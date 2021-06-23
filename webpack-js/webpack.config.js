@@ -5,8 +5,8 @@ module.exports = {
     devtool: 'source-map',
     entry: './src/app.js',
     output: {
-        filename: 'build-old.js',
-        path: path.join(__dirname, '../web/js-webpack-old')
+        filename: 'build.js',
+        path: path.join(__dirname, '../web/js-webpack')
     },
     module: {
         rules: [{
