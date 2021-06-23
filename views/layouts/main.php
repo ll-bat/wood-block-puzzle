@@ -28,7 +28,7 @@ $logoText = Yii::$app->session->get('game._logo_text', 'Wood Block Puzzle');
 <?php $this->beginBody() ?>
 
 <div class="main">
-    <div class='navbar' style="border-bottom: 2px inset rgba(167,83,26,0.84)">
+    <div class='navbar' id="site-navbar" style="border-bottom: 2px inset rgba(167,83,26,0.84)">
         <div class="d-flex">
             <img src='<?= $logo ?>' class="m-2 ml-5" height='50' alt="logo" style="margin-top: 12px !important;"/>
             <p class='my-font my-font-2 my-2 mt-3 mx-3'> <?= $logoText ?> </p>

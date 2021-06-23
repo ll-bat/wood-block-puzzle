@@ -6,6 +6,7 @@ $this->title = 'My Yii Application';
 ?>
 <div id="wood-block-puzzle">
     <div class="content" id="content"></div>
+    <div class="figures d-flex justify-content-around" id="figures"></div>
 <!--    <p id="dd"></p>-->
 <!--    <p id="vv"></p>-->
 <!--    <div class='fallDown' id='backdrop' style="z-index: 1;">-->

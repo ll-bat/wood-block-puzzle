@@ -6,6 +6,9 @@ export default class DomNegotiator {
      * @var _divElement
      */
 
+    /**
+     * @param $element {HTMLElement|String}
+     */
     constructor($element = null) {
         if ($element && typeof $element === 'string') {
             $element = FUNC.$($element);

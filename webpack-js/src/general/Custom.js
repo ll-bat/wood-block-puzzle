@@ -21,6 +21,22 @@ const FUNC = {
         $object.removeEventListener($event, $handler)
     },
 
+    /**
+     * @param divElement {HTMLElement}
+     * @param className {string}
+     */
+    addClass(divElement, className) {
+        divElement.classList.add(className)
+    },
+
+    /**
+     * @param divElement {HTMLElement}
+     * @param className {string}
+     */
+    removeClass(divElement, className) {
+        divElement.classList.remove(className)
+    },
+
     setStyle($element, $style) {
         for (let a in $style) {
             $element.style[a] = $style[a]

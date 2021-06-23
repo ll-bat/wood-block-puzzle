@@ -22,6 +22,24 @@ class Layout {
     draw() {
         this.initBoxes()
         this.drawLayout();
+        this.customizeBoardSize();
+    }
+
+    customizeBoardSize($height = null) {
+        if (!$height) {
+            $height = (CONSTANTS.boxHeight + 3) * CONSTANTS.boxesOnColumn;
+            $height += FUNC.$('#site-navbar').offsetHeight;
+            $height += 30;
+            if ($height > CONSTANTS.height) {
+                $height = CONSTANTS.height - 100;
+            }
+
+            FUNC.setStyle(this._domNegotiator.getElement(), {
+                height: $height + 'px'
+            });
+        } else {
+            console.log('all done');
+        }
     }
 
     initBoxes() {
