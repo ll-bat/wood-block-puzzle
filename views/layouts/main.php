@@ -27,8 +27,8 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div id="wood-block-puzzle">
-    <span> application started </span>
+<div class="main">
+    <?= $content ?>
 </div>
 
 <?php $this->endBody() ?>

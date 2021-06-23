@@ -1,0 +1,28 @@
+{
+    "name": "project-webpack",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "start": "npx webpack"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ll-bat/Wood-block-puzzle.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ll-bat/Wood-block-puzzle/issues"
+    },
+    "homepage": "https://github.com/ll-bat/Wood-block-puzzle#readme",
+    "dependencies": {
+        "css-loader": "^5.0.1",
+        "style-loader": "^2.0.0",
+        "webpack": "^5.11.0"
+    },
+    "devDependencies": {
+        "webpack-cli": "^4.7.2"
+    }
+}
