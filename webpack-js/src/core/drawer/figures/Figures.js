@@ -29,11 +29,12 @@ class Figures {
     /**
      * @param type {string}
      * @param scaleK
+     * @param $style {object}
      */
-    draw(type, scaleK = 3) {
+    draw(type, scaleK = 3, $style = {}) {
         if (this.hasFigure(type)) {
             const figureObj = this.getFigure(type);
-            return $figureDrawer.draw(figureObj, scaleK);
+            return $figureDrawer.draw(figureObj, scaleK, $style);
         } else {
             throw new DOMException(`${type} figure does not exist`);
         }

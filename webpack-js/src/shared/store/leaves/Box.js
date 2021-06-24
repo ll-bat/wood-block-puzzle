@@ -15,11 +15,22 @@ export default class Box {
         this.data = {};
     }
 
+    isBusy() {
+        if (this.data.busy) {
+            return 1;
+        }
+        return 0;
+    }
+
     /**
      * @param $div {HTMLElement}
      */
     setReferenceDiv($div) {
         this.referenceDiv = $div;
+    }
+
+    getReferenceDiv() {
+        return this.referenceDiv;
     }
 
     getCoordinateX() {
@@ -29,6 +40,7 @@ export default class Box {
     getCoordinateY() {
         return this.y;
     }
+
 
 }
 

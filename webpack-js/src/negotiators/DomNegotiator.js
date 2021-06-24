@@ -1,6 +1,8 @@
 import FUNC from "../general/Custom";
+import DomNegotiatorAbstract from "../core/abstract/DomNegotiatorAbstract";
+import CONSTANTS from "../general/Constants";
 
-export default class DomNegotiator {
+export default class DomNegotiator extends DomNegotiatorAbstract {
     /**
      * @type {HTMLDivElement}
      * @var _divElement
@@ -10,15 +12,26 @@ export default class DomNegotiator {
      * @param $element {HTMLElement|String}
      */
     constructor($element = null) {
+        super();
+
         if ($element && typeof $element === 'string') {
-            $element = FUNC.$($element);
+            $element = this.findOrCreate($element);
         }
 
-        this._divElement = $element;
+        this.setElement($element);
+    }
+
+    findOrCreate($elementId) {
+        let element = FUNC.$($elementId);
+        if (!element) {
+            element = FUNC.elt('div', null, $elementId);
+            CONSTANTS.dom.body.append(element);
+        }
+        return element;
     }
 
     /**
-     * @param $element {HTMLDivElement}
+     * @param $element {HTMLElement|String}
      */
     setElement($element) {
         this._divElement = $element;
@@ -32,10 +45,10 @@ export default class DomNegotiator {
      * @param $element {HTMLElement}
      */
     append($element) {
-        this._divElement.append($element)
+        this.getElement().append($element)
     }
 
     clearHtml() {
-        this._divElement.innerHTML = "";
+        this.getElement().innerHTML = "";
     }
 }

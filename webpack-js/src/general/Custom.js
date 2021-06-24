@@ -52,4 +52,18 @@ const FUNC = {
     }
 }
 
+const $limit = 50;
+let power = 2;
+const powers = [1];
+for (let i = 1; i <= $limit; i++) {
+    powers.push(power);
+    power *= 2;
+}
+
+FUNC.power = num => {
+    if (num <= $limit)
+        return powers[num];
+    throw new DOMException('num can"t be more than ' + $limit);
+}
+
 export default FUNC;

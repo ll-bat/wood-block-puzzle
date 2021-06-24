@@ -7,8 +7,9 @@ class FigureDrawer {
     /**
      * @param figureObjOrPattern {Figure|Array}
      * @param scaleK
+     * @param $style {object}
      */
-    draw(figureObjOrPattern, scaleK = 3) {
+    draw(figureObjOrPattern, scaleK = 3, $style = {}) {
         if (figureObjOrPattern instanceof Figure) {
             figureObjOrPattern = figureObjOrPattern.pattern;
         }
@@ -21,7 +22,7 @@ class FigureDrawer {
         const bw = CONSTANTS.boxWidth / scaleK;
         const bh = CONSTANTS.boxHeight / scaleK;
 
-        this.drawFigureWithDetails(figureObjOrPattern, bw, bh, boxDiv);
+        this.drawFigureWithDetails(figureObjOrPattern, bw, bh, boxDiv, $style);
         return boxDiv;
     }
 

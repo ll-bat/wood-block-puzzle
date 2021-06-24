@@ -3,6 +3,7 @@ import DomNegotiator from "./negotiators/DomNegotiator";
 import $randomFigureDrawer from "./core/drawer/concrete/relax/RandomFiguresDrawer";
 import STATE from "./shared/store/leaves/State";
 import $figureMover from "./core/events/FigureMover";
+import $figureOnBoardMatcher from "./core/events/next_handler/FigureOnBoardMatcher";
 
 $layout.setup(
     new DomNegotiator('#content'));
@@ -13,6 +14,8 @@ $randomFigureDrawer.setup(
     new DomNegotiator('#figures'));
 
 $randomFigureDrawer.draw();
+
+$figureMover.setup($figureOnBoardMatcher);
 
 const randomFigures = STATE.relax.getFigures();
 randomFigures.forEach(figureObj => {

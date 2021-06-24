@@ -14,6 +14,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_drawer_concrete_relax_RandomFiguresDrawer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./core/drawer/concrete/relax/RandomFiguresDrawer */ "./src/core/drawer/concrete/relax/RandomFiguresDrawer.js");
 /* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
 /* harmony import */ var _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./core/events/FigureMover */ "./src/core/events/FigureMover.js");
+/* harmony import */ var _core_events_next_handler_FigureOnBoardMatcher__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./core/events/next_handler/FigureOnBoardMatcher */ "./src/core/events/next_handler/FigureOnBoardMatcher.js");
+
 
 
 
@@ -30,10 +32,77 @@ _core_drawer_concrete_relax_RandomFiguresDrawer__WEBPACK_IMPORTED_MODULE_2__.def
 
 _core_drawer_concrete_relax_RandomFiguresDrawer__WEBPACK_IMPORTED_MODULE_2__.default.draw();
 
+_core_events_FigureMover__WEBPACK_IMPORTED_MODULE_4__.default.setup(_core_events_next_handler_FigureOnBoardMatcher__WEBPACK_IMPORTED_MODULE_5__.default);
+
 const randomFigures = _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_3__.default.relax.getFigures();
 randomFigures.forEach(figureObj => {
     _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_4__.default.register(figureObj);
 });
+
+/***/ }),
+
+/***/ "./src/core/abstract/Configurable.js":
+/*!*******************************************!*\
+  !*** ./src/core/abstract/Configurable.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ Configurable
+/* harmony export */ });
+class Configurable {
+    /**
+     * @param params {Object} list of `key => value` pairs representing configuration of the current class
+     */
+    configure(params) {
+        for (let a in params) {
+            this[a] = params[a];
+        }
+    }
+}
+
+/***/ }),
+
+/***/ "./src/core/abstract/DomNegotiatorAbstract.js":
+/*!****************************************************!*\
+  !*** ./src/core/abstract/DomNegotiatorAbstract.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ DomNegotiatorAbstract
+/* harmony export */ });
+/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../general/Custom */ "./src/general/Custom.js");
+
+
+class DomNegotiatorAbstract {
+
+}
+
+/***/ }),
+
+/***/ "./src/core/abstract/NextHandler.js":
+/*!******************************************!*\
+  !*** ./src/core/abstract/NextHandler.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ NextHandler
+/* harmony export */ });
+/* harmony import */ var _Configurable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Configurable */ "./src/core/abstract/Configurable.js");
+
+
+class NextHandler extends _Configurable__WEBPACK_IMPORTED_MODULE_0__.default {
+    constructor() {
+        super();
+    }
+
+    next(e, figure) {}
+}
 
 /***/ }),
 
@@ -239,8 +308,9 @@ class FigureDrawer {
     /**
      * @param figureObjOrPattern {Figure|Array}
      * @param scaleK
+     * @param $style {object}
      */
-    draw(figureObjOrPattern, scaleK = 3) {
+    draw(figureObjOrPattern, scaleK = 3, $style = {}) {
         if (figureObjOrPattern instanceof _leaves_Figure__WEBPACK_IMPORTED_MODULE_2__.default) {
             figureObjOrPattern = figureObjOrPattern.pattern;
         }
@@ -253,7 +323,7 @@ class FigureDrawer {
         const bw = _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxWidth / scaleK;
         const bh = _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxHeight / scaleK;
 
-        this.drawFigureWithDetails(figureObjOrPattern, bw, bh, boxDiv);
+        this.drawFigureWithDetails(figureObjOrPattern, bw, bh, boxDiv, $style);
         return boxDiv;
     }
 
@@ -338,11 +408,12 @@ class Figures {
     /**
      * @param type {string}
      * @param scaleK
+     * @param $style {object}
      */
-    draw(type, scaleK = 3) {
+    draw(type, scaleK = 3, $style = {}) {
         if (this.hasFigure(type)) {
             const figureObj = this.getFigure(type);
-            return _FigureDrawer__WEBPACK_IMPORTED_MODULE_2__.default.draw(figureObj, scaleK);
+            return _FigureDrawer__WEBPACK_IMPORTED_MODULE_2__.default.draw(figureObj, scaleK, $style);
         } else {
             throw new DOMException(`${type} figure does not exist`);
         }
@@ -491,6 +562,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ Figure
 /* harmony export */ });
+/* harmony import */ var _general_Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../general/Constants */ "./src/general/Constants.js");
+/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../general/Custom */ "./src/general/Custom.js");
+
+
 
 class Figure {
     /**
@@ -506,6 +581,36 @@ class Figure {
             .map(c => c.split(""))
     }
 
+    isset(i, j) {
+        return this.pattern[i] && this.pattern[i][j] && this.pattern[i][j] !== '.';
+    }
+
+    toString() {
+        throw new DOMException('Figure toString() method is not implemented');
+    }
+
+    toInt() {
+        const rowCount = _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow;
+        let result = 0;
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < rowCount; j++) {
+                if (this.isset(i, j)) {
+                    result += _general_Custom__WEBPACK_IMPORTED_MODULE_1__.default.power(i * rowCount + j);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * returns max number blocks on X-axis
+     */
+    getCategory() {
+       let result = 0;
+       this.pattern.forEach(arr => result = Math.max(result, arr.length));
+       return result;
+    }
 }
 
 /***/ }),
@@ -522,8 +627,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../general/Custom */ "./src/general/Custom.js");
 /* harmony import */ var _general_Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../general/Constants */ "./src/general/Constants.js");
-/* harmony import */ var _drawer_figures_FigureDrawer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../drawer/figures/FigureDrawer */ "./src/core/drawer/figures/FigureDrawer.js");
-/* harmony import */ var _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../drawer/figures/Figures */ "./src/core/drawer/figures/Figures.js");
+/* harmony import */ var _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../drawer/figures/Figures */ "./src/core/drawer/figures/Figures.js");
+/* harmony import */ var _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../shared/store/tmp/TmpFigureHelper */ "./src/shared/store/tmp/TmpFigureHelper.js");
 
 
 
@@ -532,25 +637,34 @@ __webpack_require__.r(__webpack_exports__);
 class FigureMover {
     constructor() {
     }
+
+    /**
+     * @param $nextHandler {NextHandler}
+     */
+    setup($nextHandler) {
+        this._nextHandler = $nextHandler;
+    }
+
     /**
      * @param figure {String}
      * @param divElement {HTMLElement}
      */
     register({ figure, divElement }) {
         let temporaryElement = null;
+        let moveHandler = null;
 
         _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.attach(divElement, 'mousedown', e => {
             const moverFigure = this.createMoverFigure();
-
-            const figureDiv = _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_3__.default.draw(figure, 1.05);
+            const figureDiv = _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__.default.draw(figure, 1.05);
             moverFigure.append(figureDiv);
-
             _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(moverFigure, {
                 left: this.getLeftPx(e.pageX) + 'px',
                 top: this.getTopPx(e.pageY) + 'px'
             });
-
-            this.attachMoveEvents(moverFigure);
+            moveHandler = this.getMouseMoveHandler(figure, moverFigure);
+            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.attach(
+                _general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.dom, 'mousemove', moveHandler
+            )
             _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(divElement, {
                 opacity: .4
             });
@@ -562,7 +676,11 @@ class FigureMover {
             if (!temporaryElement)
                 return;
 
+            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.detach(
+                _general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.dom, 'mousemove', moveHandler
+            );
             temporaryElement.remove();
+            _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_3__.default.clearHtml();
             _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(divElement, {
                 opacity: 1
             })
@@ -570,35 +688,27 @@ class FigureMover {
     }
 
     /**
+     * @param figure {String}
      * @param divElement {HTMLElement}
      */
-    getMouseMoveHandler(divElement) {
+    getMouseMoveHandler(figure, divElement) {
         return e => {
             const { pageX, pageY } = e;
             _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(divElement, {
                 left: this.getLeftPx(pageX) + 'px',
                 top: this.getTopPx(pageY) + 'px'
-            })
+            });
+
+            this._nextHandler.next(e, figure);
         }
     }
 
-    /**
-     * @param divElement {HTMLElement}
-     */
-    attachMoveEvents(divElement) {
-        const handler = this.getMouseMoveHandler(divElement);
-
-        _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.attach(
-            _general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.dom, 'mousemove', handler
-        )
-    }
-
     getLeftPx($left) {
-        return $left - 30;
+        return $left + _general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.figureOffsetX
     }
 
     getTopPx($top) {
-        return $top - 60
+        return $top + _general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.figureOffsetY
     }
 
     createMoverFigure() {
@@ -614,6 +724,285 @@ class FigureMover {
 
 const $figureMover = new FigureMover();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($figureMover);
+
+
+/***/ }),
+
+/***/ "./src/core/events/next_handler/FigureOnBoardMatcher.js":
+/*!**************************************************************!*\
+  !*** ./src/core/events/next_handler/FigureOnBoardMatcher.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../abstract/NextHandler */ "./src/core/abstract/NextHandler.js");
+/* harmony import */ var _logic_FigurePlaceFinder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../logic/FigurePlaceFinder */ "./src/core/logic/FigurePlaceFinder.js");
+/* harmony import */ var _logic_FigurePlaceChecker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../logic/FigurePlaceChecker */ "./src/core/logic/FigurePlaceChecker.js");
+/* harmony import */ var _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../negotiators/DomNegotiator */ "./src/negotiators/DomNegotiator.js");
+/* harmony import */ var _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../shared/store/tmp/TmpFigureHelper */ "./src/shared/store/tmp/TmpFigureHelper.js");
+
+
+
+
+
+
+class FigureOnBoardMatcher extends _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__.default {
+    constructor() {
+        super();
+    }
+
+    /**
+     * @param e {Event}
+     * @param figure {String}
+     */
+    next(e, figure) {
+        const blockIndexes = _logic_FigurePlaceFinder__WEBPACK_IMPORTED_MODULE_1__.default.find(e, figure);
+        if (blockIndexes === null) {
+            _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_4__.default.clearHtml();
+        } else {
+            if (_logic_FigurePlaceChecker__WEBPACK_IMPORTED_MODULE_2__.default.isDrawable(blockIndexes, figure)) {
+                _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_4__.default.drawTmpFigure(blockIndexes, figure);
+            } else {
+                _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_4__.default.clearHtml()
+            }
+        }
+    }
+}
+
+const $figureOnBoardMatcher = new FigureOnBoardMatcher();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($figureOnBoardMatcher);
+
+/***/ }),
+
+/***/ "./src/core/logic/FigurePlaceChecker.js":
+/*!**********************************************!*\
+  !*** ./src/core/logic/FigurePlaceChecker.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../shared/store/Boxes */ "./src/shared/store/Boxes.js");
+/* harmony import */ var _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../drawer/figures/Figures */ "./src/core/drawer/figures/Figures.js");
+/* harmony import */ var _math_Calculator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../math/Calculator */ "./src/core/math/Calculator.js");
+/* harmony import */ var _general_Constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../general/Constants */ "./src/general/Constants.js");
+
+
+
+
+
+class FigurePlaceChecker {
+    constructor() {
+    }
+
+    /**
+     * @param x block index >= 0 AND < boxesOnRow
+     * @param y block index >= 0 AND < boxesOnColumn
+     * @param figure {String} such as TYPE_1, TYPE_2
+     */
+    isDrawable({ x, y }, figure) {
+        let $board = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_0__.default.inverse(_shared_store_Boxes__WEBPACK_IMPORTED_MODULE_0__.default.toString());
+        $board += '0'.repeat(3 * _general_Constants__WEBPACK_IMPORTED_MODULE_3__.default.boxesOnRow);
+        const $figure = _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_1__.default.getFigure(figure);
+        return _math_Calculator__WEBPACK_IMPORTED_MODULE_2__.default.matchesIntToStringPatternFrom($board, $figure.toInt(), { x, y }, $figure.getCategory());
+    }
+}
+
+const $figurePlaceChecker = new FigurePlaceChecker();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($figurePlaceChecker);
+
+/***/ }),
+
+/***/ "./src/core/logic/FigurePlaceFinder.js":
+/*!*********************************************!*\
+  !*** ./src/core/logic/FigurePlaceFinder.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _general_Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../general/Constants */ "./src/general/Constants.js");
+/* harmony import */ var _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../shared/store/Boxes */ "./src/shared/store/Boxes.js");
+/* harmony import */ var _webpack_src_shared_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../webpack/src/shared/constants */ "../webpack/src/shared/constants.js");
+
+
+
+
+class FigurePlaceFinder {
+    constructor() {
+    }
+    /**
+     * @param x
+     * @param y
+     * @param figure {String} such as TYPE_1, TYPE_2
+     * @return {{x, y} | null}
+     * @description This method should find a block from (64 blocks) where we can put the `figure` (to start drawing from)
+     */
+    find({ x, y }, figure) {
+        x += _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.figureOffsetX;
+        y += _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.figureOffsetY;
+
+        const boxIndexes = this.goFindBox({ x, y });
+        if (boxIndexes instanceof Object) {
+            return boxIndexes
+        }
+
+        return null;
+    }
+
+    goFindBox({ x,  y }) {
+        let errorX = _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxWidth / 2;
+        let errorY = _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxHeight / 2;
+
+        // figure is left of board
+        if (x < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.offsetX - errorX) {
+            return -1;
+        }
+
+        // figure is up of board
+        if (y < _webpack_src_shared_constants__WEBPACK_IMPORTED_MODULE_2__.offsetY - errorY) {
+            return -1;
+        }
+
+        let colX = _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow - 1, colY = _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnColumn - 1;
+        for (let j = 0; j < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow; j++) {
+            const box = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__.default.get(0, j);
+            const boxCoordinateX = box.getCoordinateX();
+            if (boxCoordinateX + errorX * 1.5 >= x) {
+                colY = j;
+                break;
+            }
+        }
+
+        for (let i = 0; i < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnColumn; i++) {
+            const box = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__.default.get(i, colX);
+            const boxCoordinateY = box.getCoordinateY();
+            if (boxCoordinateY + errorY * 1.5 >= y) {
+                colX = i;
+                break;
+            }
+        }
+
+        const rightLimit = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__.default.get(0,_general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow - 1).getCoordinateX() + _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxWidth;
+        const bottomLimit = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__.default.get(_general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow - 1, 0).getCoordinateY() + _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxHeight;
+
+        if (x - rightLimit > -_general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxWidth / 3) {
+            return -1;
+        }
+
+        if (y - bottomLimit > -_general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxHeight / 3) {
+            return -1;
+        }
+
+        return {
+            x: colX, y: colY
+        }
+    }
+}
+
+const $figurePlaceFinder = new FigurePlaceFinder();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($figurePlaceFinder);
+
+/***/ }),
+
+/***/ "./src/core/math/Calculator.js":
+/*!*************************************!*\
+  !*** ./src/core/math/Calculator.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ Calculator
+/* harmony export */ });
+/* harmony import */ var _general_Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../general/Constants */ "./src/general/Constants.js");
+/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../general/Custom */ "./src/general/Custom.js");
+
+
+
+class Calculator {
+    /**
+     * @param $string {String} such as `10111101010101010`
+     * @param $int {Number} such as `15, 254, 3033`
+     * @param $category {Number}
+     * @param $partSize {Number}
+     */
+    static matchesIntToStringPattern($string, $int, $category = _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow,  $partSize = _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow * 3) {
+        return Calculator.matchesIntToStringPatternFrom($string, $int, { x: 0, y: 0 }, $category, $partSize);
+    }
+
+    /**
+     *
+     * @param $string {String}
+     * @param $int {Number}
+     * @param x {Number}
+     * @param y {Number}
+     * @param $category {Number}
+     * @param $partSize {Number}
+     */
+    static matchesIntToStringPatternFrom($string, $int, { x, y }, $category,  $partSize = _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow * 3) {
+        const startingIndex = x * _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow + y;
+
+        console.log(x, y, $category);
+
+        let number = 0;
+        for (let i = startingIndex; i < $partSize; i++) {
+            if ($string[i] === undefined) {
+                return false;
+            }
+
+            const char = $string[i];
+            if (char === '1') {
+                number += _general_Custom__WEBPACK_IMPORTED_MODULE_1__.default.power(i - startingIndex);
+            }
+        }
+
+        function isMatch() {
+            const matches = number & $int;
+            return matches === $int;
+        }
+
+        let currentCategory = x;
+        const maxCategory = _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow - $category + 1;
+
+        if (currentCategory < maxCategory && isMatch()) {
+            return true;
+        }
+
+        const power2to3xBoxesOnRow = _general_Custom__WEBPACK_IMPORTED_MODULE_1__.default.power(_general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow * 3);
+        for (let i = startingIndex + 1; i < $string.length; i++) {
+            number /= 2;
+            number = Math.floor(number);
+
+            const char = $string[i];
+            if (char === '1') {
+                number += power2to3xBoxesOnRow;
+            }
+
+            if (currentCategory === _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow - 1) {
+                currentCategory = 0;
+            }
+
+            if (currentCategory++ >= maxCategory) {
+                continue;
+            }
+
+            if (isMatch()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
 
 
 /***/ }),
@@ -655,8 +1044,8 @@ const CONSTANTS = {
     offsetY: _shared_store_Config__WEBPACK_IMPORTED_MODULE_0__.default.getScreenHeight() * 0.1 + 20,
     boxesOnRow: 8,
     boxesOnColumn: 8,
-    figureOffsetX: -70,
-    figureOffsetY: -200,
+    figureOffsetX: -30,
+    figureOffsetY: -60,
     boxColor: 'rgba(153, 93, 93)',
     blockCrashColor: 'rgb(151, 96, 96)',
     boxHeight: null,
@@ -748,6 +1137,20 @@ const FUNC = {
     }
 }
 
+const $limit = 50;
+let power = 2;
+const powers = [1];
+for (let i = 1; i <= $limit; i++) {
+    powers.push(power);
+    power *= 2;
+}
+
+FUNC.power = num => {
+    if (num <= $limit)
+        return powers[num];
+    throw new DOMException('num can"t be more than ' + $limit);
+}
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FUNC);
 
 /***/ }),
@@ -763,9 +1166,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* binding */ DomNegotiator
 /* harmony export */ });
 /* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../general/Custom */ "./src/general/Custom.js");
+/* harmony import */ var _core_abstract_DomNegotiatorAbstract__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/abstract/DomNegotiatorAbstract */ "./src/core/abstract/DomNegotiatorAbstract.js");
+/* harmony import */ var _general_Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../general/Constants */ "./src/general/Constants.js");
 
 
-class DomNegotiator {
+
+
+class DomNegotiator extends _core_abstract_DomNegotiatorAbstract__WEBPACK_IMPORTED_MODULE_1__.default {
     /**
      * @type {HTMLDivElement}
      * @var _divElement
@@ -775,15 +1182,26 @@ class DomNegotiator {
      * @param $element {HTMLElement|String}
      */
     constructor($element = null) {
+        super();
+
         if ($element && typeof $element === 'string') {
-            $element = _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.$($element);
+            $element = this.findOrCreate($element);
         }
 
-        this._divElement = $element;
+        this.setElement($element);
+    }
+
+    findOrCreate($elementId) {
+        let element = _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.$($elementId);
+        if (!element) {
+            element = _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.elt('div', null, $elementId);
+            _general_Constants__WEBPACK_IMPORTED_MODULE_2__.default.dom.body.append(element);
+        }
+        return element;
     }
 
     /**
-     * @param $element {HTMLDivElement}
+     * @param $element {HTMLElement|String}
      */
     setElement($element) {
         this._divElement = $element;
@@ -797,11 +1215,11 @@ class DomNegotiator {
      * @param $element {HTMLElement}
      */
     append($element) {
-        this._divElement.append($element)
+        this.getElement().append($element)
     }
 
     clearHtml() {
-        this._divElement.innerHTML = "";
+        this.getElement().innerHTML = "";
     }
 }
 
@@ -839,8 +1257,46 @@ class Boxes {
         );
     }
 
+    /**
+     * @param i
+     * @param j
+     * @return {Box}
+     */
     get(i, j) {
         return this._boxes[i][j];
+    }
+
+    getBoxes() {
+        return this._boxes;
+    }
+
+    toString() {
+        let result = "";
+        this.getBoxes().forEach(row => {
+            /**
+             * @type {Box}
+             */
+            row.forEach(block => {
+                result += block.isBusy().toString();
+            })
+        });
+        return result;
+    }
+
+    /**
+     * @param $string {String}
+     */
+    inverse($string) {
+        let result = "";
+        for (let c of $string) {
+            if (c === '0') {
+                result += '1';
+            } else {
+                result += '0';
+            }
+        }
+
+        return result;
     }
 
     reset() {
@@ -942,11 +1398,22 @@ class Box {
         this.data = {};
     }
 
+    isBusy() {
+        if (this.data.busy) {
+            return 1;
+        }
+        return 0;
+    }
+
     /**
      * @param $div {HTMLElement}
      */
     setReferenceDiv($div) {
         this.referenceDiv = $div;
+    }
+
+    getReferenceDiv() {
+        return this.referenceDiv;
     }
 
     getCoordinateX() {
@@ -956,6 +1423,7 @@ class Box {
     getCoordinateY() {
         return this.y;
     }
+
 
 }
 
@@ -994,6 +1462,184 @@ const STATE = {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (STATE);
+
+/***/ }),
+
+/***/ "./src/shared/store/tmp/TmpFigureHelper.js":
+/*!*************************************************!*\
+  !*** ./src/shared/store/tmp/TmpFigureHelper.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _core_abstract_DomNegotiatorAbstract__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/abstract/DomNegotiatorAbstract */ "./src/core/abstract/DomNegotiatorAbstract.js");
+/* harmony import */ var _core_drawer_figures_FigureDrawer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../core/drawer/figures/FigureDrawer */ "./src/core/drawer/figures/FigureDrawer.js");
+/* harmony import */ var _core_drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../core/drawer/figures/Figures */ "./src/core/drawer/figures/Figures.js");
+/* harmony import */ var _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../negotiators/DomNegotiator */ "./src/negotiators/DomNegotiator.js");
+/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../general/Custom */ "./src/general/Custom.js");
+/* harmony import */ var _Boxes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Boxes */ "./src/shared/store/Boxes.js");
+
+
+
+
+
+
+
+class TmpFigureHelper extends _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_3__.default {
+    constructor() {
+        super('#tmp-element');
+    }
+
+    drawTmpFigure({ x, y }, figure) {
+        this.clearHtml();
+        const divElement = _core_drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__.default.draw(figure, 1.02, { opacity: .3 });
+        this.append(divElement);
+
+        const box = _Boxes__WEBPACK_IMPORTED_MODULE_5__.default.get(x, y);
+
+        _general_Custom__WEBPACK_IMPORTED_MODULE_4__.default.setStyle(this.getElement(), {
+            position: 'absolute',
+            left: box.getCoordinateX() + 'px',
+            top: box.getCoordinateY() + 'px',
+        });
+    }
+}
+
+const $tmpFigureHelper = new TmpFigureHelper();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($tmpFigureHelper);
+
+/***/ }),
+
+/***/ "../webpack/src/shared/android.js":
+/*!****************************************!*\
+  !*** ../webpack/src/shared/android.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+const userAgent = navigator.userAgent.toLowerCase();
+const Android = userAgent.indexOf("android") > -1;
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Android);
+
+/***/ }),
+
+/***/ "../webpack/src/shared/constants.js":
+/*!******************************************!*\
+  !*** ../webpack/src/shared/constants.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "dom": () => /* binding */ dom,
+/* harmony export */   "width": () => /* binding */ width,
+/* harmony export */   "height": () => /* binding */ height,
+/* harmony export */   "offsetY": () => /* binding */ offsetY,
+/* harmony export */   "boxesOnRow": () => /* binding */ boxesOnRow,
+/* harmony export */   "boxesOnColumn": () => /* binding */ boxesOnColumn,
+/* harmony export */   "figureOffsetX": () => /* binding */ figureOffsetX,
+/* harmony export */   "figureOffsetY": () => /* binding */ figureOffsetY,
+/* harmony export */   "boxColor": () => /* binding */ boxColor,
+/* harmony export */   "blockCrashColor": () => /* binding */ blockCrashColor,
+/* harmony export */   "boxHeight": () => /* binding */ boxHeight,
+/* harmony export */   "boxWidth": () => /* binding */ boxWidth,
+/* harmony export */   "offsetX": () => /* binding */ offsetX
+/* harmony export */ });
+/* harmony import */ var _store_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store/config */ "../webpack/src/shared/store/config.js");
+
+
+const dom = document;
+const width = _store_config__WEBPACK_IMPORTED_MODULE_0__.default.getScreenWidth() * .9;
+const height = _store_config__WEBPACK_IMPORTED_MODULE_0__.default.getScreenHeight();
+const offsetY = height * 0.1 + 20;
+const boxesOnRow = 8;
+const boxesOnColumn = 8;
+const figureOffsetX = -70
+const figureOffsetY = -200
+const boxColor = 'rgba(153, 93, 93)';
+const blockCrashColor = 'rgb(151, 96, 96)';
+
+let offsetX1 = 0;
+let boxHeight1 = (height * .7) / boxesOnColumn;
+let boxWidth1 = (width - offsetX1) / boxesOnRow
+boxWidth1 = boxHeight1 = Math.min(boxWidth1, boxHeight1);
+
+let rightOffsetX = offsetX1 + boxesOnRow * boxWidth1
+rightOffsetX = width - rightOffsetX;
+offsetX1 = (offsetX1 + rightOffsetX) / 2 + 20;
+
+const boxHeight = boxHeight1
+const boxWidth = boxWidth1
+const offsetX = offsetX1
+
+/***/ }),
+
+/***/ "../webpack/src/shared/store/config.js":
+/*!*********************************************!*\
+  !*** ../webpack/src/shared/store/config.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _android__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../android */ "../webpack/src/shared/android.js");
+
+
+const CONFIG = {
+    android: {
+        click: 'touchstart',
+        move: 'touchmove',
+        end: 'touchend'
+    },
+    ps: {
+        click: 'mousedown',
+        move: 'mousemove',
+        end: 'mouseup'
+    },
+    get(type) {
+        if (_android__WEBPACK_IMPORTED_MODULE_0__.default) {
+            if (!this.android[type]) {
+                throw new Exception(`${type} is not defined`)
+            }
+            return this.android[type]
+        }
+        if (!this.ps[type]) {
+            throw new Exception(`${type} is not defined`)
+        }
+        return this.ps[type];
+    },
+    coords(e) {
+        if (_android__WEBPACK_IMPORTED_MODULE_0__.default) {
+            return { x: e.touches[0].clientX, y: e.touches[0].clientY }
+        }
+        return { x: e.clientX, y: e.clientY }
+    },
+    getScreenWidth() {
+        if (_android__WEBPACK_IMPORTED_MODULE_0__.default) {
+            let ratio = window.devicePixelRatio || 1;
+            return screen.width * ratio;
+        }
+        return window.innerWidth;
+    },
+    getScreenHeight() {
+        if (_android__WEBPACK_IMPORTED_MODULE_0__.default) {
+            let ratio = window.devicePixelRatio || 1;
+            return screen.height * ratio;
+        }
+        return window.innerHeight
+    }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CONFIG);
 
 /***/ })
 

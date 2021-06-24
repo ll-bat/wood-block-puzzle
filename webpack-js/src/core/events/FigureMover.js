@@ -1,30 +1,39 @@
 import FUNC from "../../general/Custom";
 import CONSTANTS from "../../general/Constants";
-import $figureDrawer from "../drawer/figures/FigureDrawer";
 import $figures from "../drawer/figures/Figures";
+import $tmpFigureHelper from "../../shared/store/tmp/TmpFigureHelper";
 
 class FigureMover {
     constructor() {
     }
+
+    /**
+     * @param $nextHandler {NextHandler}
+     */
+    setup($nextHandler) {
+        this._nextHandler = $nextHandler;
+    }
+
     /**
      * @param figure {String}
      * @param divElement {HTMLElement}
      */
     register({ figure, divElement }) {
         let temporaryElement = null;
+        let moveHandler = null;
 
         FUNC.attach(divElement, 'mousedown', e => {
             const moverFigure = this.createMoverFigure();
-
             const figureDiv = $figures.draw(figure, 1.05);
             moverFigure.append(figureDiv);
-
             FUNC.setStyle(moverFigure, {
                 left: this.getLeftPx(e.pageX) + 'px',
                 top: this.getTopPx(e.pageY) + 'px'
             });
-
-            this.attachMoveEvents(moverFigure);
+            moveHandler = this.getMouseMoveHandler(figure, moverFigure);
+            FUNC.attach(
+                CONSTANTS.dom, 'mousemove', moveHandler
+            )
             FUNC.setStyle(divElement, {
                 opacity: .4
             });
@@ -36,7 +45,11 @@ class FigureMover {
             if (!temporaryElement)
                 return;
 
+            FUNC.detach(
+                CONSTANTS.dom, 'mousemove', moveHandler
+            );
             temporaryElement.remove();
+            $tmpFigureHelper.clearHtml();
             FUNC.setStyle(divElement, {
                 opacity: 1
             })
@@ -44,35 +57,27 @@ class FigureMover {
     }
 
     /**
+     * @param figure {String}
      * @param divElement {HTMLElement}
      */
-    getMouseMoveHandler(divElement) {
+    getMouseMoveHandler(figure, divElement) {
         return e => {
             const { pageX, pageY } = e;
             FUNC.setStyle(divElement, {
                 left: this.getLeftPx(pageX) + 'px',
                 top: this.getTopPx(pageY) + 'px'
-            })
+            });
+
+            this._nextHandler.next(e, figure);
         }
     }
 
-    /**
-     * @param divElement {HTMLElement}
-     */
-    attachMoveEvents(divElement) {
-        const handler = this.getMouseMoveHandler(divElement);
-
-        FUNC.attach(
-            CONSTANTS.dom, 'mousemove', handler
-        )
-    }
-
     getLeftPx($left) {
-        return $left - 30;
+        return $left + CONSTANTS.figureOffsetX
     }
 
     getTopPx($top) {
-        return $top - 60
+        return $top + CONSTANTS.figureOffsetY
     }
 
     createMoverFigure() {
