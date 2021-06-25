@@ -1,3 +1,4 @@
+import FUNC from "../../../general/Custom";
 
 const STATE = {
     shared: {
@@ -22,20 +23,34 @@ const STATE = {
     },
     relax: {
         randomFigures: [],
+        cachedFigures: [],
         /**
          * @param figure {String} such as `TYPE_1`
          * @param divElement {HTMLElement}
+         * @param index {Number}
          */
-        addRandomFigure({ figure, divElement}) {
-            this.randomFigures.push({ figure, divElement });
+        addRandomFigure({ figure, divElement, index }) {
+            this.randomFigures.push({ figure, divElement, index });
         },
         getFigures() {
             return this.randomFigures;
         },
-        removeFigure(figure) {
-
+        removeRandomFigure(figure, index) {
+            const thisFigure = this.randomFigures.find(f => f.index === index);
+            FUNC.setStyle(thisFigure.divElement, { visibility: "hidden"})
+            const figureIndex = this.randomFigures.findIndex(f => f.index === index);
+            this.randomFigures.splice(figureIndex, 1);
+            this.cachedFigures.push(thisFigure);
+        },
+        isAllFiguresDrawn() {
+            return this.randomFigures.length === 0;
         },
         clear() {
+            this.cachedFigures.forEach(figure => {
+                figure.divElement.remove();
+            });
+
+            this.cachedFigures = [];
             this.randomFigures = [];
         }
     }

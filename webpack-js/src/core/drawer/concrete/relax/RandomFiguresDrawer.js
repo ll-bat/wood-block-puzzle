@@ -13,11 +13,8 @@ class RandomFiguresDrawer {
         this._domNegotiator = domNegotiator;
     }
 
-
     draw($figuresCount = 3) {
         this.ensureProperties();
-
-        STATE.relax.clear();
 
         const keys = Object.keys(AllFigures);
         const figuresLength = keys.length;
@@ -26,7 +23,7 @@ class RandomFiguresDrawer {
             const randomNumber = this.getRandomNumber(figuresLength);
             const figure = keys[randomNumber];
             const divElement = $figures.draw(figure);
-            STATE.relax.addRandomFigure({ figure, divElement });
+            STATE.relax.addRandomFigure({ figure, divElement, index: i });
             this._domNegotiator.append(divElement);
         }
     }

@@ -1,12 +1,15 @@
 import Box from "./leaves/Box";
 import Calculator from "../../core/math/Calculator";
+import EventHandler from "../../core/abstract/EventHandler";
+import EVENTS from "../../core/events/Events";
 
-class Boxes {
+class Boxes extends EventHandler {
     /**
      * @type {[]}
      * @var _boxes
      */
     constructor() {
+        super();
         this.reset();
         this._cachedMatrix = this.toMatrix();
     }
@@ -78,9 +81,9 @@ class Boxes {
                 if (Calculator.isset($childMatrix, i, j)) {
                     const box = this.get(x + i, y + j);
                     box.setBusy();
-                    if (extraData.colorBox) {
-                        const background = extraData.color || '#92522e';
-                        box.style({ background })
+
+                    if (this.hasHandler(EVENTS.BOX_UPDATE)) {
+                        this.getHandler(EVENTS.BOX_UPDATE).next({}, null, { x: x + i, y: y + j })
                     }
                 }
             })

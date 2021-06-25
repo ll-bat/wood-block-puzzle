@@ -4,7 +4,7 @@
 
 $this->title = 'My Yii Application';
 ?>
-<div id="wood-block-puzzle">
+<div id="wood-block-puzzle" style="user-select: none !important;">
     <div class="content" id="content"></div>
     <div class="figures d-flex justify-content-around" id="figures"></div>
 <!--    <p id="dd"></p>-->

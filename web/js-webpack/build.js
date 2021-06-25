@@ -2,6 +2,57 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/Helper/relax/BoxOnboardCrasher.js":
+/*!***********************************************!*\
+  !*** ./src/Helper/relax/BoxOnboardCrasher.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _general_Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../general/Constants */ "./src/general/Constants.js");
+
+
+class BoxOnboardCrasher {
+    constructor() {
+        this.reset();
+    }
+
+    reset() {
+        this.boxesOnRow = [];
+        this.boxesOnColumn = [];
+
+        for (let i = 0; i < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow; i++) {
+            this.boxesOnRow.push(0);
+        }
+
+        for (let i = 0; i < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow; i++) {
+            this.boxesOnColumn.push(0);
+        }
+    }
+
+    update({ x, y }) {
+        this.boxesOnRow[x]++;
+        this.boxesOnColumn[y]++;
+
+        let $break = false;
+        if (this.boxesOnRow[x] === _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow) {
+            $break = true;
+        }
+
+        if (this.boxesOnColumn[y] === _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnColumn) {
+            $break = true;
+        }
+    }
+}
+
+const $boxOnboardCrasher = new BoxOnboardCrasher();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($boxOnboardCrasher);
+
+/***/ }),
+
 /***/ "./src/app.js":
 /*!********************!*\
   !*** ./src/app.js ***!
@@ -12,9 +63,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_drawer_Layout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core/drawer/Layout */ "./src/core/drawer/Layout.js");
 /* harmony import */ var _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./negotiators/DomNegotiator */ "./src/negotiators/DomNegotiator.js");
 /* harmony import */ var _core_drawer_concrete_relax_RandomFiguresDrawer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./core/drawer/concrete/relax/RandomFiguresDrawer */ "./src/core/drawer/concrete/relax/RandomFiguresDrawer.js");
-/* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
-/* harmony import */ var _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./core/events/FigureMover */ "./src/core/events/FigureMover.js");
-/* harmony import */ var _core_events_next_handler_FigureOnBoardMatcher__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./core/events/next_handler/FigureOnBoardMatcher */ "./src/core/events/next_handler/FigureOnBoardMatcher.js");
+/* harmony import */ var _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./core/events/FigureMover */ "./src/core/events/FigureMover.js");
+/* harmony import */ var _core_events_next_handler_FigureOnBoardMatcher__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./core/events/next_handler/FigureOnBoardMatcher */ "./src/core/events/next_handler/FigureOnBoardMatcher.js");
+/* harmony import */ var _core_events_next_handler_relax_MouseUpHandler__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./core/events/next_handler/relax/MouseUpHandler */ "./src/core/events/next_handler/relax/MouseUpHandler.js");
+/* harmony import */ var _core_events_next_handler_relax_RandomFigureEventHelper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./core/events/next_handler/relax/RandomFigureEventHelper */ "./src/core/events/next_handler/relax/RandomFigureEventHelper.js");
+/* harmony import */ var _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./shared/store/Boxes */ "./src/shared/store/Boxes.js");
+/* harmony import */ var _core_events_Events__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./core/events/Events */ "./src/core/events/Events.js");
+/* harmony import */ var _core_events_next_handler_relax_BoxUpdateHandler__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./core/events/next_handler/relax/BoxUpdateHandler */ "./src/core/events/next_handler/relax/BoxUpdateHandler.js");
 
 
 
@@ -22,22 +77,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-_core_drawer_Layout__WEBPACK_IMPORTED_MODULE_0__.default.setup(
-    new _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_1__.default('#content'));
 
+
+
+
+_core_drawer_Layout__WEBPACK_IMPORTED_MODULE_0__.default.setup(new _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_1__.default('#content'));
 _core_drawer_Layout__WEBPACK_IMPORTED_MODULE_0__.default.draw();
 
-_core_drawer_concrete_relax_RandomFiguresDrawer__WEBPACK_IMPORTED_MODULE_2__.default.setup(
-    new _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_1__.default('#figures'));
+_core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('mousemove', _core_events_next_handler_FigureOnBoardMatcher__WEBPACK_IMPORTED_MODULE_4__.default);
+_core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('mouseup', _core_events_next_handler_relax_MouseUpHandler__WEBPACK_IMPORTED_MODULE_5__.default)
 
-_core_drawer_concrete_relax_RandomFiguresDrawer__WEBPACK_IMPORTED_MODULE_2__.default.draw();
+_core_drawer_concrete_relax_RandomFiguresDrawer__WEBPACK_IMPORTED_MODULE_2__.default.setup(new _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_1__.default('#figures'));
+_core_events_next_handler_relax_RandomFigureEventHelper__WEBPACK_IMPORTED_MODULE_6__.default.drawRandomFiguresAndRegisterEvents();
 
-_core_events_FigureMover__WEBPACK_IMPORTED_MODULE_4__.default.setup(_core_events_next_handler_FigureOnBoardMatcher__WEBPACK_IMPORTED_MODULE_5__.default);
-
-const randomFigures = _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_3__.default.relax.getFigures();
-randomFigures.forEach(figureObj => {
-    _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_4__.default.register(figureObj);
-});
+_shared_store_Boxes__WEBPACK_IMPORTED_MODULE_7__.default.registerHandler(_core_events_Events__WEBPACK_IMPORTED_MODULE_8__.default.BOX_UPDATE, _core_events_next_handler_relax_BoxUpdateHandler__WEBPACK_IMPORTED_MODULE_9__.default)
 
 /***/ }),
 
@@ -51,7 +104,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ Configurable
 /* harmony export */ });
-class Configurable {
+/* harmony import */ var _ErrorHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ErrorHandler */ "./src/core/abstract/ErrorHandler.js");
+
+
+class Configurable extends _ErrorHandler__WEBPACK_IMPORTED_MODULE_0__.default {
     /**
      * @param params {Object} list of `key => value` pairs representing configuration of the current class
      */
@@ -83,6 +139,69 @@ class DomNegotiatorAbstract {
 
 /***/ }),
 
+/***/ "./src/core/abstract/ErrorHandler.js":
+/*!*******************************************!*\
+  !*** ./src/core/abstract/ErrorHandler.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ ErrorHandler
+/* harmony export */ });
+
+class ErrorHandler {
+    log(...messages) {
+        console.log(...messages);
+    }
+
+    error(message) {
+        throw new DOMException(message);
+    }
+}
+
+/***/ }),
+
+/***/ "./src/core/abstract/EventHandler.js":
+/*!*******************************************!*\
+  !*** ./src/core/abstract/EventHandler.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ EventHandler
+/* harmony export */ });
+class EventHandler {
+    constructor() {
+        this._handlers = {}
+    }
+    /**
+     * @param $mouseEvent {String}
+     * @param $nextHandler {NextHandler}
+     */
+    registerHandler($mouseEvent, $nextHandler) {
+        this._handlers[$mouseEvent] = $nextHandler;
+    }
+
+    /**
+     * @param $mouseEvent
+     * @return {NextHandler}
+     */
+    getHandler($mouseEvent) {
+        if (this.hasHandler($mouseEvent)) {
+            return this._handlers[$mouseEvent];
+        }
+        throw new DOMException($mouseEvent + ' handler has not been registered');
+    }
+
+    hasHandler($mouseEvent) {
+        return this._handlers[$mouseEvent] != null;
+    }
+}
+
+/***/ }),
+
 /***/ "./src/core/abstract/NextHandler.js":
 /*!******************************************!*\
   !*** ./src/core/abstract/NextHandler.js ***!
@@ -101,7 +220,7 @@ class NextHandler extends _Configurable__WEBPACK_IMPORTED_MODULE_0__.default {
         super();
     }
 
-    next(e, figure) {}
+    next(e, figure, extraData = {}) {}
 }
 
 /***/ }),
@@ -243,11 +362,8 @@ class RandomFiguresDrawer {
         this._domNegotiator = domNegotiator;
     }
 
-
     draw($figuresCount = 3) {
         this.ensureProperties();
-
-        _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_2__.default.relax.clear();
 
         const keys = Object.keys(_figures_leaves_AllFigures__WEBPACK_IMPORTED_MODULE_0__.default);
         const figuresLength = keys.length;
@@ -256,7 +372,7 @@ class RandomFiguresDrawer {
             const randomNumber = this.getRandomNumber(figuresLength);
             const figure = keys[randomNumber];
             const divElement = _figures_Figures__WEBPACK_IMPORTED_MODULE_1__.default.draw(figure);
-            _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_2__.default.relax.addRandomFigure({ figure, divElement });
+            _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_2__.default.relax.addRandomFigure({ figure, divElement, index: i });
             this._domNegotiator.append(divElement);
         }
     }
@@ -579,6 +695,14 @@ class Figure {
             .map(c => c.trim())
             .filter(c => c)
             .map(c => c.split(""))
+
+        this.matrix = this.pattern.map(row => {
+            return row.map(cell => {
+                return cell === '.'
+                    ? 0
+                    : 1
+            })
+        });
     }
 
     isset(i, j) {
@@ -587,6 +711,10 @@ class Figure {
 
     toString() {
         throw new DOMException('Figure toString() method is not implemented');
+    }
+
+    toMatrix() {
+        return this.matrix;
     }
 
     toInt() {
@@ -615,6 +743,28 @@ class Figure {
 
 /***/ }),
 
+/***/ "./src/core/events/Events.js":
+/*!***********************************!*\
+  !*** ./src/core/events/Events.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+
+const EVENTS = {
+    MOUSE_DOWN : 'mouse-down',
+    MOUSE_UP : 'mouse-up',
+    MOUSE_MOVE : 'mouse-move',
+    BOX_UPDATE : 'box-update',
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EVENTS);
+
+/***/ }),
+
 /***/ "./src/core/events/FigureMover.js":
 /*!****************************************!*\
   !*** ./src/core/events/FigureMover.js ***!
@@ -629,67 +779,70 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _general_Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../general/Constants */ "./src/general/Constants.js");
 /* harmony import */ var _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../drawer/figures/Figures */ "./src/core/drawer/figures/Figures.js");
 /* harmony import */ var _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../shared/store/tmp/TmpFigureHelper */ "./src/shared/store/tmp/TmpFigureHelper.js");
+/* harmony import */ var _abstract_EventHandler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../abstract/EventHandler */ "./src/core/abstract/EventHandler.js");
+/* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
 
 
 
 
 
-class FigureMover {
+
+
+class FigureMover extends _abstract_EventHandler__WEBPACK_IMPORTED_MODULE_4__.default {
     constructor() {
-    }
-
-    /**
-     * @param $nextHandler {NextHandler}
-     */
-    setup($nextHandler) {
-        this._nextHandler = $nextHandler;
+        super();
     }
 
     /**
      * @param figure {String}
      * @param divElement {HTMLElement}
+     * @param index {Number}
+     * @description all these params are coming from `STATE.relax.getFigures()[index]`
      */
-    register({ figure, divElement }) {
+    register({ figure, divElement, index }) {
         let temporaryElement = null;
         let moveHandler = null;
 
         _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.attach(divElement, 'mousedown', e => {
             const moverFigure = this.createMoverFigure();
             const figureDiv = _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__.default.draw(figure, 1.05);
+
             moverFigure.append(figureDiv);
+            moveHandler = this.getMouseMoveHandler(figure, moverFigure);
+
             _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(moverFigure, {
                 left: this.getLeftPx(e.pageX) + 'px',
                 top: this.getTopPx(e.pageY) + 'px'
             });
-            moveHandler = this.getMouseMoveHandler(figure, moverFigure);
-            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.attach(
-                _general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.dom, 'mousemove', moveHandler
-            )
-            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(divElement, {
-                opacity: .4
-            });
+            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(divElement, { opacity: .4 });
+
+            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.attach(_general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.dom, 'mousemove', moveHandler)
+            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.attach(_general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.dom, 'mouseup', mouseUpHandler);
 
             temporaryElement = moverFigure;
         });
 
-        _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.attach(_general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.dom, 'mouseup', e => {
+        const mouseUpHandler = e => {
             if (!temporaryElement)
                 return;
 
-            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.detach(
-                _general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.dom, 'mousemove', moveHandler
-            );
+            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.detach(_general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.dom, 'mousemove', moveHandler);
             temporaryElement.remove();
             _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_3__.default.clearHtml();
-            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(divElement, {
-                opacity: 1
-            })
-        });
+            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(divElement, { opacity: 1 })
+            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(divElement, { opacity: 1 });
+
+            this.getHandler('mouseup').next(e, figure, { index });
+            _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_5__.default.shared.resetDrawable();
+            // important
+            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.detach(_general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.dom, 'mouseup', mouseUpHandler);
+        };
     }
 
     /**
      * @param figure {String}
      * @param divElement {HTMLElement}
+     * @return {NextHandler}
      */
     getMouseMoveHandler(figure, divElement) {
         return e => {
@@ -699,7 +852,7 @@ class FigureMover {
                 top: this.getTopPx(pageY) + 'px'
             });
 
-            this._nextHandler.next(e, figure);
+            this.getHandler('mousemove').next(e, figure);
         }
     }
 
@@ -741,8 +894,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../abstract/NextHandler */ "./src/core/abstract/NextHandler.js");
 /* harmony import */ var _logic_FigurePlaceFinder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../logic/FigurePlaceFinder */ "./src/core/logic/FigurePlaceFinder.js");
 /* harmony import */ var _logic_FigurePlaceChecker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../logic/FigurePlaceChecker */ "./src/core/logic/FigurePlaceChecker.js");
-/* harmony import */ var _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../negotiators/DomNegotiator */ "./src/negotiators/DomNegotiator.js");
-/* harmony import */ var _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../shared/store/tmp/TmpFigureHelper */ "./src/shared/store/tmp/TmpFigureHelper.js");
+/* harmony import */ var _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../shared/store/tmp/TmpFigureHelper */ "./src/shared/store/tmp/TmpFigureHelper.js");
+/* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
 
 
 
@@ -761,12 +914,16 @@ class FigureOnBoardMatcher extends _abstract_NextHandler__WEBPACK_IMPORTED_MODUL
     next(e, figure) {
         const blockIndexes = _logic_FigurePlaceFinder__WEBPACK_IMPORTED_MODULE_1__.default.find(e, figure);
         if (blockIndexes === null) {
-            _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_4__.default.clearHtml();
+            _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_3__.default.clearHtml();
         } else {
+            console.clear();
             if (_logic_FigurePlaceChecker__WEBPACK_IMPORTED_MODULE_2__.default.isDrawable(blockIndexes, figure)) {
-                _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_4__.default.drawTmpFigure(blockIndexes, figure);
+                _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_3__.default.drawTmpFigure(blockIndexes, figure);
+                _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_4__.default.shared.setBlockIndexes(blockIndexes);
+                _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_4__.default.shared.setDrawable(true);
             } else {
-                _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_4__.default.clearHtml()
+                _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_3__.default.clearHtml()
+                _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_4__.default.shared.setDrawable(false);
             }
         }
     }
@@ -774,6 +931,126 @@ class FigureOnBoardMatcher extends _abstract_NextHandler__WEBPACK_IMPORTED_MODUL
 
 const $figureOnBoardMatcher = new FigureOnBoardMatcher();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($figureOnBoardMatcher);
+
+/***/ }),
+
+/***/ "./src/core/events/next_handler/relax/BoxUpdateHandler.js":
+/*!****************************************************************!*\
+  !*** ./src/core/events/next_handler/relax/BoxUpdateHandler.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../abstract/NextHandler */ "./src/core/abstract/NextHandler.js");
+/* harmony import */ var _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../shared/store/Boxes */ "./src/shared/store/Boxes.js");
+/* harmony import */ var _Helper_relax_BoxOnboardCrasher__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../Helper/relax/BoxOnboardCrasher */ "./src/Helper/relax/BoxOnboardCrasher.js");
+
+
+
+
+class BoxUpdateHandler extends _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__.default {
+    constructor(props) {
+        super(props);
+    }
+
+    next(e, figure, extraData = {}) {
+        const { x, y } = extraData;
+        const box = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__.default.get(x, y);
+        box.style({ background: '#92522e' });
+        _Helper_relax_BoxOnboardCrasher__WEBPACK_IMPORTED_MODULE_2__.default.update({ x, y })
+    }
+}
+
+const $boxUpdateHandler = new BoxUpdateHandler();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($boxUpdateHandler);
+
+/***/ }),
+
+/***/ "./src/core/events/next_handler/relax/MouseUpHandler.js":
+/*!**************************************************************!*\
+  !*** ./src/core/events/next_handler/relax/MouseUpHandler.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../abstract/NextHandler */ "./src/core/abstract/NextHandler.js");
+/* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
+/* harmony import */ var _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../shared/store/Boxes */ "./src/shared/store/Boxes.js");
+/* harmony import */ var _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../drawer/figures/Figures */ "./src/core/drawer/figures/Figures.js");
+/* harmony import */ var _drawer_concrete_relax_RandomFiguresDrawer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../drawer/concrete/relax/RandomFiguresDrawer */ "./src/core/drawer/concrete/relax/RandomFiguresDrawer.js");
+/* harmony import */ var _RandomFigureEventHelper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./RandomFigureEventHelper */ "./src/core/events/next_handler/relax/RandomFigureEventHelper.js");
+
+
+
+
+
+
+
+class MouseUpHandler extends _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__.default {
+    /**
+     * @param e {Event}
+     * @param figure {String}
+     * @param index {Number}
+     * @return {boolean}
+     */
+    next(e, figure, { index } ) {
+        if (!_shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__.default.shared.isDrawable()) {
+            return false;
+        }
+
+        const { x, y } = _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__.default.shared.getBlockIndexes();
+
+        if (x === null || y === null) {
+            this.log('Error:');
+            this.log('x: ', x, 'y: ', y);
+            this.error('x or y in MouseUpHandler next() method is not in right format')
+        } else {
+            const matrix = _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_3__.default.getFigure(figure).toMatrix();
+            _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_2__.default.updateMatrix(matrix, { x, y }, { colorBox: true })
+            _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__.default.relax.removeRandomFigure(figure, index);
+            if (_shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__.default.relax.isAllFiguresDrawn()) {
+                _RandomFigureEventHelper__WEBPACK_IMPORTED_MODULE_5__.default.drawRandomFiguresAndRegisterEvents();
+            }
+        }
+    }
+}
+
+const $mouseUpHandler = new MouseUpHandler();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($mouseUpHandler);
+
+/***/ }),
+
+/***/ "./src/core/events/next_handler/relax/RandomFigureEventHelper.js":
+/*!***********************************************************************!*\
+  !*** ./src/core/events/next_handler/relax/RandomFigureEventHelper.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ RandomFigureEventHelper
+/* harmony export */ });
+/* harmony import */ var _drawer_concrete_relax_RandomFiguresDrawer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../drawer/concrete/relax/RandomFiguresDrawer */ "./src/core/drawer/concrete/relax/RandomFiguresDrawer.js");
+/* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
+/* harmony import */ var _FigureMover__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../FigureMover */ "./src/core/events/FigureMover.js");
+
+
+
+
+class RandomFigureEventHelper {
+    static drawRandomFiguresAndRegisterEvents() {
+        _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__.default.relax.clear();
+        _drawer_concrete_relax_RandomFiguresDrawer__WEBPACK_IMPORTED_MODULE_0__.default.draw();
+        _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__.default.relax.getFigures()
+            .forEach(figureObj => _FigureMover__WEBPACK_IMPORTED_MODULE_2__.default.register(figureObj));
+    }
+}
 
 /***/ }),
 
@@ -806,10 +1083,9 @@ class FigurePlaceChecker {
      * @param figure {String} such as TYPE_1, TYPE_2
      */
     isDrawable({ x, y }, figure) {
-        let $board = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_0__.default.inverse(_shared_store_Boxes__WEBPACK_IMPORTED_MODULE_0__.default.toString());
-        $board += '0'.repeat(3 * _general_Constants__WEBPACK_IMPORTED_MODULE_3__.default.boxesOnRow);
-        const $figure = _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_1__.default.getFigure(figure);
-        return _math_Calculator__WEBPACK_IMPORTED_MODULE_2__.default.matchesIntToStringPatternFrom($board, $figure.toInt(), { x, y }, $figure.getCategory());
+        const boardAsMatrix = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_0__.default.toMatrix();
+        const figureAsMatrix = _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_1__.default.getFigure(figure).toMatrix();
+        return _math_Calculator__WEBPACK_IMPORTED_MODULE_2__.default.isMatrixMatch(boardAsMatrix, figureAsMatrix, { x, y });
     }
 }
 
@@ -928,6 +1204,45 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Calculator {
+    /**
+     *
+     * @param $parentMatrix {Array[]}
+     * @param $childMatrix {Array[]}
+     * @param x {Number} starting x-index in `$parentMatrix`
+     * @param y {Number} staring y-index in `$parentMatrix`
+     */
+    static isMatrixMatch($parentMatrix, $childMatrix, { x, y }) {
+        let isMatch = true;
+        $childMatrix.forEach((row, i) => {
+            if (!isMatch) return false;
+            row.forEach((cell, j) => {
+                if (Calculator.isset($childMatrix, i, j)) {
+                    if (Calculator.isset($parentMatrix, x + i, y + j)) {
+                        isMatch = false;
+                        return false;
+                    }
+                    if (x + i >= _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow || y + j >= _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnColumn) {
+                        isMatch = false;
+                        return false;
+                    }
+                }
+            })
+        });
+        return isMatch;
+    }
+
+    static isset($array, $i, $j) {
+        if (!$array[$i]) {
+            return false
+        }
+
+        if (!$array[$i][$j]) {
+            return false;
+        }
+
+        return $array[$i][$j] === 1;
+    }
+
     /**
      * @param $string {String} such as `10111101010101010`
      * @param $int {Number} such as `15, 254, 3033`
@@ -1236,15 +1551,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _leaves_Box__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./leaves/Box */ "./src/shared/store/leaves/Box.js");
+/* harmony import */ var _core_math_Calculator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../core/math/Calculator */ "./src/core/math/Calculator.js");
+/* harmony import */ var _core_abstract_EventHandler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../core/abstract/EventHandler */ "./src/core/abstract/EventHandler.js");
+/* harmony import */ var _core_events_Events__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../core/events/Events */ "./src/core/events/Events.js");
 
 
-class Boxes {
+
+
+
+class Boxes extends _core_abstract_EventHandler__WEBPACK_IMPORTED_MODULE_2__.default {
     /**
      * @type {[]}
      * @var _boxes
      */
     constructor() {
+        super();
         this.reset();
+        this._cachedMatrix = this.toMatrix();
     }
 
     addRow() {
@@ -1281,6 +1604,46 @@ class Boxes {
             })
         });
         return result;
+    }
+
+    toMatrix() {
+        const result = [];
+        this._boxes.forEach(row => {
+            result.push([]);
+            const curIndex = result.length - 1;
+            /**
+             * @type {Box}
+             */
+            row.forEach(box => {
+                result[curIndex].push(box.isBusy());
+            })
+        });
+
+        return result;
+    }
+
+    /**
+     * @param $childMatrix {Array[]}
+     * @param x {Number}
+     * @param y {Number}
+     * @param extraData {{
+     *     colorBox,
+     *     color,
+     * }}
+     */
+    updateMatrix($childMatrix, { x, y }, extraData = {}) {
+        $childMatrix.forEach((row, i) => {
+            row.forEach((cell, j) => {
+                if (_core_math_Calculator__WEBPACK_IMPORTED_MODULE_1__.default.isset($childMatrix, i, j)) {
+                    const box = this.get(x + i, y + j);
+                    box.setBusy();
+
+                    if (this.hasHandler(_core_events_Events__WEBPACK_IMPORTED_MODULE_3__.default.BOX_UPDATE)) {
+                        this.getHandler(_core_events_Events__WEBPACK_IMPORTED_MODULE_3__.default.BOX_UPDATE).next({}, null, { x: x + i, y: y + j })
+                    }
+                }
+            })
+        });
     }
 
     /**
@@ -1381,6 +1744,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ Box
 /* harmony export */ });
+/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../general/Custom */ "./src/general/Custom.js");
+
+
 class Box {
     constructor({ x, y }) {
         /**
@@ -1405,6 +1771,10 @@ class Box {
         return 0;
     }
 
+    setBusy() {
+        this.data.busy = true;
+    }
+
     /**
      * @param $div {HTMLElement}
      */
@@ -1414,6 +1784,14 @@ class Box {
 
     getReferenceDiv() {
         return this.referenceDiv;
+    }
+
+    /**
+     * @param $style {Object}
+     */
+    style($style) {
+        _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(this.getReferenceDiv(), $style);
+        console.log('got into style')
     }
 
     getCoordinateX() {
@@ -1441,21 +1819,60 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
+/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../general/Custom */ "./src/general/Custom.js");
+
 
 const STATE = {
+    shared: {
+        blockIndex: { x: null, y: null },
+        drawable: null,
+        setDrawable($state) {
+            this.drawable = $state;
+        },
+        isDrawable() {
+            return this.drawable;
+        },
+        setBlockIndexes({ x, y }) {
+            this.blockIndex = { x, y }
+        },
+        getBlockIndexes() {
+            return this.blockIndex;
+        },
+        resetDrawable() {
+            this.blockIndex = { x: null, y: null }
+            this.setDrawable(null);
+        }
+    },
     relax: {
         randomFigures: [],
+        cachedFigures: [],
         /**
          * @param figure {String} such as `TYPE_1`
          * @param divElement {HTMLElement}
+         * @param index {Number}
          */
-        addRandomFigure({ figure, divElement}) {
-            this.randomFigures.push({ figure, divElement });
+        addRandomFigure({ figure, divElement, index }) {
+            this.randomFigures.push({ figure, divElement, index });
         },
         getFigures() {
             return this.randomFigures;
         },
+        removeRandomFigure(figure, index) {
+            const thisFigure = this.randomFigures.find(f => f.index === index);
+            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(thisFigure.divElement, { visibility: "hidden"})
+            const figureIndex = this.randomFigures.findIndex(f => f.index === index);
+            this.randomFigures.splice(figureIndex, 1);
+            this.cachedFigures.push(thisFigure);
+        },
+        isAllFiguresDrawn() {
+            return this.randomFigures.length === 0;
+        },
         clear() {
+            this.cachedFigures.forEach(figure => {
+                figure.divElement.remove();
+            });
+
+            this.cachedFigures = [];
             this.randomFigures = [];
         }
     }

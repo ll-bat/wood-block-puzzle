@@ -13,8 +13,10 @@ class FigureMover extends EventHandler {
     /**
      * @param figure {String}
      * @param divElement {HTMLElement}
+     * @param index {Number}
+     * @description all these params are coming from `STATE.relax.getFigures()[index]`
      */
-    register({ figure, divElement }) {
+    register({ figure, divElement, index }) {
         let temporaryElement = null;
         let moveHandler = null;
 
@@ -47,7 +49,7 @@ class FigureMover extends EventHandler {
             FUNC.setStyle(divElement, { opacity: 1 })
             FUNC.setStyle(divElement, { opacity: 1 });
 
-            this.getHandler('mouseup').next(e, figure);
+            this.getHandler('mouseup').next(e, figure, { index });
             STATE.shared.resetDrawable();
             // important
             FUNC.detach(CONSTANTS.dom, 'mouseup', mouseUpHandler);
