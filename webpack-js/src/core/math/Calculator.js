@@ -3,6 +3,45 @@ import FUNC from "../../general/Custom";
 
 export default class Calculator {
     /**
+     *
+     * @param $parentMatrix {Array[]}
+     * @param $childMatrix {Array[]}
+     * @param x {Number} starting x-index in `$parentMatrix`
+     * @param y {Number} staring y-index in `$parentMatrix`
+     */
+    static isMatrixMatch($parentMatrix, $childMatrix, { x, y }) {
+        let isMatch = true;
+        $childMatrix.forEach((row, i) => {
+            if (!isMatch) return false;
+            row.forEach((cell, j) => {
+                if (Calculator.isset($childMatrix, i, j)) {
+                    if (Calculator.isset($parentMatrix, x + i, y + j)) {
+                        isMatch = false;
+                        return false;
+                    }
+                    if (x + i >= CONSTANTS.boxesOnRow || y + j >= CONSTANTS.boxesOnColumn) {
+                        isMatch = false;
+                        return false;
+                    }
+                }
+            })
+        });
+        return isMatch;
+    }
+
+    static isset($array, $i, $j) {
+        if (!$array[$i]) {
+            return false
+        }
+
+        if (!$array[$i][$j]) {
+            return false;
+        }
+
+        return $array[$i][$j] === 1;
+    }
+
+    /**
      * @param $string {String} such as `10111101010101010`
      * @param $int {Number} such as `15, 254, 3033`
      * @param $category {Number}

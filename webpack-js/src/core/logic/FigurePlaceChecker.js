@@ -13,10 +13,9 @@ class FigurePlaceChecker {
      * @param figure {String} such as TYPE_1, TYPE_2
      */
     isDrawable({ x, y }, figure) {
-        let $board = $boxes.inverse($boxes.toString());
-        $board += '0'.repeat(3 * CONSTANTS.boxesOnRow);
-        const $figure = $figures.getFigure(figure);
-        return Calculator.matchesIntToStringPatternFrom($board, $figure.toInt(), { x, y }, $figure.getCategory());
+        const boardAsMatrix = $boxes.toMatrix();
+        const figureAsMatrix = $figures.getFigure(figure).toMatrix();
+        return Calculator.isMatrixMatch(boardAsMatrix, figureAsMatrix, { x, y });
     }
 }
 

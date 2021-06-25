@@ -45,6 +45,22 @@ class Boxes {
         return result;
     }
 
+    toMatrix() {
+        const result = [];
+        this._boxes.forEach(row => {
+            result.push([]);
+            const curIndex = result.length - 1;
+            /**
+             * @type {Box}
+             */
+            row.forEach(box => {
+                result[curIndex].push(box.isBusy());
+            })
+        });
+
+        return result;
+    }
+
     /**
      * @param $string {String}
      */

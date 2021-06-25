@@ -18,6 +18,7 @@ class FigureOnBoardMatcher extends NextHandler {
         if (blockIndexes === null) {
             $tmpFigureHelper.clearHtml();
         } else {
+            console.clear();
             if ($figurePlaceChecker.isDrawable(blockIndexes, figure)) {
                 $tmpFigureHelper.drawTmpFigure(blockIndexes, figure);
             } else {

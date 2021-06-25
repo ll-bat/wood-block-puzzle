@@ -13,6 +13,14 @@ export default class Figure {
             .map(c => c.trim())
             .filter(c => c)
             .map(c => c.split(""))
+
+        this.matrix = this.pattern.map(row => {
+            return row.map(cell => {
+                return cell === '.'
+                    ? 0
+                    : 1
+            })
+        });
     }
 
     isset(i, j) {
@@ -21,6 +29,10 @@ export default class Figure {
 
     toString() {
         throw new DOMException('Figure toString() method is not implemented');
+    }
+
+    toMatrix() {
+        return this.matrix;
     }
 
     toInt() {
