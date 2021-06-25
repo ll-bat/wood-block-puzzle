@@ -3,6 +3,7 @@ import CONSTANTS from "../../general/Constants";
 import $figures from "../drawer/figures/Figures";
 import $tmpFigureHelper from "../../shared/store/tmp/TmpFigureHelper";
 import EventHandler from "../abstract/EventHandler";
+import STATE from "../../shared/store/leaves/State";
 
 class FigureMover extends EventHandler {
     constructor() {
@@ -20,39 +21,37 @@ class FigureMover extends EventHandler {
         FUNC.attach(divElement, 'mousedown', e => {
             const moverFigure = this.createMoverFigure();
             const figureDiv = $figures.draw(figure, 1.05);
+
             moverFigure.append(figureDiv);
+            moveHandler = this.getMouseMoveHandler(figure, moverFigure);
+
             FUNC.setStyle(moverFigure, {
                 left: this.getLeftPx(e.pageX) + 'px',
                 top: this.getTopPx(e.pageY) + 'px'
             });
-            moveHandler = this.getMouseMoveHandler(figure, moverFigure);
-            FUNC.attach(
-                CONSTANTS.dom, 'mousemove', moveHandler
-            )
-            FUNC.setStyle(divElement, {
-                opacity: .4
-            });
+            FUNC.setStyle(divElement, { opacity: .4 });
+
+            FUNC.attach(CONSTANTS.dom, 'mousemove', moveHandler)
+            FUNC.attach(CONSTANTS.dom, 'mouseup', mouseUpHandler);
 
             temporaryElement = moverFigure;
         });
 
-        FUNC.attach(CONSTANTS.dom, 'mouseup', e => {
+        const mouseUpHandler = e => {
             if (!temporaryElement)
                 return;
 
-            FUNC.detach(
-                CONSTANTS.dom, 'mousemove', moveHandler
-            );
+            FUNC.detach(CONSTANTS.dom, 'mousemove', moveHandler);
             temporaryElement.remove();
-            $tmpFigureHelper.clearHtml();FUNC.setStyle(divElement, {
-                opacity: 1
-            })
-            FUNC.setStyle(divElement, {
-                opacity: 1
-            });
+            $tmpFigureHelper.clearHtml();
+            FUNC.setStyle(divElement, { opacity: 1 })
+            FUNC.setStyle(divElement, { opacity: 1 });
 
             this.getHandler('mouseup').next(e, figure);
-        });
+            STATE.shared.resetDrawable();
+            // important
+            FUNC.detach(CONSTANTS.dom, 'mouseup', mouseUpHandler);
+        };
     }
 
     /**

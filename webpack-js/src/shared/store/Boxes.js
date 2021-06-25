@@ -1,4 +1,5 @@
 import Box from "./leaves/Box";
+import Calculator from "../../core/math/Calculator";
 
 class Boxes {
     /**
@@ -7,6 +8,7 @@ class Boxes {
      */
     constructor() {
         this.reset();
+        this._cachedMatrix = this.toMatrix();
     }
 
     addRow() {
@@ -59,6 +61,30 @@ class Boxes {
         });
 
         return result;
+    }
+
+    /**
+     * @param $childMatrix {Array[]}
+     * @param x {Number}
+     * @param y {Number}
+     * @param extraData {{
+     *     colorBox,
+     *     color,
+     * }}
+     */
+    updateMatrix($childMatrix, { x, y }, extraData = {}) {
+        $childMatrix.forEach((row, i) => {
+            row.forEach((cell, j) => {
+                if (Calculator.isset($childMatrix, i, j)) {
+                    const box = this.get(x + i, y + j);
+                    box.setBusy();
+                    if (extraData.colorBox) {
+                        const background = extraData.color || '#92522e';
+                        box.style({ background })
+                    }
+                }
+            })
+        });
     }
 
     /**

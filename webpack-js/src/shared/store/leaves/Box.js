@@ -1,3 +1,5 @@
+import FUNC from "../../../general/Custom";
+
 export default class Box {
     constructor({ x, y }) {
         /**
@@ -22,6 +24,10 @@ export default class Box {
         return 0;
     }
 
+    setBusy() {
+        this.data.busy = true;
+    }
+
     /**
      * @param $div {HTMLElement}
      */
@@ -31,6 +37,14 @@ export default class Box {
 
     getReferenceDiv() {
         return this.referenceDiv;
+    }
+
+    /**
+     * @param $style {Object}
+     */
+    style($style) {
+        FUNC.setStyle(this.getReferenceDiv(), $style);
+        console.log('got into style')
     }
 
     getCoordinateX() {

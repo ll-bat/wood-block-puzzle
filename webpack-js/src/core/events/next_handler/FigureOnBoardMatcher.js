@@ -22,8 +22,10 @@ class FigureOnBoardMatcher extends NextHandler {
             if ($figurePlaceChecker.isDrawable(blockIndexes, figure)) {
                 $tmpFigureHelper.drawTmpFigure(blockIndexes, figure);
                 STATE.shared.setBlockIndexes(blockIndexes);
+                STATE.shared.setDrawable(true);
             } else {
                 $tmpFigureHelper.clearHtml()
+                STATE.shared.setDrawable(false);
             }
         }
     }

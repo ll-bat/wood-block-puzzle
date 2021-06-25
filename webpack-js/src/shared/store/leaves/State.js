@@ -1,8 +1,13 @@
 
 const STATE = {
     shared: {
-        blockIndex: {
-            x: null, y: null
+        blockIndex: { x: null, y: null },
+        drawable: null,
+        setDrawable($state) {
+            this.drawable = $state;
+        },
+        isDrawable() {
+            return this.drawable;
         },
         setBlockIndexes({ x, y }) {
             this.blockIndex = { x, y }
@@ -10,6 +15,10 @@ const STATE = {
         getBlockIndexes() {
             return this.blockIndex;
         },
+        resetDrawable() {
+            this.blockIndex = { x: null, y: null }
+            this.setDrawable(null);
+        }
     },
     relax: {
         randomFigures: [],
@@ -22,6 +31,9 @@ const STATE = {
         },
         getFigures() {
             return this.randomFigures;
+        },
+        removeFigure(figure) {
+
         },
         clear() {
             this.randomFigures = [];
