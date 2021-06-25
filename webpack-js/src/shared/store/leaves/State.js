@@ -1,5 +1,16 @@
 
 const STATE = {
+    shared: {
+        blockIndex: {
+            x: null, y: null
+        },
+        setBlockIndexes({ x, y }) {
+            this.blockIndex = { x, y }
+        },
+        getBlockIndexes() {
+            return this.blockIndex;
+        },
+    },
     relax: {
         randomFigures: [],
         /**

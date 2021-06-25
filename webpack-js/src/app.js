@@ -4,20 +4,16 @@ import $randomFigureDrawer from "./core/drawer/concrete/relax/RandomFiguresDrawe
 import STATE from "./shared/store/leaves/State";
 import $figureMover from "./core/events/FigureMover";
 import $figureOnBoardMatcher from "./core/events/next_handler/FigureOnBoardMatcher";
+import $mouseUpHandler from "./core/events/next_handler/relax/MouseUpHandler";
 
-$layout.setup(
-    new DomNegotiator('#content'));
-
+$layout.setup(new DomNegotiator('#content'));
 $layout.draw();
 
-$randomFigureDrawer.setup(
-    new DomNegotiator('#figures'));
-
+$randomFigureDrawer.setup(new DomNegotiator('#figures'));
 $randomFigureDrawer.draw();
 
-$figureMover.setup($figureOnBoardMatcher);
+$figureMover.registerHandler('mousemove', $figureOnBoardMatcher);
+$figureMover.registerHandler('mouseup', $mouseUpHandler)
 
 const randomFigures = STATE.relax.getFigures();
-randomFigures.forEach(figureObj => {
-    $figureMover.register(figureObj);
-});
+randomFigures.forEach(figureObj => $figureMover.register(figureObj));

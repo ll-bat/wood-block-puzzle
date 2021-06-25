@@ -1,8 +1,8 @@
 import NextHandler from "../../abstract/NextHandler";
 import $figurePlaceFinder from "../../logic/FigurePlaceFinder";
 import $figurePlaceChecker from "../../logic/FigurePlaceChecker";
-import DomNegotiator from "../../../negotiators/DomNegotiator";
 import $tmpFigureHelper from "../../../shared/store/tmp/TmpFigureHelper";
+import STATE from "../../../shared/store/leaves/State";
 
 class FigureOnBoardMatcher extends NextHandler {
     constructor() {
@@ -21,6 +21,7 @@ class FigureOnBoardMatcher extends NextHandler {
             console.clear();
             if ($figurePlaceChecker.isDrawable(blockIndexes, figure)) {
                 $tmpFigureHelper.drawTmpFigure(blockIndexes, figure);
+                STATE.shared.setBlockIndexes(blockIndexes);
             } else {
                 $tmpFigureHelper.clearHtml()
             }

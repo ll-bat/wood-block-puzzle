@@ -5,5 +5,5 @@ export default class NextHandler extends Configurable {
         super();
     }
 
-    next(e, figure) {}
+    next(e, figure, extraData = {}) {}
 }

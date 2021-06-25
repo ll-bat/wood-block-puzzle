@@ -2,16 +2,11 @@ import FUNC from "../../general/Custom";
 import CONSTANTS from "../../general/Constants";
 import $figures from "../drawer/figures/Figures";
 import $tmpFigureHelper from "../../shared/store/tmp/TmpFigureHelper";
+import EventHandler from "../abstract/EventHandler";
 
-class FigureMover {
+class FigureMover extends EventHandler {
     constructor() {
-    }
-
-    /**
-     * @param $nextHandler {NextHandler}
-     */
-    setup($nextHandler) {
-        this._nextHandler = $nextHandler;
+        super();
     }
 
     /**
@@ -49,16 +44,21 @@ class FigureMover {
                 CONSTANTS.dom, 'mousemove', moveHandler
             );
             temporaryElement.remove();
-            $tmpFigureHelper.clearHtml();
-            FUNC.setStyle(divElement, {
+            $tmpFigureHelper.clearHtml();FUNC.setStyle(divElement, {
                 opacity: 1
             })
+            FUNC.setStyle(divElement, {
+                opacity: 1
+            });
+
+            this.getHandler('mouseup').next(e, figure);
         });
     }
 
     /**
      * @param figure {String}
      * @param divElement {HTMLElement}
+     * @return {NextHandler}
      */
     getMouseMoveHandler(figure, divElement) {
         return e => {
@@ -68,7 +68,7 @@ class FigureMover {
                 top: this.getTopPx(pageY) + 'px'
             });
 
-            this._nextHandler.next(e, figure);
+            this.getHandler('mousemove').next(e, figure);
         }
     }
 

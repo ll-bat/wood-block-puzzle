@@ -1,4 +1,6 @@
-export default class Configurable {
+import ErrorHandler from "./ErrorHandler";
+
+export default class Configurable extends ErrorHandler {
     /**
      * @param params {Object} list of `key => value` pairs representing configuration of the current class
      */
