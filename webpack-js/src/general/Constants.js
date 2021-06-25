@@ -9,6 +9,7 @@ const CONSTANTS = {
     boxesOnColumn: 8,
     figureOffsetX: -30,
     figureOffsetY: -60,
+    boxDefaultColor: '#1E1E1E',
     boxColor: 'rgba(153, 93, 93)',
     blockCrashColor: 'rgb(151, 96, 96)',
     boxHeight: null,

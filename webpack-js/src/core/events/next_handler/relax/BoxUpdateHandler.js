@@ -11,7 +11,9 @@ class BoxUpdateHandler extends NextHandler {
         const { x, y } = extraData;
         const box = $boxes.get(x, y);
         box.style({ background: '#92522e' });
-        $boxOnboardCrasher.update({ x, y })
+        $boxOnboardCrasher.update({ x, y });
+        console.log('row: ', $boxOnboardCrasher.boxesOnRow);
+        console.log('column: ', $boxOnboardCrasher.boxesOnColumn);
     }
 }
 

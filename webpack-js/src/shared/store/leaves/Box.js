@@ -24,8 +24,8 @@ export default class Box {
         return 0;
     }
 
-    setBusy() {
-        this.data.busy = true;
+    setBusy($state = true) {
+        this.data.busy = $state;
     }
 
     /**

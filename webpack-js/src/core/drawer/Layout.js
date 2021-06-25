@@ -78,7 +78,7 @@ class Layout {
             height: (CONSTANTS.boxHeight) + "px",
             left: box.getCoordinateX() + 'px',
             top: box.getCoordinateY() + 'px',
-            background: '#1E1E1E', //rgba(0,0,0,.02)
+            background: CONSTANTS.boxDefaultColor, //rgba(0,0,0,.02)
             border: '2px solid black' //1px solid rgba(0,0,0,.051)
         })
 

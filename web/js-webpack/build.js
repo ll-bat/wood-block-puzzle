@@ -13,6 +13,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _general_Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../general/Constants */ "./src/general/Constants.js");
+/* harmony import */ var _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../shared/store/Boxes */ "./src/shared/store/Boxes.js");
+
 
 
 class BoxOnboardCrasher {
@@ -37,14 +39,67 @@ class BoxOnboardCrasher {
         this.boxesOnRow[x]++;
         this.boxesOnColumn[y]++;
 
-        let $break = false;
+
+        let crashBlocks = false;
         if (this.boxesOnRow[x] === _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow) {
-            $break = true;
+            crashBlocks = true;
         }
 
         if (this.boxesOnColumn[y] === _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnColumn) {
-            $break = true;
+            crashBlocks = true;
         }
+
+        if (crashBlocks) {
+            this.crashBlocks();
+        }
+    }
+
+    crashBlocks() {
+        const rowIndexesToCrash = [];
+        const columnIndexesToCrash = [];
+        this.boxesOnRow.forEach((numberOfBlocks, rowIndex) => {
+            if (numberOfBlocks === _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow) {
+                rowIndexesToCrash.push(rowIndex);
+            }
+        });
+
+        this.boxesOnColumn.forEach((numberOfBlocks, columnIndex) => {
+            if (numberOfBlocks === _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnColumn) {
+                columnIndexesToCrash.push(columnIndex);
+            }
+        });
+
+        console.log('Crashing');
+        console.log(rowIndexesToCrash);
+        console.log(columnIndexesToCrash);
+
+        rowIndexesToCrash.forEach(rowIndex => {
+            for (let j = 0; j < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnColumn; j++) {
+                const box = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__.default.get(rowIndex, j);
+                box.style({ background: _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxDefaultColor });
+                box.setBusy(false);
+            }
+
+            this.boxesOnRow[rowIndex] = 0;
+            for (let j = 0; j< _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow; j++) {
+                this.boxesOnColumn[j]--;
+            }
+        });
+
+        columnIndexesToCrash.forEach(columnIndex => {
+            for (let i = 0; i < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow; i++) {
+                const box = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__.default.get(i, columnIndex);
+                box.style({ background: _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxDefaultColor });
+                box.setBusy(false);
+            }
+
+            this.boxesOnColumn[columnIndex] = 0;
+            for (let i = 0; i < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnColumn; i++) {
+                if (this.boxesOnRow[i] > 0) {
+                    this.boxesOnRow[i]--;
+                }
+            }
+        });
     }
 }
 
@@ -318,7 +373,7 @@ class Layout {
             height: (_general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.boxHeight) + "px",
             left: box.getCoordinateX() + 'px',
             top: box.getCoordinateY() + 'px',
-            background: '#1E1E1E', //rgba(0,0,0,.02)
+            background: _general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.boxDefaultColor, //rgba(0,0,0,.02)
             border: '2px solid black' //1px solid rgba(0,0,0,.051)
         })
 
@@ -960,7 +1015,9 @@ class BoxUpdateHandler extends _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0_
         const { x, y } = extraData;
         const box = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__.default.get(x, y);
         box.style({ background: '#92522e' });
-        _Helper_relax_BoxOnboardCrasher__WEBPACK_IMPORTED_MODULE_2__.default.update({ x, y })
+        _Helper_relax_BoxOnboardCrasher__WEBPACK_IMPORTED_MODULE_2__.default.update({ x, y });
+        console.log('row: ', _Helper_relax_BoxOnboardCrasher__WEBPACK_IMPORTED_MODULE_2__.default.boxesOnRow);
+        console.log('column: ', _Helper_relax_BoxOnboardCrasher__WEBPACK_IMPORTED_MODULE_2__.default.boxesOnColumn);
     }
 }
 
@@ -1361,6 +1418,7 @@ const CONSTANTS = {
     boxesOnColumn: 8,
     figureOffsetX: -30,
     figureOffsetY: -60,
+    boxDefaultColor: '#1E1E1E',
     boxColor: 'rgba(153, 93, 93)',
     blockCrashColor: 'rgb(151, 96, 96)',
     boxHeight: null,
@@ -1771,8 +1829,8 @@ class Box {
         return 0;
     }
 
-    setBusy() {
-        this.data.busy = true;
+    setBusy($state = true) {
+        this.data.busy = $state;
     }
 
     /**
