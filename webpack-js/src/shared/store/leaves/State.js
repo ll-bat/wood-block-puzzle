@@ -1,4 +1,5 @@
 import FUNC from "../../../general/Custom";
+import RandomFigure from "../../../leaves/RandomFigure";
 
 const STATE = {
     shared: {
@@ -22,7 +23,13 @@ const STATE = {
         }
     },
     relax: {
+        /**
+         * @type {RandomFigure[]}
+         */
         randomFigures: [],
+        /**
+         * @type {RandomFigure[]}
+         */
         cachedFigures: [],
         /**
          * @param figure {String} such as `TYPE_1`
@@ -30,14 +37,17 @@ const STATE = {
          * @param index {Number}
          */
         addRandomFigure({ figure, divElement, index }) {
-            this.randomFigures.push({ figure, divElement, index });
+            this.randomFigures.push(new RandomFigure({ figure, divElement, index }));
         },
         getFigures() {
             return this.randomFigures;
         },
         removeRandomFigure(figure, index) {
+            /**
+             * @type {RandomFigure}
+             */
             const thisFigure = this.randomFigures.find(f => f.index === index);
-            FUNC.setStyle(thisFigure.divElement, { visibility: "hidden"})
+            FUNC.setStyle(thisFigure.getDivElement(), { visibility: "hidden"})
             const figureIndex = this.randomFigures.findIndex(f => f.index === index);
             this.randomFigures.splice(figureIndex, 1);
             this.cachedFigures.push(thisFigure);
@@ -47,7 +57,7 @@ const STATE = {
         },
         clear() {
             this.cachedFigures.forEach(figure => {
-                figure.divElement.remove();
+                figure.getDivElement().remove();
             });
 
             this.cachedFigures = [];

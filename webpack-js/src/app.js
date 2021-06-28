@@ -9,12 +9,14 @@ import $boxes from "./shared/store/Boxes";
 import EVENTS from "./core/events/Events";
 import $boxUpdateHandler from "./core/events/next_handler/relax/BoxUpdateHandler";
 import $afterRandomFigurePutOnBoardHandler from "./core/events/next_handler/relax/AfterRandomFigurePutOnBoardHandler";
+import $randomFigureOnBoardChecker from "./core/events/next_handler/relax/RandomFigureOnBoardChecker";
 
 $layout.setup(new DomNegotiator('#content'));
 $layout.draw();
 
 $figureMover.registerHandler('mousemove', $figureOnBoardMatcher);
 $figureMover.registerHandler('mouseup', $mouseUpHandler)
+$figureMover.registerHandler('mouseup', $randomFigureOnBoardChecker)
 
 $randomFigureDrawer.setup(new DomNegotiator('#figures'));
 RandomFigureEventHelper.drawRandomFiguresAndRegisterEvents();

@@ -63,7 +63,7 @@ export default class Calculator {
     static matchesIntToStringPatternFrom($string, $int, { x, y }, $category,  $partSize = CONSTANTS.boxesOnRow * 3) {
         const startingIndex = x * CONSTANTS.boxesOnRow + y;
 
-        console.log(x, y, $category);
+        // console.log(x, y, $category);
 
         let number = 0;
         for (let i = startingIndex; i < $partSize; i++) {
@@ -85,7 +85,7 @@ export default class Calculator {
         let currentCategory = x;
         const maxCategory = CONSTANTS.boxesOnRow - $category + 1;
 
-        if (currentCategory < maxCategory && isMatch()) {
+        if ((currentCategory < maxCategory) && isMatch()) {
             return true;
         }
 
