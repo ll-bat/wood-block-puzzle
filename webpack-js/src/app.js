@@ -8,6 +8,7 @@ import RandomFigureEventHelper from "./core/events/next_handler/relax/RandomFigu
 import $boxes from "./shared/store/Boxes";
 import EVENTS from "./core/events/Events";
 import $boxUpdateHandler from "./core/events/next_handler/relax/BoxUpdateHandler";
+import $afterRandomFigurePutOnBoardHandler from "./core/events/next_handler/relax/AfterRandomFigurePutOnBoardHandler";
 
 $layout.setup(new DomNegotiator('#content'));
 $layout.draw();
@@ -18,4 +19,5 @@ $figureMover.registerHandler('mouseup', $mouseUpHandler)
 $randomFigureDrawer.setup(new DomNegotiator('#figures'));
 RandomFigureEventHelper.drawRandomFiguresAndRegisterEvents();
 
-$boxes.registerHandler(EVENTS.BOX_UPDATE, $boxUpdateHandler)
+$boxes.registerHandler(EVENTS.BOX_UPDATE, $boxUpdateHandler);
+$boxes.registerHandler(EVENTS.BOARD_CHANGE, $afterRandomFigurePutOnBoardHandler);

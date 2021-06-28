@@ -1,5 +1,6 @@
 import CONSTANTS from "../../general/Constants";
 import $boxes from "../../shared/store/Boxes";
+import $blockCrashAnimation from "../../core/animation/BlockCrashAnimation";
 
 class BoxOnboardCrasher {
     constructor() {
@@ -22,15 +23,21 @@ class BoxOnboardCrasher {
     update({ x, y }) {
         this.boxesOnRow[x]++;
         this.boxesOnColumn[y]++;
+    }
 
-
+    checkBlocksToCrash() {
         let crashBlocks = false;
-        if (this.boxesOnRow[x] === CONSTANTS.boxesOnRow) {
-            crashBlocks = true;
+
+        for (let i = 0; i < CONSTANTS.boxesOnRow; i++) {
+            if (this.boxesOnRow[i] === CONSTANTS.boxesOnRow) {
+                crashBlocks = true;
+            }
         }
 
-        if (this.boxesOnColumn[y] === CONSTANTS.boxesOnColumn) {
-            crashBlocks = true;
+        for (let j = 0; j < CONSTANTS.boxesOnRow; j++) {
+            if (this.boxesOnColumn[j] === CONSTANTS.boxesOnColumn) {
+                crashBlocks = true;
+            }
         }
 
         if (crashBlocks) {
@@ -53,14 +60,15 @@ class BoxOnboardCrasher {
             }
         });
 
-        console.log('Crashing');
-        console.log(rowIndexesToCrash);
-        console.log(columnIndexesToCrash);
+        // console.log('Crashing');
+        // console.log(rowIndexesToCrash);
+        // console.log(columnIndexesToCrash);
 
         rowIndexesToCrash.forEach(rowIndex => {
             for (let j = 0; j < CONSTANTS.boxesOnColumn; j++) {
                 const box = $boxes.get(rowIndex, j);
                 box.style({ background: CONSTANTS.boxDefaultColor });
+                $blockCrashAnimation.animateCrash(box);
                 box.setBusy(false);
             }
 
@@ -74,6 +82,7 @@ class BoxOnboardCrasher {
             for (let i = 0; i < CONSTANTS.boxesOnRow; i++) {
                 const box = $boxes.get(i, columnIndex);
                 box.style({ background: CONSTANTS.boxDefaultColor });
+                $blockCrashAnimation.animateCrash(box);
                 box.setBusy(false);
             }
 

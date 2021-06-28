@@ -88,6 +88,10 @@ class Boxes extends EventHandler {
                 }
             })
         });
+
+        if (this.hasHandler(EVENTS.BOARD_CHANGE)) {
+            this.getHandler(EVENTS.BOARD_CHANGE).next({}, null);
+        }
     }
 
     /**

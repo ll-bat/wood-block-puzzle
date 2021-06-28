@@ -1,5 +1,3 @@
-import DomNegotiatorAbstract from "../../../core/abstract/DomNegotiatorAbstract";
-import $figureDrawer from "../../../core/drawer/figures/FigureDrawer";
 import $figures from "../../../core/drawer/figures/Figures";
 import DomNegotiator from "../../../negotiators/DomNegotiator";
 import FUNC from "../../../general/Custom";

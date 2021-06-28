@@ -44,7 +44,7 @@ export default class Box {
      */
     style($style) {
         FUNC.setStyle(this.getReferenceDiv(), $style);
-        console.log('got into style')
+        // console.log('got into style')
     }
 
     getCoordinateX() {

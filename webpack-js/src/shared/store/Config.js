@@ -14,12 +14,12 @@ const CONFIG = {
     get(type) {
         if (Android) {
             if (!this.android[type]) {
-                throw new Exception(`${type} is not defined`)
+                throw new DOMException(`${type} is not defined`)
             }
             return this.android[type]
         }
         if (!this.ps[type]) {
-            throw new Exception(`${type} is not defined`)
+            throw new DOMException(`${type} is not defined`)
         }
         return this.ps[type];
     },
