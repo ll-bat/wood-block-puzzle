@@ -42,6 +42,13 @@ const STATE = {
         getFigures() {
             return this.randomFigures;
         },
+        /**
+         * @param index
+         * @return {RandomFigure}
+         */
+        getRandomFigure(index) {
+            return this.getFigures().find(figure => figure.index === index);
+        },
         removeRandomFigure(figure, index) {
             /**
              * @type {RandomFigure}

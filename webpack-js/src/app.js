@@ -10,13 +10,15 @@ import EVENTS from "./core/events/Events";
 import $boxUpdateHandler from "./core/events/next_handler/relax/BoxUpdateHandler";
 import $afterRandomFigurePutOnBoardHandler from "./core/events/next_handler/relax/AfterRandomFigurePutOnBoardHandler";
 import $randomFigureOnBoardChecker from "./core/events/next_handler/relax/RandomFigureOnBoardChecker";
+import $randomFigureClicker from "./core/events/next_handler/relax/RandomFigureClicker";
 
 $layout.setup(new DomNegotiator('#content'));
 $layout.draw();
 
 $figureMover.registerHandler('mousemove', $figureOnBoardMatcher);
-$figureMover.registerHandler('mouseup', $mouseUpHandler)
-$figureMover.registerHandler('mouseup', $randomFigureOnBoardChecker)
+$figureMover.registerHandler('mouseup', $mouseUpHandler);
+$figureMover.registerHandler('mouseup', $randomFigureOnBoardChecker);
+$figureMover.registerHandler(EVENTS.BEFORE_FIGURE_CLICK, $randomFigureClicker, false);
 
 $randomFigureDrawer.setup(new DomNegotiator('#figures'));
 RandomFigureEventHelper.drawRandomFiguresAndRegisterEvents();

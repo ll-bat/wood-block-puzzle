@@ -4,6 +4,7 @@ import $figures from "../drawer/figures/Figures";
 import $tmpFigureHelper from "../../shared/store/tmp/TmpFigureHelper";
 import EventHandler from "../abstract/EventHandler";
 import STATE from "../../shared/store/leaves/State";
+import EVENTS from "./Events";
 
 class FigureMover extends EventHandler {
     constructor() {
@@ -21,6 +22,11 @@ class FigureMover extends EventHandler {
         let moveHandler = null;
 
         FUNC.attach(divElement, 'mousedown', e => {
+            const isOk = this.triggerNextHandler(EVENTS.BEFORE_FIGURE_CLICK, false,{ figure, divElement, index });
+            if (!isOk) {
+                return false;
+            }
+
             const moverFigure = this.createMoverFigure();
             const figureDiv = $figures.draw(figure, 1.05);
 

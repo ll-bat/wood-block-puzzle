@@ -29,6 +29,19 @@ export default class Calculator {
         return isMatch;
     }
 
+    static isMatrixMatchForAny($parentMatrix, $childMatrix) {
+        for (let i = 0; i < CONSTANTS.boxesOnRow; i++) {
+            for (let j = 0; j < CONSTANTS.boxesOnColumn; j++) {
+                const ok = Calculator.isMatrixMatch($parentMatrix, $childMatrix, { x: i, y: j });
+                if (ok) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     static isset($array, $i, $j) {
         if (!$array[$i]) {
             return false

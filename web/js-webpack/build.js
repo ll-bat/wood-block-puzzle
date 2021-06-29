@@ -14,6 +14,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _general_Constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../general/Constants */ "./src/general/Constants.js");
 /* harmony import */ var _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../shared/store/Boxes */ "./src/shared/store/Boxes.js");
+/* harmony import */ var _core_animation_BlockCrashAnimation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../core/animation/BlockCrashAnimation */ "./src/core/animation/BlockCrashAnimation.js");
+
 
 
 
@@ -38,15 +40,21 @@ class BoxOnboardCrasher {
     update({ x, y }) {
         this.boxesOnRow[x]++;
         this.boxesOnColumn[y]++;
+    }
 
-
+    checkBlocksToCrash() {
         let crashBlocks = false;
-        if (this.boxesOnRow[x] === _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow) {
-            crashBlocks = true;
+
+        for (let i = 0; i < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow; i++) {
+            if (this.boxesOnRow[i] === _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow) {
+                crashBlocks = true;
+            }
         }
 
-        if (this.boxesOnColumn[y] === _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnColumn) {
-            crashBlocks = true;
+        for (let j = 0; j < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow; j++) {
+            if (this.boxesOnColumn[j] === _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnColumn) {
+                crashBlocks = true;
+            }
         }
 
         if (crashBlocks) {
@@ -69,14 +77,15 @@ class BoxOnboardCrasher {
             }
         });
 
-        console.log('Crashing');
-        console.log(rowIndexesToCrash);
-        console.log(columnIndexesToCrash);
+        // console.log('Crashing');
+        // console.log(rowIndexesToCrash);
+        // console.log(columnIndexesToCrash);
 
         rowIndexesToCrash.forEach(rowIndex => {
             for (let j = 0; j < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnColumn; j++) {
                 const box = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__.default.get(rowIndex, j);
                 box.style({ background: _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxDefaultColor });
+                _core_animation_BlockCrashAnimation__WEBPACK_IMPORTED_MODULE_2__.default.animateCrash(box);
                 box.setBusy(false);
             }
 
@@ -90,6 +99,7 @@ class BoxOnboardCrasher {
             for (let i = 0; i < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow; i++) {
                 const box = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__.default.get(i, columnIndex);
                 box.style({ background: _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxDefaultColor });
+                _core_animation_BlockCrashAnimation__WEBPACK_IMPORTED_MODULE_2__.default.animateCrash(box);
                 box.setBusy(false);
             }
 
@@ -125,6 +135,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./shared/store/Boxes */ "./src/shared/store/Boxes.js");
 /* harmony import */ var _core_events_Events__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./core/events/Events */ "./src/core/events/Events.js");
 /* harmony import */ var _core_events_next_handler_relax_BoxUpdateHandler__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./core/events/next_handler/relax/BoxUpdateHandler */ "./src/core/events/next_handler/relax/BoxUpdateHandler.js");
+/* harmony import */ var _core_events_next_handler_relax_AfterRandomFigurePutOnBoardHandler__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./core/events/next_handler/relax/AfterRandomFigurePutOnBoardHandler */ "./src/core/events/next_handler/relax/AfterRandomFigurePutOnBoardHandler.js");
+/* harmony import */ var _core_events_next_handler_relax_RandomFigureOnBoardChecker__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./core/events/next_handler/relax/RandomFigureOnBoardChecker */ "./src/core/events/next_handler/relax/RandomFigureOnBoardChecker.js");
+/* harmony import */ var _core_events_next_handler_relax_RandomFigureClicker__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./core/events/next_handler/relax/RandomFigureClicker */ "./src/core/events/next_handler/relax/RandomFigureClicker.js");
+
+
+
 
 
 
@@ -140,12 +156,15 @@ _core_drawer_Layout__WEBPACK_IMPORTED_MODULE_0__.default.setup(new _negotiators_
 _core_drawer_Layout__WEBPACK_IMPORTED_MODULE_0__.default.draw();
 
 _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('mousemove', _core_events_next_handler_FigureOnBoardMatcher__WEBPACK_IMPORTED_MODULE_4__.default);
-_core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('mouseup', _core_events_next_handler_relax_MouseUpHandler__WEBPACK_IMPORTED_MODULE_5__.default)
+_core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('mouseup', _core_events_next_handler_relax_MouseUpHandler__WEBPACK_IMPORTED_MODULE_5__.default);
+_core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('mouseup', _core_events_next_handler_relax_RandomFigureOnBoardChecker__WEBPACK_IMPORTED_MODULE_11__.default);
+_core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler(_core_events_Events__WEBPACK_IMPORTED_MODULE_8__.default.BEFORE_FIGURE_CLICK, _core_events_next_handler_relax_RandomFigureClicker__WEBPACK_IMPORTED_MODULE_12__.default, false);
 
 _core_drawer_concrete_relax_RandomFiguresDrawer__WEBPACK_IMPORTED_MODULE_2__.default.setup(new _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_1__.default('#figures'));
 _core_events_next_handler_relax_RandomFigureEventHelper__WEBPACK_IMPORTED_MODULE_6__.default.drawRandomFiguresAndRegisterEvents();
 
-_shared_store_Boxes__WEBPACK_IMPORTED_MODULE_7__.default.registerHandler(_core_events_Events__WEBPACK_IMPORTED_MODULE_8__.default.BOX_UPDATE, _core_events_next_handler_relax_BoxUpdateHandler__WEBPACK_IMPORTED_MODULE_9__.default)
+_shared_store_Boxes__WEBPACK_IMPORTED_MODULE_7__.default.registerHandler(_core_events_Events__WEBPACK_IMPORTED_MODULE_8__.default.BOX_UPDATE, _core_events_next_handler_relax_BoxUpdateHandler__WEBPACK_IMPORTED_MODULE_9__.default);
+_shared_store_Boxes__WEBPACK_IMPORTED_MODULE_7__.default.registerHandler(_core_events_Events__WEBPACK_IMPORTED_MODULE_8__.default.BOARD_CHANGE, _core_events_next_handler_relax_AfterRandomFigurePutOnBoardHandler__WEBPACK_IMPORTED_MODULE_10__.default);
 
 /***/ }),
 
@@ -227,6 +246,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => /* binding */ EventHandler
 /* harmony export */ });
+/* harmony import */ var _MultipleNextHandlers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MultipleNextHandlers */ "./src/core/abstract/MultipleNextHandlers.js");
+/* harmony import */ var _NextHandler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NextHandler */ "./src/core/abstract/NextHandler.js");
+
+
+
 class EventHandler {
     constructor() {
         this._handlers = {}
@@ -234,24 +258,95 @@ class EventHandler {
     /**
      * @param $mouseEvent {String}
      * @param $nextHandler {NextHandler}
+     * @param $multiple {Boolean}
      */
-    registerHandler($mouseEvent, $nextHandler) {
-        this._handlers[$mouseEvent] = $nextHandler;
+    registerHandler($mouseEvent, $nextHandler, $multiple = true) {
+        if (!($nextHandler instanceof _NextHandler__WEBPACK_IMPORTED_MODULE_1__.default)) {
+            throw new DOMException($nextHandler + ' should be an instance of NextHandler::class')
+        }
+
+        let thisHandlers;
+        if ($multiple) {
+            thisHandlers = this._handlers[$mouseEvent];
+            if (!thisHandlers) {
+                thisHandlers = [];
+            }
+
+            thisHandlers.push($nextHandler);
+        } else {
+            thisHandlers = $nextHandler;
+        }
+
+        this._handlers[$mouseEvent] = thisHandlers;
     }
 
     /**
      * @param $mouseEvent
+     * @param $multiple {Boolean}
      * @return {NextHandler}
      */
-    getHandler($mouseEvent) {
+    getHandler($mouseEvent, $multiple = true) {
         if (this.hasHandler($mouseEvent)) {
-            return this._handlers[$mouseEvent];
+            const handlers = this._handlers[$mouseEvent];
+            if ($multiple) {
+                return new _MultipleNextHandlers__WEBPACK_IMPORTED_MODULE_0__.default(handlers);
+            } else {
+                if (!(handlers instanceof _NextHandler__WEBPACK_IMPORTED_MODULE_1__.default)) {
+                    throw new DOMException('There are more than 1 or 0 event handlers for event ' + $mouseEvent);
+                }
+
+                return handlers;
+            }
         }
         throw new DOMException($mouseEvent + ' handler has not been registered');
     }
 
     hasHandler($mouseEvent) {
         return this._handlers[$mouseEvent] != null;
+    }
+
+    triggerNextHandler($eventType, $multiple = false, ...$params) {
+        if (this.hasHandler($eventType)) {
+            return this.getHandler($eventType, $multiple).next({}, null, ...$params);
+        } else {
+            return true;
+        }
+    }
+}
+
+/***/ }),
+
+/***/ "./src/core/abstract/MultipleNextHandlers.js":
+/*!***************************************************!*\
+  !*** ./src/core/abstract/MultipleNextHandlers.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ MultipleNextHandlers
+/* harmony export */ });
+/* harmony import */ var _NextHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NextHandler */ "./src/core/abstract/NextHandler.js");
+
+
+class MultipleNextHandlers extends _NextHandler__WEBPACK_IMPORTED_MODULE_0__.default {
+    constructor(handlers) {
+        super();
+        /**
+         * @type {NextHandler[]}
+         */
+        this.handlers = handlers;
+    }
+
+    /**
+     * @param e
+     * @param figure
+     * @param extraData
+     */
+    next(e, figure, extraData = {}) {
+        for (const handler of this.handlers) {
+            handler.next(e, figure, extraData);
+        }
     }
 }
 
@@ -277,6 +372,170 @@ class NextHandler extends _Configurable__WEBPACK_IMPORTED_MODULE_0__.default {
 
     next(e, figure, extraData = {}) {}
 }
+
+/***/ }),
+
+/***/ "./src/core/abstract/Styler.js":
+/*!*************************************!*\
+  !*** ./src/core/abstract/Styler.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ Styler
+/* harmony export */ });
+/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../general/Custom */ "./src/general/Custom.js");
+/* harmony import */ var _ErrorHandler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ErrorHandler */ "./src/core/abstract/ErrorHandler.js");
+
+
+
+class Styler extends _ErrorHandler__WEBPACK_IMPORTED_MODULE_1__.default {
+    style($style) {
+        const divElement = this.getDivElement();
+        if (!divElement) {
+            this.log(divElement);
+            this.error('Setting style on null');
+        }
+
+        _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(divElement, $style);
+    }
+
+    getDivElement() {}
+}
+
+/***/ }),
+
+/***/ "./src/core/animation/BlockCrashAnimation.js":
+/*!***************************************************!*\
+  !*** ./src/core/animation/BlockCrashAnimation.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../general/Custom */ "./src/general/Custom.js");
+/* harmony import */ var _general_Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../general/Constants */ "./src/general/Constants.js");
+
+
+
+class BlockCrashAnimation {
+    async animateCrash({ x, y }) {
+        await this.run(
+            this.draw({ x, y }), { x, y }
+        )
+    }
+
+    draw({ x, y }) {
+        let el = _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.elt('div', null, null, {
+            position: 'absolute',
+            left: x + 'px',
+            top: y + 'px',
+            width: _general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.boxWidth + 'px',
+            height: _general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.boxHeight + 'px',
+            background: _general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.blockCrashColor,
+            border: '2px inset black',
+        })
+
+        _general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.dom.body.append(el)
+        return el
+    }
+
+    async run(el, boxCoordinates) {
+        await this.parabolicCurve(el, boxCoordinates)
+    }
+
+    async parabolicCurve(el, { x, y }) {
+        const steps = 55
+        const clockWise = Math.random() > .5 ? 1 : -1
+        const endX = 20
+        const xPerStep = (endX / steps)
+        let currentStep = steps
+        let currentX = 0
+        let currentY = calcY(currentX)
+        let currentOpacity = 1
+        let currentScale = 1
+        const addX = 100 * clockWise;
+        const addY = Math.random() * 100;
+        let posX = 0;
+        let posY = 0;
+        const perStep = 1 / steps
+        let degree = 0;
+        const degPerStep = 6 * clockWise;
+
+        while (currentStep--) {
+            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(el, {
+                left: currentX + posX + x + 'px',
+                top: currentY + posY + y + 'px',
+                transform: `
+                    scale(${currentScale}) 
+                    rotate(${degree}deg)
+                   `,
+                opacity: currentOpacity
+            })
+            currentX += clockWise * xPerStep * (Math.sin(currentStep / steps) * 1.6 + .2)
+            currentY = calcY(currentX)
+            currentOpacity -= perStep
+            currentScale -= perStep / 2
+            posX = addX * Math.cos(currentStep / steps)
+            posY = addY * Math.cos(currentStep / steps)
+            degree += degPerStep * Math.cos(currentStep / steps)
+            await this.wait(10)
+        }
+
+        function calcY(x) {
+            return 1.46 * x * x + 10
+        }
+
+        el.remove()
+    }
+
+    async withTransform(el) {
+        const steps = 150
+        const clockWise = Math.random() > .5 ? 1 : -1
+        const startDegree = -90 + clockWise * 85
+        const endDegree = startDegree + clockWise * (Math.random() * 30 + 20)
+        const degreePerStep = clockWise * (Math.abs(endDegree - startDegree) / steps)
+        const distPerStep = 1.5
+        const perStep = 1 / steps
+        let currentDegree = startDegree;
+        let currentDist = distPerStep
+        let currentStep = steps
+        let currentOpacity = 1
+        let currentScale = 1
+
+        while (currentStep--) {
+            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(el, {
+                transform: `
+                       rotate(${currentDegree}deg)
+                       translateX(${currentDist}px)
+                       scale(${currentScale})
+                    `,
+                opacity: currentOpacity
+            })
+            currentDegree += degreePerStep
+            currentDist += distPerStep * Math.sin(currentStep / steps) * 2
+            currentOpacity -= perStep
+            currentScale -= perStep / 2
+            await this.wait(2)
+        }
+
+        el.remove()
+    }
+
+    wait(time) {
+        return new Promise((res) => {
+            setTimeout(() => {
+                res()
+            }, time)
+        })
+    }
+}
+
+const $blockCrashAnimation = new BlockCrashAnimation()
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($blockCrashAnimation);
 
 /***/ }),
 
@@ -814,6 +1073,8 @@ const EVENTS = {
     MOUSE_UP : 'mouse-up',
     MOUSE_MOVE : 'mouse-move',
     BOX_UPDATE : 'box-update',
+    BOARD_CHANGE : 'board-change',
+    BEFORE_FIGURE_CLICK : 'before-figure-click',
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EVENTS);
@@ -836,6 +1097,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../shared/store/tmp/TmpFigureHelper */ "./src/shared/store/tmp/TmpFigureHelper.js");
 /* harmony import */ var _abstract_EventHandler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../abstract/EventHandler */ "./src/core/abstract/EventHandler.js");
 /* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
+/* harmony import */ var _Events__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Events */ "./src/core/events/Events.js");
+
 
 
 
@@ -859,6 +1122,11 @@ class FigureMover extends _abstract_EventHandler__WEBPACK_IMPORTED_MODULE_4__.de
         let moveHandler = null;
 
         _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.attach(divElement, 'mousedown', e => {
+            const isOk = this.triggerNextHandler(_Events__WEBPACK_IMPORTED_MODULE_6__.default.BEFORE_FIGURE_CLICK, false,{ figure, divElement, index });
+            if (!isOk) {
+                return false;
+            }
+
             const moverFigure = this.createMoverFigure();
             const figureDiv = _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__.default.draw(figure, 1.05);
 
@@ -971,7 +1239,7 @@ class FigureOnBoardMatcher extends _abstract_NextHandler__WEBPACK_IMPORTED_MODUL
         if (blockIndexes === null) {
             _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_3__.default.clearHtml();
         } else {
-            console.clear();
+            // console.clear();
             if (_logic_FigurePlaceChecker__WEBPACK_IMPORTED_MODULE_2__.default.isDrawable(blockIndexes, figure)) {
                 _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_3__.default.drawTmpFigure(blockIndexes, figure);
                 _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_4__.default.shared.setBlockIndexes(blockIndexes);
@@ -986,6 +1254,37 @@ class FigureOnBoardMatcher extends _abstract_NextHandler__WEBPACK_IMPORTED_MODUL
 
 const $figureOnBoardMatcher = new FigureOnBoardMatcher();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($figureOnBoardMatcher);
+
+/***/ }),
+
+/***/ "./src/core/events/next_handler/relax/AfterRandomFigurePutOnBoardHandler.js":
+/*!**********************************************************************************!*\
+  !*** ./src/core/events/next_handler/relax/AfterRandomFigurePutOnBoardHandler.js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../abstract/NextHandler */ "./src/core/abstract/NextHandler.js");
+/* harmony import */ var _Helper_relax_BoxOnboardCrasher__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../Helper/relax/BoxOnboardCrasher */ "./src/Helper/relax/BoxOnboardCrasher.js");
+
+
+
+class AfterRandomFigurePutOnBoardHandler extends _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__.default {
+    constructor(props) {
+        super(props);
+    }
+
+    next(e, figure, extraData = {}) {
+        _Helper_relax_BoxOnboardCrasher__WEBPACK_IMPORTED_MODULE_1__.default.checkBlocksToCrash();
+    }
+
+}
+
+const $afterRandomFigurePutOnBoardHandler = new AfterRandomFigurePutOnBoardHandler();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($afterRandomFigurePutOnBoardHandler);
 
 /***/ }),
 
@@ -1016,8 +1315,6 @@ class BoxUpdateHandler extends _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0_
         const box = _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_1__.default.get(x, y);
         box.style({ background: '#92522e' });
         _Helper_relax_BoxOnboardCrasher__WEBPACK_IMPORTED_MODULE_2__.default.update({ x, y });
-        console.log('row: ', _Helper_relax_BoxOnboardCrasher__WEBPACK_IMPORTED_MODULE_2__.default.boxesOnRow);
-        console.log('column: ', _Helper_relax_BoxOnboardCrasher__WEBPACK_IMPORTED_MODULE_2__.default.boxesOnColumn);
     }
 }
 
@@ -1083,6 +1380,48 @@ const $mouseUpHandler = new MouseUpHandler();
 
 /***/ }),
 
+/***/ "./src/core/events/next_handler/relax/RandomFigureClicker.js":
+/*!*******************************************************************!*\
+  !*** ./src/core/events/next_handler/relax/RandomFigureClicker.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../abstract/NextHandler */ "./src/core/abstract/NextHandler.js");
+/* harmony import */ var _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../drawer/figures/Figures */ "./src/core/drawer/figures/Figures.js");
+/* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
+
+
+
+
+class RandomFigureClicker extends _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__.default {
+    constructor(props) {
+        super(props);
+    }
+
+    /**
+     * @param e
+     * @param figure
+     * @param extraData {{
+     *     figure,  divElement,  index
+     * }}
+     * @return {boolean}
+     */
+    next(e, figure, extraData = {}) {
+        const figureIndex = extraData.index;
+        const randomFigure = _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_2__.default.relax.getRandomFigure(figureIndex);
+        return randomFigure.isLocked() === false;
+    }
+}
+
+const $randomFigureClicker = new RandomFigureClicker();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($randomFigureClicker);
+
+/***/ }),
+
 /***/ "./src/core/events/next_handler/relax/RandomFigureEventHelper.js":
 /*!***********************************************************************!*\
   !*** ./src/core/events/next_handler/relax/RandomFigureEventHelper.js ***!
@@ -1108,6 +1447,57 @@ class RandomFigureEventHelper {
             .forEach(figureObj => _FigureMover__WEBPACK_IMPORTED_MODULE_2__.default.register(figureObj));
     }
 }
+
+/***/ }),
+
+/***/ "./src/core/events/next_handler/relax/RandomFigureOnBoardChecker.js":
+/*!**************************************************************************!*\
+  !*** ./src/core/events/next_handler/relax/RandomFigureOnBoardChecker.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../abstract/NextHandler */ "./src/core/abstract/NextHandler.js");
+/* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
+/* harmony import */ var _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../drawer/figures/Figures */ "./src/core/drawer/figures/Figures.js");
+/* harmony import */ var _math_Calculator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../math/Calculator */ "./src/core/math/Calculator.js");
+/* harmony import */ var _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../shared/store/Boxes */ "./src/shared/store/Boxes.js");
+/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../general/Custom */ "./src/general/Custom.js");
+
+
+
+
+
+
+
+class RandomFigureOnBoardChecker extends _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__.default {
+    constructor(props) {
+        super(props);
+    }
+
+    next(e, figure, extraData = {}) {
+        const randomFigures = _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__.default.relax.getFigures();
+        /**
+         * @type {RandomFigure[]}
+         */
+        for (const randomFigure of randomFigures) {
+            const figureName = randomFigure.getFigureName();
+            const figure = _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__.default.getFigure(figureName);
+            const isPlaceOnBoardForDrawingThisRandomFigure = _math_Calculator__WEBPACK_IMPORTED_MODULE_3__.default.isMatrixMatchForAny(_shared_store_Boxes__WEBPACK_IMPORTED_MODULE_4__.default.toMatrix(), figure.toMatrix());
+            if (!isPlaceOnBoardForDrawingThisRandomFigure) {
+                randomFigure.lock();
+            } else {
+                randomFigure.unlock();
+            }
+        }
+    }
+}
+
+const $randomFigureOnBoardChecker = new RandomFigureOnBoardChecker();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($randomFigureOnBoardChecker);
 
 /***/ }),
 
@@ -1288,6 +1678,19 @@ class Calculator {
         return isMatch;
     }
 
+    static isMatrixMatchForAny($parentMatrix, $childMatrix) {
+        for (let i = 0; i < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow; i++) {
+            for (let j = 0; j < _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnColumn; j++) {
+                const ok = Calculator.isMatrixMatch($parentMatrix, $childMatrix, { x: i, y: j });
+                if (ok) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     static isset($array, $i, $j) {
         if (!$array[$i]) {
             return false
@@ -1322,7 +1725,7 @@ class Calculator {
     static matchesIntToStringPatternFrom($string, $int, { x, y }, $category,  $partSize = _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow * 3) {
         const startingIndex = x * _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow + y;
 
-        console.log(x, y, $category);
+        // console.log(x, y, $category);
 
         let number = 0;
         for (let i = startingIndex; i < $partSize; i++) {
@@ -1344,7 +1747,7 @@ class Calculator {
         let currentCategory = x;
         const maxCategory = _general_Constants__WEBPACK_IMPORTED_MODULE_0__.default.boxesOnRow - $category + 1;
 
-        if (currentCategory < maxCategory && isMatch()) {
+        if ((currentCategory < maxCategory) && isMatch()) {
             return true;
         }
 
@@ -1528,6 +1931,63 @@ FUNC.power = num => {
 
 /***/ }),
 
+/***/ "./src/leaves/RandomFigure.js":
+/*!************************************!*\
+  !*** ./src/leaves/RandomFigure.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ RandomFigure
+/* harmony export */ });
+/* harmony import */ var _core_abstract_Styler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/abstract/Styler */ "./src/core/abstract/Styler.js");
+
+
+class RandomFigure extends _core_abstract_Styler__WEBPACK_IMPORTED_MODULE_0__.default {
+    constructor({ figure, divElement, index }) {
+        super();
+        this.figure = figure;
+        this.divElement = divElement;
+        this.index = index;
+        this.locked = false;
+    }
+
+    getFigureName() {
+        return this.figure;
+    }
+
+    gitFigureIndex() {
+        return this.index;
+    }
+
+    getDivElement() {
+        return this.divElement;
+    }
+
+    lock() {
+        if (this.isLocked())
+            return;
+
+        this.locked = true;
+        this.style({ opacity: .5 });
+    }
+
+    unlock() {
+        if (!this.isLocked())
+            return;
+
+        this.locked = false;
+        this.style({ opacity: 1 })
+    }
+
+    isLocked() {
+        return this.locked === true;
+    }
+}
+
+/***/ }),
+
 /***/ "./src/negotiators/DomNegotiator.js":
 /*!******************************************!*\
   !*** ./src/negotiators/DomNegotiator.js ***!
@@ -1702,6 +2162,10 @@ class Boxes extends _core_abstract_EventHandler__WEBPACK_IMPORTED_MODULE_2__.def
                 }
             })
         });
+
+        if (this.hasHandler(_core_events_Events__WEBPACK_IMPORTED_MODULE_3__.default.BOARD_CHANGE)) {
+            this.getHandler(_core_events_Events__WEBPACK_IMPORTED_MODULE_3__.default.BOARD_CHANGE).next({}, null);
+        }
     }
 
     /**
@@ -1757,12 +2221,12 @@ const CONFIG = {
     get(type) {
         if (_general_Android__WEBPACK_IMPORTED_MODULE_0__.default) {
             if (!this.android[type]) {
-                throw new Exception(`${type} is not defined`)
+                throw new DOMException(`${type} is not defined`)
             }
             return this.android[type]
         }
         if (!this.ps[type]) {
-            throw new Exception(`${type} is not defined`)
+            throw new DOMException(`${type} is not defined`)
         }
         return this.ps[type];
     },
@@ -1849,7 +2313,7 @@ class Box {
      */
     style($style) {
         _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(this.getReferenceDiv(), $style);
-        console.log('got into style')
+        // console.log('got into style')
     }
 
     getCoordinateX() {
@@ -1878,6 +2342,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../general/Custom */ "./src/general/Custom.js");
+/* harmony import */ var _leaves_RandomFigure__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../leaves/RandomFigure */ "./src/leaves/RandomFigure.js");
+
 
 
 const STATE = {
@@ -1902,7 +2368,13 @@ const STATE = {
         }
     },
     relax: {
+        /**
+         * @type {RandomFigure[]}
+         */
         randomFigures: [],
+        /**
+         * @type {RandomFigure[]}
+         */
         cachedFigures: [],
         /**
          * @param figure {String} such as `TYPE_1`
@@ -1910,14 +2382,24 @@ const STATE = {
          * @param index {Number}
          */
         addRandomFigure({ figure, divElement, index }) {
-            this.randomFigures.push({ figure, divElement, index });
+            this.randomFigures.push(new _leaves_RandomFigure__WEBPACK_IMPORTED_MODULE_1__.default({ figure, divElement, index }));
         },
         getFigures() {
             return this.randomFigures;
         },
+        /**
+         * @param index
+         * @return {RandomFigure}
+         */
+        getRandomFigure(index) {
+            return this.getFigures().find(figure => figure.index === index);
+        },
         removeRandomFigure(figure, index) {
+            /**
+             * @type {RandomFigure}
+             */
             const thisFigure = this.randomFigures.find(f => f.index === index);
-            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(thisFigure.divElement, { visibility: "hidden"})
+            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(thisFigure.getDivElement(), { visibility: "hidden"})
             const figureIndex = this.randomFigures.findIndex(f => f.index === index);
             this.randomFigures.splice(figureIndex, 1);
             this.cachedFigures.push(thisFigure);
@@ -1927,7 +2409,7 @@ const STATE = {
         },
         clear() {
             this.cachedFigures.forEach(figure => {
-                figure.divElement.remove();
+                figure.getDivElement().remove();
             });
 
             this.cachedFigures = [];
@@ -1950,32 +2432,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _core_abstract_DomNegotiatorAbstract__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/abstract/DomNegotiatorAbstract */ "./src/core/abstract/DomNegotiatorAbstract.js");
-/* harmony import */ var _core_drawer_figures_FigureDrawer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../core/drawer/figures/FigureDrawer */ "./src/core/drawer/figures/FigureDrawer.js");
-/* harmony import */ var _core_drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../core/drawer/figures/Figures */ "./src/core/drawer/figures/Figures.js");
-/* harmony import */ var _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../negotiators/DomNegotiator */ "./src/negotiators/DomNegotiator.js");
-/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../general/Custom */ "./src/general/Custom.js");
-/* harmony import */ var _Boxes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Boxes */ "./src/shared/store/Boxes.js");
+/* harmony import */ var _core_drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/drawer/figures/Figures */ "./src/core/drawer/figures/Figures.js");
+/* harmony import */ var _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../negotiators/DomNegotiator */ "./src/negotiators/DomNegotiator.js");
+/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../general/Custom */ "./src/general/Custom.js");
+/* harmony import */ var _Boxes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Boxes */ "./src/shared/store/Boxes.js");
 
 
 
 
 
-
-
-class TmpFigureHelper extends _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_3__.default {
+class TmpFigureHelper extends _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_1__.default {
     constructor() {
         super('#tmp-element');
     }
 
     drawTmpFigure({ x, y }, figure) {
         this.clearHtml();
-        const divElement = _core_drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__.default.draw(figure, 1.02, { opacity: .3 });
+        const divElement = _core_drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_0__.default.draw(figure, 1.02, { opacity: .3 });
         this.append(divElement);
 
-        const box = _Boxes__WEBPACK_IMPORTED_MODULE_5__.default.get(x, y);
+        const box = _Boxes__WEBPACK_IMPORTED_MODULE_3__.default.get(x, y);
 
-        _general_Custom__WEBPACK_IMPORTED_MODULE_4__.default.setStyle(this.getElement(), {
+        _general_Custom__WEBPACK_IMPORTED_MODULE_2__.default.setStyle(this.getElement(), {
             position: 'absolute',
             left: box.getCoordinateX() + 'px',
             top: box.getCoordinateY() + 'px',

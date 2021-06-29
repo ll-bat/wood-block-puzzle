@@ -18,8 +18,7 @@ class RandomFigureOnBoardChecker extends NextHandler {
         for (const randomFigure of randomFigures) {
             const figureName = randomFigure.getFigureName();
             const figure = $figures.getFigure(figureName);
-            const board = $boxes.inverse($boxes.toString());
-            const isPlaceOnBoardForDrawingThisRandomFigure = Calculator.matchesIntToStringPattern(board, figure.toInt(), figure.getCategory());
+            const isPlaceOnBoardForDrawingThisRandomFigure = Calculator.isMatrixMatchForAny($boxes.toMatrix(), figure.toMatrix());
             if (!isPlaceOnBoardForDrawingThisRandomFigure) {
                 randomFigure.lock();
             } else {
