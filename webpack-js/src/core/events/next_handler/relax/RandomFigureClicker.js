@@ -18,7 +18,7 @@ class RandomFigureClicker extends NextHandler {
     next(e, figure, extraData = {}) {
         const figureIndex = extraData.index;
         const randomFigure = STATE.relax.getRandomFigure(figureIndex);
-        return randomFigure.isLocked() === false;
+        return !randomFigure.isLocked();
     }
 }
 

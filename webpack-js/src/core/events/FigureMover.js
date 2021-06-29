@@ -2,11 +2,10 @@ import FUNC from "../../general/Custom";
 import CONSTANTS from "../../general/Constants";
 import $figures from "../drawer/figures/Figures";
 import $tmpFigureHelper from "../../shared/store/tmp/TmpFigureHelper";
-import EventHandler from "../abstract/EventHandler";
 import STATE from "../../shared/store/leaves/State";
-import EVENTS from "./Events";
+import BeforeEvent from "../abstract/BeforeEvent";
 
-class FigureMover extends EventHandler {
+class FigureMover extends BeforeEvent {
     constructor() {
         super();
     }
@@ -21,9 +20,9 @@ class FigureMover extends EventHandler {
         let temporaryElement = null;
         let moveHandler = null;
 
-        FUNC.attach(divElement, 'mousedown', e => {
-            const isOk = this.triggerNextHandler(EVENTS.BEFORE_FIGURE_CLICK, false,{ figure, divElement, index });
-            if (!isOk) {
+        const mousedownHandler = e => {
+            const ok = this.triggerBeforeClick({ figure, divElement, index });
+            if (!ok) {
                 return false;
             }
 
@@ -43,7 +42,7 @@ class FigureMover extends EventHandler {
             FUNC.attach(CONSTANTS.dom, 'mouseup', mouseUpHandler);
 
             temporaryElement = moverFigure;
-        });
+        };
 
         const mouseUpHandler = e => {
             if (!temporaryElement)
@@ -60,6 +59,8 @@ class FigureMover extends EventHandler {
             // important
             FUNC.detach(CONSTANTS.dom, 'mouseup', mouseUpHandler);
         };
+
+        FUNC.attach(divElement, 'mousedown', mousedownHandler);
     }
 
     /**

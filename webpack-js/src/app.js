@@ -18,7 +18,8 @@ $layout.draw();
 $figureMover.registerHandler('mousemove', $figureOnBoardMatcher);
 $figureMover.registerHandler('mouseup', $mouseUpHandler);
 $figureMover.registerHandler('mouseup', $randomFigureOnBoardChecker);
-$figureMover.registerHandler(EVENTS.BEFORE_FIGURE_CLICK, $randomFigureClicker, false);
+$figureMover.onBeforeClick($randomFigureClicker)
+// $figureMover.registerHandler(EVENTS.BEFORE_FIGURE_CLICK, $randomFigureClicker, false);
 
 $randomFigureDrawer.setup(new DomNegotiator('#figures'));
 RandomFigureEventHelper.drawRandomFiguresAndRegisterEvents();

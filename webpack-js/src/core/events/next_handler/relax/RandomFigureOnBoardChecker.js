@@ -3,7 +3,6 @@ import STATE from "../../../../shared/store/leaves/State";
 import $figures from "../../../drawer/figures/Figures";
 import Calculator from "../../../math/Calculator";
 import $boxes from "../../../../shared/store/Boxes";
-import FUNC from "../../../../general/Custom";
 
 class RandomFigureOnBoardChecker extends NextHandler {
     constructor(props) {
