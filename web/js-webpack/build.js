@@ -162,7 +162,6 @@ _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('m
 _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('mouseup', _core_events_next_handler_relax_RandomFigureOnBoardChecker__WEBPACK_IMPORTED_MODULE_11__.default);
 _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.addMiddleware(_core_events_Events__WEBPACK_IMPORTED_MODULE_8__.default.BEFORE_MOUSE_DOWN ,_core_middlewares_RandomFigureClickerMiddleWare__WEBPACK_IMPORTED_MODULE_12__.default);
 _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.afterClick(_core_events_next_handler_relax_GameStateChecker__WEBPACK_IMPORTED_MODULE_13__.default);
-// $figureMover.registerHandler(EVENTS.BEFORE_FIGURE_CLICK, $randomFigureClicker, false);
 
 _core_drawer_concrete_relax_RandomFiguresDrawer__WEBPACK_IMPORTED_MODULE_2__.default.setup(new _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_1__.default('#figures'));
 _core_events_next_handler_relax_RandomFigureEventHelper__WEBPACK_IMPORTED_MODULE_6__.default.drawRandomFiguresAndRegisterEvents();
@@ -1226,9 +1225,17 @@ class FigureMover extends _components_Component__WEBPACK_IMPORTED_MODULE_5__.def
 
             const moverFigure = this.createMoverFigure();
             const figureDiv = _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__.default.draw(figure, 1.05);
-
             moverFigure.append(figureDiv);
-            moveHandler = this.getMouseMoveHandler(figure, moverFigure);
+
+            moveHandler = e => {
+                const { pageX, pageY } = e;
+                _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(moverFigure, {
+                    left: this.getLeftPx(pageX) + 'px',
+                    top: this.getTopPx(pageY) + 'px'
+                });
+
+                this.getHandler('mousemove').next(e, figure);
+            };
 
             _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(moverFigure, {
                 left: this.getLeftPx(e.pageX) + 'px',
@@ -1262,23 +1269,6 @@ class FigureMover extends _components_Component__WEBPACK_IMPORTED_MODULE_5__.def
         };
 
         _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.attach(divElement, 'mousedown', mousedownHandler);
-    }
-
-    /**
-     * @param figure {String}
-     * @param divElement {HTMLElement}
-     * @return {NextHandler}
-     */
-    getMouseMoveHandler(figure, divElement) {
-        return e => {
-            const { pageX, pageY } = e;
-            _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(divElement, {
-                left: this.getLeftPx(pageX) + 'px',
-                top: this.getTopPx(pageY) + 'px'
-            });
-
-            this.getHandler('mousemove').next(e, figure);
-        }
     }
 
     getLeftPx($left) {
@@ -2352,22 +2342,6 @@ class Boxes extends _core_abstract_EventHandler__WEBPACK_IMPORTED_MODULE_2__.def
         if (this.hasHandler(_core_events_Events__WEBPACK_IMPORTED_MODULE_3__.default.BOARD_CHANGE)) {
             this.getHandler(_core_events_Events__WEBPACK_IMPORTED_MODULE_3__.default.BOARD_CHANGE).next({}, null);
         }
-    }
-
-    /**
-     * @param $string {String}
-     */
-    inverse($string) {
-        let result = "";
-        for (let c of $string) {
-            if (c === '0') {
-                result += '1';
-            } else {
-                result += '0';
-            }
-        }
-
-        return result;
     }
 
     reset() {

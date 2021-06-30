@@ -94,22 +94,6 @@ class Boxes extends EventHandler {
         }
     }
 
-    /**
-     * @param $string {String}
-     */
-    inverse($string) {
-        let result = "";
-        for (let c of $string) {
-            if (c === '0') {
-                result += '1';
-            } else {
-                result += '0';
-            }
-        }
-
-        return result;
-    }
-
     reset() {
         this._boxes = []
     }

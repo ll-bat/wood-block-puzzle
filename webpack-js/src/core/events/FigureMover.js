@@ -30,9 +30,17 @@ class FigureMover extends Component {
 
             const moverFigure = this.createMoverFigure();
             const figureDiv = $figures.draw(figure, 1.05);
-
             moverFigure.append(figureDiv);
-            moveHandler = this.getMouseMoveHandler(figure, moverFigure);
+
+            moveHandler = e => {
+                const { pageX, pageY } = e;
+                FUNC.setStyle(moverFigure, {
+                    left: this.getLeftPx(pageX) + 'px',
+                    top: this.getTopPx(pageY) + 'px'
+                });
+
+                this.getHandler('mousemove').next(e, figure);
+            };
 
             FUNC.setStyle(moverFigure, {
                 left: this.getLeftPx(e.pageX) + 'px',
@@ -66,23 +74,6 @@ class FigureMover extends Component {
         };
 
         FUNC.attach(divElement, 'mousedown', mousedownHandler);
-    }
-
-    /**
-     * @param figure {String}
-     * @param divElement {HTMLElement}
-     * @return {NextHandler}
-     */
-    getMouseMoveHandler(figure, divElement) {
-        return e => {
-            const { pageX, pageY } = e;
-            FUNC.setStyle(divElement, {
-                left: this.getLeftPx(pageX) + 'px',
-                top: this.getTopPx(pageY) + 'px'
-            });
-
-            this.getHandler('mousemove').next(e, figure);
-        }
     }
 
     getLeftPx($left) {
