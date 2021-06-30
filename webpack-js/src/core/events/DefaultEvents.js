@@ -1,8 +1,9 @@
 import ErrorHandler from "../abstract/ErrorHandler";
 import NextHandler from "../abstract/NextHandler";
 import EVENTS from "./Events";
+import Configurable from "../abstract/Configurable";
 
-export default class DefaultEvents extends ErrorHandler {
+export default class DefaultEvents extends Configurable {
     constructor(props) {
         super();
         this.beforeClickHandlers = [];

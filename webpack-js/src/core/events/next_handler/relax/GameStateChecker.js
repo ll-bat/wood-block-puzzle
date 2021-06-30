@@ -1,6 +1,5 @@
 import NextHandler from "../../../abstract/NextHandler";
 import STATE from "../../../../shared/store/leaves/State";
-import FUNC from "../../../../general/Custom";
 
 class GameStateChecker extends NextHandler {
     next(e, figure, extraData = {}) {

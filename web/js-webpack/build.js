@@ -1088,11 +1088,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _abstract_ErrorHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../abstract/ErrorHandler */ "./src/core/abstract/ErrorHandler.js");
 /* harmony import */ var _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../abstract/NextHandler */ "./src/core/abstract/NextHandler.js");
 /* harmony import */ var _Events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Events */ "./src/core/events/Events.js");
+/* harmony import */ var _abstract_Configurable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../abstract/Configurable */ "./src/core/abstract/Configurable.js");
 
 
 
 
-class DefaultEvents extends _abstract_ErrorHandler__WEBPACK_IMPORTED_MODULE_0__.default {
+
+class DefaultEvents extends _abstract_Configurable__WEBPACK_IMPORTED_MODULE_3__.default {
     constructor(props) {
         super();
         this.beforeClickHandlers = [];
@@ -1433,8 +1435,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../abstract/NextHandler */ "./src/core/abstract/NextHandler.js");
 /* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
-/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../general/Custom */ "./src/general/Custom.js");
-
 
 
 
