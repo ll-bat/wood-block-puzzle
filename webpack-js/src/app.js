@@ -19,7 +19,7 @@ $layout.draw();
 $figureMover.registerHandler('mousemove', $figureOnBoardMatcher);
 $figureMover.registerHandler('mouseup', $mouseUpHandler);
 $figureMover.registerHandler('mouseup', $randomFigureOnBoardChecker);
-$figureMover.addMiddleware($randomFigureClickerMiddleWare);
+$figureMover.addMiddleware(EVENTS.BEFORE_MOUSE_DOWN ,$randomFigureClickerMiddleWare);
 $figureMover.afterClick($gameStateChecker);
 // $figureMover.registerHandler(EVENTS.BEFORE_FIGURE_CLICK, $randomFigureClicker, false);
 

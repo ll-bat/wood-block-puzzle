@@ -160,7 +160,7 @@ _core_drawer_Layout__WEBPACK_IMPORTED_MODULE_0__.default.draw();
 _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('mousemove', _core_events_next_handler_FigureOnBoardMatcher__WEBPACK_IMPORTED_MODULE_4__.default);
 _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('mouseup', _core_events_next_handler_relax_MouseUpHandler__WEBPACK_IMPORTED_MODULE_5__.default);
 _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('mouseup', _core_events_next_handler_relax_RandomFigureOnBoardChecker__WEBPACK_IMPORTED_MODULE_11__.default);
-_core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.addMiddleware(_core_middlewares_RandomFigureClickerMiddleWare__WEBPACK_IMPORTED_MODULE_12__.default);
+_core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.addMiddleware(_core_events_Events__WEBPACK_IMPORTED_MODULE_8__.default.BEFORE_MOUSE_DOWN ,_core_middlewares_RandomFigureClickerMiddleWare__WEBPACK_IMPORTED_MODULE_12__.default);
 _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.afterClick(_core_events_next_handler_relax_GameStateChecker__WEBPACK_IMPORTED_MODULE_13__.default);
 // $figureMover.registerHandler(EVENTS.BEFORE_FIGURE_CLICK, $randomFigureClicker, false);
 
@@ -1193,6 +1193,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../shared/store/tmp/TmpFigureHelper */ "./src/shared/store/tmp/TmpFigureHelper.js");
 /* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
 /* harmony import */ var _components_Component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Component */ "./src/core/components/Component.js");
+/* harmony import */ var _Events__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Events */ "./src/core/events/Events.js");
+
 
 
 
@@ -1216,7 +1218,7 @@ class FigureMover extends _components_Component__WEBPACK_IMPORTED_MODULE_5__.def
         let moveHandler = null;
 
         const mousedownHandler = e => {
-            if (!this.passesMiddlewares({ figure, divElement, index })) {
+            if (!this.passesMiddlewares(_Events__WEBPACK_IMPORTED_MODULE_6__.default.BEFORE_MOUSE_DOWN, { figure, divElement, index })) {
                 return false;
             }
 
@@ -1890,31 +1892,39 @@ class Middleware extends _abstract_EventHandler__WEBPACK_IMPORTED_MODULE_1__.def
 
     constructor() {
         super();
-        this.middlewares = [];
+        this.middlewares = {};
     }
 
     /**
+     * @param $eventType {String}
      * @param $middleware {Middleware}
      * @param $multiple {Boolean}
      */
-    addMiddleware($middleware, $multiple = true) {
+    addMiddleware($eventType, $middleware, $multiple = true) {
         if (!($middleware instanceof Middleware)) {
             this.log($middleware);
             this.error('$middleware is not an instance of Middleware::class');
         }
 
         if ($multiple) {
-            this.middlewares.push($middleware);
+            if (!this.middlewares[$eventType]) {
+                this.middlewares[$eventType] = [];
+            }
+            this.middlewares[$eventType].push($middleware);
         } else {
-            this.middlewares = [$middleware];
+            this.middlewares[$eventType] = [$middleware];
         }
     }
 
-    passesMiddlewares($params = {}) {
+    passesMiddlewares($eventType, $params = {}) {
+        if (!this.middlewares[$eventType]) {
+            return true;
+        }
+
         /**
          * @type {Middleware}
          */
-        for (let middleware of this.middlewares) {
+        for (let middleware of this.middlewares[$eventType]) {
             if (!middleware.canPass($params)) {
                 return false;
             }

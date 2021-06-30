@@ -5,31 +5,39 @@ export default class Middleware extends EventHandler {
 
     constructor() {
         super();
-        this.middlewares = [];
+        this.middlewares = {};
     }
 
     /**
+     * @param $eventType {String}
      * @param $middleware {Middleware}
      * @param $multiple {Boolean}
      */
-    addMiddleware($middleware, $multiple = true) {
+    addMiddleware($eventType, $middleware, $multiple = true) {
         if (!($middleware instanceof Middleware)) {
             this.log($middleware);
             this.error('$middleware is not an instance of Middleware::class');
         }
 
         if ($multiple) {
-            this.middlewares.push($middleware);
+            if (!this.middlewares[$eventType]) {
+                this.middlewares[$eventType] = [];
+            }
+            this.middlewares[$eventType].push($middleware);
         } else {
-            this.middlewares = [$middleware];
+            this.middlewares[$eventType] = [$middleware];
         }
     }
 
-    passesMiddlewares($params = {}) {
+    passesMiddlewares($eventType, $params = {}) {
+        if (!this.middlewares[$eventType]) {
+            return true;
+        }
+
         /**
          * @type {Middleware}
          */
-        for (let middleware of this.middlewares) {
+        for (let middleware of this.middlewares[$eventType]) {
             if (!middleware.canPass($params)) {
                 return false;
             }

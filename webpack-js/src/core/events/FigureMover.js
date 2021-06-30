@@ -4,6 +4,7 @@ import $figures from "../drawer/figures/Figures";
 import $tmpFigureHelper from "../../shared/store/tmp/TmpFigureHelper";
 import STATE from "../../shared/store/leaves/State";
 import Component from "../components/Component";
+import EVENTS from "./Events";
 
 class FigureMover extends Component {
     constructor() {
@@ -21,7 +22,7 @@ class FigureMover extends Component {
         let moveHandler = null;
 
         const mousedownHandler = e => {
-            if (!this.passesMiddlewares({ figure, divElement, index })) {
+            if (!this.passesMiddlewares(EVENTS.BEFORE_MOUSE_DOWN, { figure, divElement, index })) {
                 return false;
             }
 
