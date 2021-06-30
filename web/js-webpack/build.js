@@ -137,7 +137,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_events_next_handler_relax_BoxUpdateHandler__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./core/events/next_handler/relax/BoxUpdateHandler */ "./src/core/events/next_handler/relax/BoxUpdateHandler.js");
 /* harmony import */ var _core_events_next_handler_relax_AfterRandomFigurePutOnBoardHandler__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./core/events/next_handler/relax/AfterRandomFigurePutOnBoardHandler */ "./src/core/events/next_handler/relax/AfterRandomFigurePutOnBoardHandler.js");
 /* harmony import */ var _core_events_next_handler_relax_RandomFigureOnBoardChecker__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./core/events/next_handler/relax/RandomFigureOnBoardChecker */ "./src/core/events/next_handler/relax/RandomFigureOnBoardChecker.js");
-/* harmony import */ var _core_events_next_handler_relax_RandomFigureClicker__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./core/events/next_handler/relax/RandomFigureClicker */ "./src/core/events/next_handler/relax/RandomFigureClicker.js");
+/* harmony import */ var _core_middlewares_RandomFigureClickerMiddleWare__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./core/middlewares/RandomFigureClickerMiddleWare */ "./src/core/middlewares/RandomFigureClickerMiddleWare.js");
+/* harmony import */ var _core_events_next_handler_relax_GameStateChecker__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./core/events/next_handler/relax/GameStateChecker */ "./src/core/events/next_handler/relax/GameStateChecker.js");
+
 
 
 
@@ -158,7 +160,9 @@ _core_drawer_Layout__WEBPACK_IMPORTED_MODULE_0__.default.draw();
 _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('mousemove', _core_events_next_handler_FigureOnBoardMatcher__WEBPACK_IMPORTED_MODULE_4__.default);
 _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('mouseup', _core_events_next_handler_relax_MouseUpHandler__WEBPACK_IMPORTED_MODULE_5__.default);
 _core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler('mouseup', _core_events_next_handler_relax_RandomFigureOnBoardChecker__WEBPACK_IMPORTED_MODULE_11__.default);
-_core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.registerHandler(_core_events_Events__WEBPACK_IMPORTED_MODULE_8__.default.BEFORE_FIGURE_CLICK, _core_events_next_handler_relax_RandomFigureClicker__WEBPACK_IMPORTED_MODULE_12__.default, false);
+_core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.addMiddleware(_core_middlewares_RandomFigureClickerMiddleWare__WEBPACK_IMPORTED_MODULE_12__.default);
+_core_events_FigureMover__WEBPACK_IMPORTED_MODULE_3__.default.afterClick(_core_events_next_handler_relax_GameStateChecker__WEBPACK_IMPORTED_MODULE_13__.default);
+// $figureMover.registerHandler(EVENTS.BEFORE_FIGURE_CLICK, $randomFigureClicker, false);
 
 _core_drawer_concrete_relax_RandomFiguresDrawer__WEBPACK_IMPORTED_MODULE_2__.default.setup(new _negotiators_DomNegotiator__WEBPACK_IMPORTED_MODULE_1__.default('#figures'));
 _core_events_next_handler_relax_RandomFigureEventHelper__WEBPACK_IMPORTED_MODULE_6__.default.drawRandomFiguresAndRegisterEvents();
@@ -248,11 +252,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _MultipleNextHandlers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MultipleNextHandlers */ "./src/core/abstract/MultipleNextHandlers.js");
 /* harmony import */ var _NextHandler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NextHandler */ "./src/core/abstract/NextHandler.js");
+/* harmony import */ var _events_DefaultEvents__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../events/DefaultEvents */ "./src/core/events/DefaultEvents.js");
 
 
 
-class EventHandler {
+
+class EventHandler extends _events_DefaultEvents__WEBPACK_IMPORTED_MODULE_2__.default {
     constructor() {
+        super();
         this._handlers = {}
     }
     /**
@@ -303,14 +310,6 @@ class EventHandler {
 
     hasHandler($mouseEvent) {
         return this._handlers[$mouseEvent] != null;
-    }
-
-    triggerNextHandler($eventType, $multiple = false, ...$params) {
-        if (this.hasHandler($eventType)) {
-            return this.getHandler($eventType, $multiple).next({}, null, ...$params);
-        } else {
-            return true;
-        }
     }
 }
 
@@ -536,6 +535,25 @@ class BlockCrashAnimation {
 
 const $blockCrashAnimation = new BlockCrashAnimation()
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($blockCrashAnimation);
+
+/***/ }),
+
+/***/ "./src/core/components/Component.js":
+/*!******************************************!*\
+  !*** ./src/core/components/Component.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ Component
+/* harmony export */ });
+/* harmony import */ var _middlewares_Middleware__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../middlewares/Middleware */ "./src/core/middlewares/Middleware.js");
+
+
+class Component extends _middlewares_Middleware__WEBPACK_IMPORTED_MODULE_0__.default {
+
+}
 
 /***/ }),
 
@@ -1057,6 +1075,80 @@ class Figure {
 
 /***/ }),
 
+/***/ "./src/core/events/DefaultEvents.js":
+/*!******************************************!*\
+  !*** ./src/core/events/DefaultEvents.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ DefaultEvents
+/* harmony export */ });
+/* harmony import */ var _abstract_ErrorHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../abstract/ErrorHandler */ "./src/core/abstract/ErrorHandler.js");
+/* harmony import */ var _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../abstract/NextHandler */ "./src/core/abstract/NextHandler.js");
+/* harmony import */ var _Events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Events */ "./src/core/events/Events.js");
+
+
+
+
+class DefaultEvents extends _abstract_ErrorHandler__WEBPACK_IMPORTED_MODULE_0__.default {
+    constructor(props) {
+        super();
+        this.beforeClickHandlers = [];
+        this.afterClickHandlers = [];
+    }
+
+    /**
+     * @param $nextHandler {NextHandler|Boolean}
+     * @param $payload {Object}
+     */
+    beforeClick($nextHandler = false, $payload = {}) {
+        if (!$nextHandler) {
+            this.triggerNextHandlers(_Events__WEBPACK_IMPORTED_MODULE_2__.default.BEFORE_MOUSE_DOWN, $payload);
+        } else {
+            if (!($nextHandler instanceof _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_1__.default)) {
+                this.log($nextHandler);
+                this.error('$nextHandler is not an instance of NextHandler::class');
+            } else {
+                this.beforeClickHandlers.push($nextHandler);
+            }
+        }
+    }
+
+    /**
+     * @param $nextHandler {NextHandler|Boolean}
+     * @param $payload {Object}
+     */
+    afterClick($nextHandler = false, $payload = {}) {
+        if (!$nextHandler) {
+            this.triggerNextHandlers(_Events__WEBPACK_IMPORTED_MODULE_2__.default.AFTER_MOUSE_UP,$payload);
+        } else {
+            if (!($nextHandler instanceof _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_1__.default)) {
+                this.log($nextHandler);
+                this.error('$nextHandler is not an instance of NextHandler::class');
+            } else {
+                this.afterClickHandlers.push($nextHandler);
+            }
+        }
+    }
+
+    triggerNextHandlers($type, $payload) {
+        const nextHandlers = $type === _Events__WEBPACK_IMPORTED_MODULE_2__.default.BEFORE_MOUSE_DOWN
+            ? this.beforeClickHandlers
+            : this.afterClickHandlers;
+
+        /**
+         * @type {NextHandler}
+         */
+        for (let nextHandler of nextHandlers) {
+            nextHandler.next($payload);
+        }
+    }
+}
+
+/***/ }),
+
 /***/ "./src/core/events/Events.js":
 /*!***********************************!*\
   !*** ./src/core/events/Events.js ***!
@@ -1069,6 +1161,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 
 const EVENTS = {
+    BEFORE_MOUSE_DOWN: 'before-mouse-down',
+    AFTER_MOUSE_UP: 'after-mouse-up',
     MOUSE_DOWN : 'mouse-down',
     MOUSE_UP : 'mouse-up',
     MOUSE_MOVE : 'mouse-move',
@@ -1095,9 +1189,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _general_Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../general/Constants */ "./src/general/Constants.js");
 /* harmony import */ var _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../drawer/figures/Figures */ "./src/core/drawer/figures/Figures.js");
 /* harmony import */ var _shared_store_tmp_TmpFigureHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../shared/store/tmp/TmpFigureHelper */ "./src/shared/store/tmp/TmpFigureHelper.js");
-/* harmony import */ var _abstract_EventHandler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../abstract/EventHandler */ "./src/core/abstract/EventHandler.js");
-/* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
-/* harmony import */ var _Events__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Events */ "./src/core/events/Events.js");
+/* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
+/* harmony import */ var _components_Component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Component */ "./src/core/components/Component.js");
 
 
 
@@ -1105,8 +1198,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-class FigureMover extends _abstract_EventHandler__WEBPACK_IMPORTED_MODULE_4__.default {
+class FigureMover extends _components_Component__WEBPACK_IMPORTED_MODULE_5__.default {
     constructor() {
         super();
     }
@@ -1121,11 +1213,12 @@ class FigureMover extends _abstract_EventHandler__WEBPACK_IMPORTED_MODULE_4__.de
         let temporaryElement = null;
         let moveHandler = null;
 
-        _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.attach(divElement, 'mousedown', e => {
-            const isOk = this.triggerNextHandler(_Events__WEBPACK_IMPORTED_MODULE_6__.default.BEFORE_FIGURE_CLICK, false,{ figure, divElement, index });
-            if (!isOk) {
+        const mousedownHandler = e => {
+            if (!this.passesMiddlewares({ figure, divElement, index })) {
                 return false;
             }
+
+            this.beforeClick(false, { e, figure, divElement, index });
 
             const moverFigure = this.createMoverFigure();
             const figureDiv = _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__.default.draw(figure, 1.05);
@@ -1143,7 +1236,7 @@ class FigureMover extends _abstract_EventHandler__WEBPACK_IMPORTED_MODULE_4__.de
             _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.attach(_general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.dom, 'mouseup', mouseUpHandler);
 
             temporaryElement = moverFigure;
-        });
+        };
 
         const mouseUpHandler = e => {
             if (!temporaryElement)
@@ -1156,10 +1249,15 @@ class FigureMover extends _abstract_EventHandler__WEBPACK_IMPORTED_MODULE_4__.de
             _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.setStyle(divElement, { opacity: 1 });
 
             this.getHandler('mouseup').next(e, figure, { index });
-            _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_5__.default.shared.resetDrawable();
+            _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_4__.default.shared.resetDrawable();
+
+            this.afterClick(false, { e, figure, divElement, index });
+
             // important
             _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.detach(_general_Constants__WEBPACK_IMPORTED_MODULE_1__.default.dom, 'mouseup', mouseUpHandler);
         };
+
+        _general_Custom__WEBPACK_IMPORTED_MODULE_0__.default.attach(divElement, 'mousedown', mousedownHandler);
     }
 
     /**
@@ -1323,6 +1421,41 @@ const $boxUpdateHandler = new BoxUpdateHandler();
 
 /***/ }),
 
+/***/ "./src/core/events/next_handler/relax/GameStateChecker.js":
+/*!****************************************************************!*\
+  !*** ./src/core/events/next_handler/relax/GameStateChecker.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../abstract/NextHandler */ "./src/core/abstract/NextHandler.js");
+/* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
+/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../general/Custom */ "./src/general/Custom.js");
+
+
+
+
+class GameStateChecker extends _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__.default {
+    next(e, figure, extraData = {}) {
+        const someUnlockedFigure = _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__.default.relax.getFigures()
+            .find(figure => !figure.isLocked());
+
+        if (!someUnlockedFigure) {
+            setTimeout(e => {
+                location.reload();
+            }, 400)
+        }
+    }
+}
+
+const $gameStateChecker = new GameStateChecker();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($gameStateChecker);
+
+/***/ }),
+
 /***/ "./src/core/events/next_handler/relax/MouseUpHandler.js":
 /*!**************************************************************!*\
   !*** ./src/core/events/next_handler/relax/MouseUpHandler.js ***!
@@ -1380,48 +1513,6 @@ const $mouseUpHandler = new MouseUpHandler();
 
 /***/ }),
 
-/***/ "./src/core/events/next_handler/relax/RandomFigureClicker.js":
-/*!*******************************************************************!*\
-  !*** ./src/core/events/next_handler/relax/RandomFigureClicker.js ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../abstract/NextHandler */ "./src/core/abstract/NextHandler.js");
-/* harmony import */ var _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../drawer/figures/Figures */ "./src/core/drawer/figures/Figures.js");
-/* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
-
-
-
-
-class RandomFigureClicker extends _abstract_NextHandler__WEBPACK_IMPORTED_MODULE_0__.default {
-    constructor(props) {
-        super(props);
-    }
-
-    /**
-     * @param e
-     * @param figure
-     * @param extraData {{
-     *     figure,  divElement,  index
-     * }}
-     * @return {boolean}
-     */
-    next(e, figure, extraData = {}) {
-        const figureIndex = extraData.index;
-        const randomFigure = _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_2__.default.relax.getRandomFigure(figureIndex);
-        return randomFigure.isLocked() === false;
-    }
-}
-
-const $randomFigureClicker = new RandomFigureClicker();
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($randomFigureClicker);
-
-/***/ }),
-
 /***/ "./src/core/events/next_handler/relax/RandomFigureEventHelper.js":
 /*!***********************************************************************!*\
   !*** ./src/core/events/next_handler/relax/RandomFigureEventHelper.js ***!
@@ -1465,8 +1556,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _drawer_figures_Figures__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../drawer/figures/Figures */ "./src/core/drawer/figures/Figures.js");
 /* harmony import */ var _math_Calculator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../math/Calculator */ "./src/core/math/Calculator.js");
 /* harmony import */ var _shared_store_Boxes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../shared/store/Boxes */ "./src/shared/store/Boxes.js");
-/* harmony import */ var _general_Custom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../general/Custom */ "./src/general/Custom.js");
-
 
 
 
@@ -1779,6 +1868,93 @@ class Calculator {
 }
 
 
+
+/***/ }),
+
+/***/ "./src/core/middlewares/Middleware.js":
+/*!********************************************!*\
+  !*** ./src/core/middlewares/Middleware.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ Middleware
+/* harmony export */ });
+/* harmony import */ var _abstract_ErrorHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../abstract/ErrorHandler */ "./src/core/abstract/ErrorHandler.js");
+/* harmony import */ var _abstract_EventHandler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../abstract/EventHandler */ "./src/core/abstract/EventHandler.js");
+
+
+
+class Middleware extends _abstract_EventHandler__WEBPACK_IMPORTED_MODULE_1__.default {
+
+    constructor() {
+        super();
+        this.middlewares = [];
+    }
+
+    /**
+     * @param $middleware {Middleware}
+     * @param $multiple {Boolean}
+     */
+    addMiddleware($middleware, $multiple = true) {
+        if (!($middleware instanceof Middleware)) {
+            this.log($middleware);
+            this.error('$middleware is not an instance of Middleware::class');
+        }
+
+        if ($multiple) {
+            this.middlewares.push($middleware);
+        } else {
+            this.middlewares = [$middleware];
+        }
+    }
+
+    passesMiddlewares($params = {}) {
+        /**
+         * @type {Middleware}
+         */
+        for (let middleware of this.middlewares) {
+            if (!middleware.canPass($params)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    canPass($params = {}) {
+        return true;
+    }
+}
+
+/***/ }),
+
+/***/ "./src/core/middlewares/RandomFigureClickerMiddleWare.js":
+/*!***************************************************************!*\
+  !*** ./src/core/middlewares/RandomFigureClickerMiddleWare.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _Middleware__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Middleware */ "./src/core/middlewares/Middleware.js");
+/* harmony import */ var _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../shared/store/leaves/State */ "./src/shared/store/leaves/State.js");
+
+
+
+class RandomFigureClickerMiddleWare extends _Middleware__WEBPACK_IMPORTED_MODULE_0__.default {
+    canPass($params = {}) {
+        const { index } = $params;
+        const randomFigure = _shared_store_leaves_State__WEBPACK_IMPORTED_MODULE_1__.default.relax.getRandomFigure(index);
+        return !randomFigure.isLocked();
+    }
+}
+
+const $randomFigureClickerMiddleWare = new RandomFigureClickerMiddleWare();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ($randomFigureClickerMiddleWare);
 
 /***/ }),
 

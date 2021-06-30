@@ -1,8 +1,10 @@
 import MultipleNextHandlers from "./MultipleNextHandlers";
 import NextHandler from "./NextHandler";
+import DefaultEvents from "../events/DefaultEvents";
 
-export default class EventHandler {
+export default class EventHandler extends DefaultEvents {
     constructor() {
+        super();
         this._handlers = {}
     }
     /**
@@ -53,13 +55,5 @@ export default class EventHandler {
 
     hasHandler($mouseEvent) {
         return this._handlers[$mouseEvent] != null;
-    }
-
-    triggerNextHandler($eventType, $multiple = false, ...$params) {
-        if (this.hasHandler($eventType)) {
-            return this.getHandler($eventType, $multiple).next({}, null, ...$params);
-        } else {
-            return true;
-        }
     }
 }

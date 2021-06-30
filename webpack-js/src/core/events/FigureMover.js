@@ -3,9 +3,9 @@ import CONSTANTS from "../../general/Constants";
 import $figures from "../drawer/figures/Figures";
 import $tmpFigureHelper from "../../shared/store/tmp/TmpFigureHelper";
 import STATE from "../../shared/store/leaves/State";
-import BeforeEvent from "../abstract/BeforeEvent";
+import Component from "../components/Component";
 
-class FigureMover extends BeforeEvent {
+class FigureMover extends Component {
     constructor() {
         super();
     }
@@ -21,10 +21,11 @@ class FigureMover extends BeforeEvent {
         let moveHandler = null;
 
         const mousedownHandler = e => {
-            const ok = this.triggerBeforeClick({ figure, divElement, index });
-            if (!ok) {
+            if (!this.passesMiddlewares({ figure, divElement, index })) {
                 return false;
             }
+
+            this.beforeClick(false, { e, figure, divElement, index });
 
             const moverFigure = this.createMoverFigure();
             const figureDiv = $figures.draw(figure, 1.05);
@@ -56,6 +57,9 @@ class FigureMover extends BeforeEvent {
 
             this.getHandler('mouseup').next(e, figure, { index });
             STATE.shared.resetDrawable();
+
+            this.afterClick(false, { e, figure, divElement, index });
+
             // important
             FUNC.detach(CONSTANTS.dom, 'mouseup', mouseUpHandler);
         };

@@ -1,5 +1,7 @@
 
 const EVENTS = {
+    BEFORE_MOUSE_DOWN: 'before-mouse-down',
+    AFTER_MOUSE_UP: 'after-mouse-up',
     MOUSE_DOWN : 'mouse-down',
     MOUSE_UP : 'mouse-up',
     MOUSE_MOVE : 'mouse-move',
