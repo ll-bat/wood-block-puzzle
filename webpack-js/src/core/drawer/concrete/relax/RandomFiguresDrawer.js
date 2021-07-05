@@ -1,16 +1,12 @@
 import AllFigures from "../../figures/leaves/AllFigures";
 import $figures from "../../figures/Figures";
 import STATE from "../../../../shared/store/leaves/State";
+import Negotiator from "../../../abstract/Negotiator";
+import DomNegotiator from "../../../../negotiators/DomNegotiator";
 
-class RandomFiguresDrawer {
+class RandomFiguresDrawer extends Negotiator {
     constructor() {
-    }
-
-    /**
-     * @param domNegotiator {DomNegotiator}
-     */
-    setup(domNegotiator) {
-        this._domNegotiator = domNegotiator;
+        super();
     }
 
     draw($figuresCount = 3) {
@@ -24,7 +20,7 @@ class RandomFiguresDrawer {
             const figure = keys[randomNumber];
             const divElement = $figures.draw(figure);
             STATE.relax.addRandomFigure({ figure, divElement, index: i });
-            this._domNegotiator.append(divElement);
+            this.getNegotiator().append(divElement);
         }
     }
 
@@ -40,13 +36,19 @@ class RandomFiguresDrawer {
     }
 
     ensureProperties() {
-        const isOk = this._domNegotiator != null;
+        const isOk = this.getNegotiator() != null;
         if (!isOk) {
             throw new DOMException('Please specify the DomNegotiator for RandomFigureDrawer');
         }
     }
 
+    reset() {
+        this.getNegotiator().clearHtml();
+    }
 }
 
 const $randomFigureDrawer = new RandomFiguresDrawer();
+// This is determined statically
+$randomFigureDrawer.setup(new DomNegotiator('#figures'));
+
 export default $randomFigureDrawer;

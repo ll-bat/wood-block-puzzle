@@ -10,8 +10,12 @@ class Boxes extends EventHandler {
      */
     constructor() {
         super();
+        this.init();
         this.reset();
-        this._cachedMatrix = this.toMatrix();
+    }
+
+    init() {
+        this._boxes = [];
     }
 
     addRow() {
@@ -95,6 +99,15 @@ class Boxes extends EventHandler {
     }
 
     reset() {
+        /**
+         * @type {Box[]}
+         */
+        for (let boxes of this._boxes) {
+            for (let box of boxes) {
+                box.reset();
+            }
+        }
+
         this._boxes = []
     }
 }

@@ -35,6 +35,9 @@ export default class Box {
         this.referenceDiv = $div;
     }
 
+    /**
+     * @return {HTMLElement}
+     */
     getReferenceDiv() {
         return this.referenceDiv;
     }
@@ -55,6 +58,7 @@ export default class Box {
         return this.y;
     }
 
-
+    reset() {
+    }
 }
 

@@ -40,6 +40,16 @@ class Figures {
         }
     }
 
+    /**
+     * @param patternAsString {string}
+     * @param scaleK {Number}
+     * @param $style {Object}
+     */
+    drawFromPattern(patternAsString, scaleK = 3, $style = {}) {
+        const pattern  = Figure.normalize(patternAsString);
+        return $figureDrawer.draw(pattern, scaleK, $style);
+    }
+
     hasFigure(type) {
         return this[type] !== null;
     }

@@ -94,6 +94,13 @@ const AllFigures = {
           ##          
          `,
         name: 'TYPE_13'
+    },
+
+    TYPE_14: {
+        figure: `
+          #
+        `,
+        name: 'TYPE_14'
     }
 }
 

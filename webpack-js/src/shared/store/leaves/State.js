@@ -69,6 +69,9 @@ const STATE = {
 
             this.cachedFigures = [];
             this.randomFigures = [];
+        },
+        reset() {
+            this.clear();
         }
     }
 }

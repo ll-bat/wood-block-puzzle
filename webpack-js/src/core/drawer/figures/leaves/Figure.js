@@ -9,10 +9,7 @@ export default class Figure {
     constructor(name, pattern) {
         this.name = name;
 
-        this.pattern = pattern.split("\n")
-            .map(c => c.trim())
-            .filter(c => c)
-            .map(c => c.split(""))
+        this.pattern = Figure.normalize(pattern);
 
         this.matrix = this.pattern.map(row => {
             return row.map(cell => {
@@ -21,6 +18,17 @@ export default class Figure {
                     : 1
             })
         });
+    }
+
+    /**
+     * @param pattern {String}
+     * @return {(*|string[])[]}
+     */
+    static normalize(pattern) {
+        return pattern.split("\n")
+            .map(c => c.trim())
+            .filter(c => c)
+            .map(c => c.split(""))
     }
 
     isset(i, j) {

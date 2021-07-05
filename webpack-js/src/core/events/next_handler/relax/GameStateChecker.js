@@ -1,5 +1,6 @@
 import NextHandler from "../../../abstract/NextHandler";
 import STATE from "../../../../shared/store/leaves/State";
+import $game from "../../../../general/Game";
 
 class GameStateChecker extends NextHandler {
     next(e, figure, extraData = {}) {
@@ -8,7 +9,7 @@ class GameStateChecker extends NextHandler {
 
         if (!someUnlockedFigure) {
             setTimeout(e => {
-                location.reload();
+                $game.getMode().lose();
             }, 400)
         }
     }

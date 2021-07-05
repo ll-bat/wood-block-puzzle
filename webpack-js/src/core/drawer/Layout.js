@@ -1,22 +1,12 @@
 import $boxes from "../../shared/store/Boxes";
 import CONSTANTS from "../../general/Constants";
 import FUNC from "../../general/Custom";
+import Negotiator from "../abstract/Negotiator";
+import DomNegotiator from "../../negotiators/DomNegotiator";
 
-class Layout {
-    /**
-     * @type {DomNegotiator}
-     * @var _domNegotiator
-     */
-
+class Layout extends Negotiator {
     constructor() {
-        this._domNegotiator = null;
-    }
-
-    /**
-     * @param layoutNegotiator {DomNegotiator}
-     */
-    setup(layoutNegotiator) {
-        this._domNegotiator = layoutNegotiator;
+        super();
     }
 
     draw() {
@@ -34,7 +24,7 @@ class Layout {
                 $height = CONSTANTS.height - 100;
             }
 
-            FUNC.setStyle(this._domNegotiator.getElement(), {
+            FUNC.setStyle(this.getNegotiator().getElement(), {
                 height: $height + 'px'
             });
         } else {
@@ -58,7 +48,7 @@ class Layout {
     }
 
     drawLayout() {
-        this._domNegotiator.clearHtml();
+        this.getNegotiator().clearHtml();
 
         for (let i = 0; i < CONSTANTS.boxesOnColumn; i++) {
             for (let j = 0; j < CONSTANTS.boxesOnRow; j++) {
@@ -84,10 +74,13 @@ class Layout {
 
         el.onmousedown = (e) => e.preventDefault()
 
-        this._domNegotiator.append(el)
+        this.getNegotiator().append(el)
         box.setReferenceDiv(el);
     }
 }
 
-const $layout = new Layout();
+const $layout = new Layout()
+// This is determined statically
+$layout.setup(new DomNegotiator('#content'));
+
 export default $layout;

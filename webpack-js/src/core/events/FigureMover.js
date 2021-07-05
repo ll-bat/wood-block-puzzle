@@ -65,6 +65,8 @@ class FigureMover extends Component {
             FUNC.setStyle(divElement, { opacity: 1 });
 
             this.getHandler('mouseup').next(e, figure, { index });
+
+            // Reset block indexes which were found
             STATE.shared.resetDrawable();
 
             this.afterClick(false, { e, figure, divElement, index });

@@ -348,3 +348,23 @@ body {
 .asf {
     color: rgb(151, 96, 96);
 }
+
+
+@keyframes _box-animation {
+    0% {
+        transform: scale(.7) translate(10px, 10px);
+    }
+    20% {
+        transform: scale(.88) translate(6px, 6px);
+    }
+    40% {
+        transform: scale(.97) translate(2px, 2px);
+    }
+    70% {
+        transform: scale(.96) translate(3px, 3px);
+    }
+}
+
+.animated-box {
+    animation: _box-animation .35s ease-in-out;
+}
