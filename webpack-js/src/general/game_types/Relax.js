@@ -22,15 +22,12 @@ export default class Relax extends GameStarter {
 
     start(...params) {
         $layout.draw();
-
         $figureMover.registerHandler(EVENTS.MOUSE_MOVE, $figureOnBoardMatcher);
         $figureMover.registerHandler(EVENTS.MOUSE_UP, $mouseUpHandler);
         $figureMover.registerHandler(EVENTS.MOUSE_UP, $randomFigureOnBoardChecker);
         $figureMover.addMiddleware(EVENTS.BEFORE_MOUSE_DOWN ,$randomFigureClickerMiddleWare);
         $figureMover.afterClick($gameStateChecker);
-
         RandomFigureEventHelper.drawRandomFiguresAndRegisterEvents();
-
         $boxes.registerHandler(EVENTS.BOX_UPDATE, $boxUpdateHandler);
         $boxes.registerHandler(EVENTS.BOARD_CHANGE, $afterRandomFigurePutOnBoardHandler);
     }
