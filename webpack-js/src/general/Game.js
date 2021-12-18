@@ -1,5 +1,6 @@
 import Relax from "./game_types/Relax";
 import GameStarter from "../core/abstract/GameStarter";
+import {GAME_TYPE_BUILD_UP, GAME_TYPE_RELAX} from "./game_types/Constants";
 
 class Game {
     init(type) {
@@ -30,10 +31,14 @@ class Game {
         this[mode].call(this)
     }
 
-    relax() {
+    [GAME_TYPE_RELAX]() {
         const relax = new Relax();
         relax.start();
         this.gamer = relax;
+    }
+
+    [GAME_TYPE_BUILD_UP]() {
+        alert("game type build up ")
     }
 
     restart() {

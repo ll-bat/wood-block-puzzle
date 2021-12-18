@@ -12,6 +12,9 @@ export default class Menu {
     }
 
     static init() {
+        const toSpace = str => str.replace(/[A-Z]/g, letter => ` ${letter.toLowerCase()}`);
+        const ucf = str => str.charAt(0).toUpperCase() + str.slice(1);
+
         [GAME_TYPE_RELAX, GAME_TYPE_COMPETE, GAME_TYPE_BUILD_UP].forEach(mode => {
             let mainDiv = FUNC.elt('div', 'menu-button')
 
@@ -21,7 +24,7 @@ export default class Menu {
                             <div style='display:flex'>
                                <div class='circle'></div>
                                <span class='text'>
-                                   ${mode}
+                                   ${ucf(toSpace(mode))}
                                </span>
                             </div>
                          </div>
