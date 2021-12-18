@@ -1,6 +1,7 @@
 import Relax from "./game_types/Relax";
 import GameStarter from "../core/abstract/GameStarter";
 import {GAME_TYPE_BUILD_UP, GAME_TYPE_RELAX} from "./game_types/Constants";
+import BuildUp from "./game_types/BuildUp";
 
 class Game {
     init(type) {
@@ -38,7 +39,9 @@ class Game {
     }
 
     [GAME_TYPE_BUILD_UP]() {
-        alert("game type build up ")
+        const buildUp = new BuildUp()
+        buildUp.start()
+        this.gamer = buildUp
     }
 
     restart() {

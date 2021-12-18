@@ -1,7 +1,7 @@
 import FUNC from "../../../general/Custom";
 
 export default class Box {
-    constructor({ x, y }) {
+    constructor({x, y}) {
         /**
          * @types int
          */
@@ -24,8 +24,17 @@ export default class Box {
         return 0;
     }
 
-    setBusy($state = true) {
+    setBusy($state = true, $color = false) {
         this.data.busy = $state;
+        if ($color) {
+            this.style({
+                background: $state ? "#92522e" : "rgb(30, 30, 30)"
+            })
+        }
+    }
+
+    toggleBusy($color = false) {
+        this.setBusy(!this.isBusy(), $color)
     }
 
     /**
@@ -40,6 +49,13 @@ export default class Box {
      */
     getReferenceDiv() {
         return this.referenceDiv;
+    }
+
+    /**
+     * @return {HTMLElement}
+     */
+    getDiv() {
+        return this.getReferenceDiv()
     }
 
     /**

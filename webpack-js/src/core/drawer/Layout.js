@@ -40,9 +40,9 @@ class Layout extends Negotiator {
 
             for (let j = 0; j < CONSTANTS.boxesOnRow; j++) {
                 let x = j * (CONSTANTS.boxWidth + 1) + CONSTANTS.offsetX
-                let y = i * (CONSTANTS.boxHeight + 1) +CONSTANTS.offsetY
+                let y = i * (CONSTANTS.boxHeight + 1) + CONSTANTS.offsetY
 
-                $boxes.addAt(i, { x, y });
+                $boxes.addAt(i, {x, y});
             }
         }
     }
@@ -52,7 +52,7 @@ class Layout extends Negotiator {
 
         for (let i = 0; i < CONSTANTS.boxesOnColumn; i++) {
             for (let j = 0; j < CONSTANTS.boxesOnRow; j++) {
-                const box = $boxes.get(i,j);
+                const box = $boxes.get(i, j);
                 this.drawOneBlock(box)
             }
         }

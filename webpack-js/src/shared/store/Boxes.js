@@ -37,6 +37,9 @@ class Boxes extends EventHandler {
         return this._boxes[i][j];
     }
 
+    /**
+     * @returns {Box[][]}
+     */
     getBoxes() {
         return this._boxes;
     }
