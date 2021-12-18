@@ -1,106 +1,106 @@
 const AllFigures = {
-    TYPE_1: {
+    LEFT_TRIANGLE: {
         figure: `
                ###
                #
                #
              `,
-        name: 'TYPE_1'
+        name: 'LEFT_TRIANGLE'
     },
 
-    TYPE_2: {
+    BLOCK: {
         figure: `
                ##
                ##
              `,
-        name: 'TYPE_2'
+        name: 'BLOCK'
     },
 
-    TYPE_3: {
+        LEFT_SMALL_TRIANGLE: {
         figure: `
                ##
                #
              `,
-        name: 'TYPE_3'
+        name: 'LEFT_SMALL_TRIANGLE'
     },
 
-    TYPE_4: {
+    VERTICAL_THREE_DOT: {
         figure: `
                ###
              `,
-        name: 'TYPE_4'
+        name: 'VERTICAL_THREE_DOT'
     },
 
-    TYPE_5: {
+    HORIZONTAL_THREE_DOT: {
         figure: `
                #
                #
                #
              `,
-        name: 'TYPE_5'
+        name: 'HORIZONTAL_THREE_DOT'
     },
 
-    TYPE_6: {
+    BIG_BLOCK: {
         figure: `
                ###
                ###
                ###
              `,
-        name: 'TYPE_6'
+        name: 'BIG_BLOCK'
     },
 
-    TYPE_7: {
+    FIVE_HORIZONTAL_DOT: {
         figure: `
                #####
              `,
-        name: 'TYPE_7'
+        name: 'FIVE_HORIZONTAL_DOT'
     },
 
-    TYPE_8: {
+    FOUR_HORIZONTAL_DOT: {
         figure: `
                ####
              `,
-        name: 'TYPE_8'
+        name: 'FOUR_HORIZONTAL_DOT'
     },
 
-    TYPE_9: {
+    FOUR_VERTICAL_DOT: {
         figure: `
                #
                #
                #
                #
              `,
-        name: 'TYPE_9'
+        name: 'FOUR_VERTICAL_DOT'
     },
 
-    TYPE_11: {
+    UPSIDE_SMALL_TRIANGLE: {
         figure: `
               .#
               ##
              `,
-        name: 'TYPE_11'
+        name: 'UPSIDE_SMALL_TRIANGLE'
     },
 
-    TYPE_12: {
+    TWO_VERTICAL_DOT: {
         figure: `
             # 
             #
            `,
-        name: 'TYPE_12'
+        name: 'TWO_VERTICAL_DOT'
     },
 
-    TYPE_13: {
+    TWO_DOT: {
         figure: `
           ##          
          `,
-        name: 'TYPE_13'
+        name: 'TWO_DOT'
     },
 
-    TYPE_14: {
+    DOT: {
         figure: `
           #
         `,
-        name: 'TYPE_14'
+        name: 'DOT'
     }
 }
 
