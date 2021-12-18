@@ -98,7 +98,7 @@ body {
 
 .menu-buttons {
     position: absolute;
-    width: 240;
+    width: 240px;
     top: 20%;
     left: calc(50% - 120px);
 }

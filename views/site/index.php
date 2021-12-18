@@ -5,7 +5,14 @@
 $this->title = 'My Yii Application';
 ?>
 <div id="wood-block-puzzle" style="user-select: none !important;">
+<!--  Menu  -->
+    <div class='fallDown' id='backdrop' style="z-index: 1;">
+        <div class='menu-buttons' id='menu-buttons'>
+        </div>
+    </div>
+<!--    -->
     <div class="content" id="content"></div>
+<!--    -->
     <div class="figures d-flex justify-content-around" id="figures"></div>
 <!--    <p id="dd"></p>-->
 <!--    <p id="vv"></p>-->

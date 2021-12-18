@@ -1,8 +1,8 @@
 import CONSTANTS from "./Constants";
 
 const FUNC = {
-    $(id) {
-        return CONSTANTS.dom.querySelector(id);
+    $(selector) {
+        return CONSTANTS.dom.querySelector(selector);
     },
 
     dd(text) {

@@ -21,9 +21,13 @@ class Game {
     }
 
     start() {
-        if (this[this.type]) {
-            this[this.type]();
+        const mode = this.type
+        const isDefined = this[mode] !== undefined
+        if (!isDefined) {
+            throw new DOMException('no such type: ' + this.type)
         }
+
+        this[mode].call(this)
     }
 
     relax() {

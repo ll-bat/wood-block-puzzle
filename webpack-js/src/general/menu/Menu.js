@@ -1,18 +1,19 @@
-import {$, elt} from '../shared/custom'
-import game from './game'
+import FUNC from "../Custom";
+import $game from "../Game";
+import {GAME_TYPE_BUILD_UP, GAME_TYPE_COMPETE, GAME_TYPE_RELAX} from "../game_types/Constants";
 
 export default class Menu {
     static show() {
-        $('backdrop').className = 'fallDown'
+        FUNC.$('#backdrop').className = 'fallDown'
     }
 
     static hide() {
-        $('backdrop').className = 'fallUp'
+        FUNC.$('#backdrop').className = 'fallUp'
     }
 
     static init() {
-        ['start', 'options', 'upgrade', 'about'].forEach(button => {
-            let mainDiv = elt('div', 'menu-button')
+        [GAME_TYPE_RELAX, GAME_TYPE_COMPETE, GAME_TYPE_BUILD_UP].forEach(mode => {
+            let mainDiv = FUNC.elt('div', 'menu-button')
 
             mainDiv.innerHTML = `
                       <div class='inner-button'>
@@ -20,7 +21,7 @@ export default class Menu {
                             <div style='display:flex'>
                                <div class='circle'></div>
                                <span class='text'>
-                                   ${button}
+                                   ${mode}
                                </span>
                             </div>
                          </div>
@@ -28,10 +29,12 @@ export default class Menu {
                    `
 
             mainDiv.addEventListener('click', (e) => {
-                game.start()
+                Menu.hide()
+                $game.init(mode)
+                $game.start()
             })
 
-            $('.menu-buttons').append(mainDiv)
+            FUNC.$('.menu-buttons').append(mainDiv)
         })
     }
 }
