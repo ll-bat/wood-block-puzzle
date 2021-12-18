@@ -16,7 +16,7 @@ const AllFigures = {
         name: 'BLOCK'
     },
 
-        LEFT_SMALL_TRIANGLE: {
+    LEFT_SMALL_TRIANGLE: {
         figure: `
                ##
                #
@@ -24,20 +24,20 @@ const AllFigures = {
         name: 'LEFT_SMALL_TRIANGLE'
     },
 
-    VERTICAL_THREE_DOT: {
+    HORIZONTAL_THREE_DOT: {
         figure: `
                ###
              `,
-        name: 'VERTICAL_THREE_DOT'
+        name: 'HORIZONTAL_THREE_DOT'
     },
 
-    HORIZONTAL_THREE_DOT: {
+    VERTICAL_THREE_DOT: {
         figure: `
                #
                #
                #
              `,
-        name: 'HORIZONTAL_THREE_DOT'
+        name: 'VERTICAL_THREE_DOT'
     },
 
     BIG_BLOCK: {
