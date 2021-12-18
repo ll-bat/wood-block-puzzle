@@ -3,6 +3,9 @@ import GameStarter from "../core/abstract/GameStarter";
 
 class Game {
     init(type) {
+        /**
+         * @type {String}
+         */
         this.type = type;
         /**
          * @type {GameStarter}
@@ -35,5 +38,4 @@ class Game {
 }
 
 const $game = new Game();
-$game.MOD_RELAX = 'relax';
 export default $game;
