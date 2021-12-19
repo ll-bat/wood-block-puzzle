@@ -24,6 +24,14 @@ export default class Box {
         return 0;
     }
 
+    set($color = true) {
+        this.setBusy(true, $color)
+    }
+
+    unset($color = false) {
+        this.setBusy(false, $color)
+    }
+
     setBusy($state = true, $color = false) {
         this.data.busy = $state;
         if ($color) {

@@ -1,6 +1,7 @@
 import Figure from "../../drawer/figures/leaves/Figure";
 import CONSTANTS from "../../../general/Constants";
 import $figures from "../../drawer/figures/Figures";
+import AllFigures from "../../drawer/figures/leaves/AllFigures";
 
 const FIGURE = "figure"
 const X = "x"
@@ -38,6 +39,13 @@ class Board {
         this.boxes[i][j] = 0;
     }
 
+    /**
+     * @returns {number[][]}
+     */
+    getLayout() {
+        return this.boxes
+    }
+
 }
 
 class BuildingBoard {
@@ -45,17 +53,18 @@ class BuildingBoard {
         this._board = new Board()
         this._obj_filters = []
         this._new_filter = []
+        this._cur_filter = {}
     }
 
     _prepareNewFilter() {
         this._new_filter = {
-            [FIGURE] : null,
-            [X] : null,
-            [Y] : null,
-            [NTH] : null,
-            [AVAILABLE_PLACES] : null,
-            [CRASH_ROWS] : null,
-            [CRASH_COLUMNS] : null,
+            [FIGURE]: null,
+            [X]: null,
+            [Y]: null,
+            [NTH]: null,
+            [AVAILABLE_PLACES]: null,
+            [CRASH_ROWS]: null,
+            [CRASH_COLUMNS]: null,
         }
     }
 
@@ -98,11 +107,21 @@ class BuildingBoard {
     }
 
     build() {
-        // TODO implement build logic
+        for (let filter of this._obj_filters) {
+            this._cur_filter = filter
+            for (let key in filter) {
+                this._applyFilter(key, filter[key])
+            }
+            this._cur_filter = {}
+        }
     }
 
+    /**
+     *
+     * @param figure {Figure}
+     */
     [FIGURE](figure) {
-        console.log('applying figure: ', figure)
+
     }
 
     [X](x) {
@@ -231,10 +250,12 @@ export class BoardBuilder {
     }
 }
 
-class Tester {
+class Helper {
     run() {
-        let buildBy, figure, boardBuilder, board;
-        figure = $figures.getFigure("HORIZONTAL_THREE_DOT")
+        let buildBy, figure, boardBuilder, board, figureTwo, buildByTwo;
+        //////////////////////////////////////////
+        figure = $figures.getFigure(AllFigures.HORIZONTAL_THREE_DOT.name)
+        /////////////////////////////////////////
         buildBy = new BuildByFigure()
         buildBy.withFigure(figure)
         buildBy.withFigureNth(0)
@@ -242,12 +263,43 @@ class Tester {
         buildBy.withFigureAvailablePlacesInBoard(5)
         buildBy.withCrashColumns(1)
         buildBy.withCrashRows(0)
+        /////////////////////////////////////////
+        figureTwo = $figures.getFigure(AllFigures.VERTICAL_THREE_DOT.name)
+        ////////////////////////////////////////
+        buildByTwo = new BuildByFigure()
+        buildByTwo.withFigure(figureTwo)
+        buildByTwo.withFigureNth(1)
+        buildByTwo.withFigurePosition(0, 2)
+        buildByTwo.withFigureAvailablePlacesInBoard(3)
+        buildByTwo.withCrashColumns(2)
+        buildByTwo.withCrashRows(2)
+        /////////////////////////////////////////
         boardBuilder = new BoardBuilder()
         boardBuilder.buildByFigure(buildBy)
+        boardBuilder.buildByFigure(buildByTwo)
+        /////////////////////////////////////////
         board = boardBuilder.build()
+        /////////////////////////////////////////
+        return board
+    }
+}
+const helper = new Helper()
+
+export class RandomBoard {
+    constructor() {
+        this.boards = []
+    }
+
+    /**
+     *
+     * @returns {Board}
+     */
+    getBoard() {
+        const board = helper.run()
+        this.boards.push(board)
+        return board
     }
 }
 
-
-export const tester = new Tester()
-tester.run()
+const $randomBoard = new RandomBoard()
+export default $randomBoard

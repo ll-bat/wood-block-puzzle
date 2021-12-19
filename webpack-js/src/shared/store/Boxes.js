@@ -101,6 +101,21 @@ class Boxes extends EventHandler {
         }
     }
 
+    /**
+     * @param layout {number[][]}
+     */
+    useLayout(layout) {
+        for (let [i, boxes] of layout.entries()) {
+            for (let [j, box] of boxes.entries()) {
+                if (box === 1) {
+                    this.get(i, j).set()
+                } else {
+                    this.get(i, j).unset()
+                }
+            }
+        }
+    }
+
     reset() {
         /**
          * @type {Box[]}

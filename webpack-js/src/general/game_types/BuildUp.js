@@ -14,6 +14,7 @@ import $afterRandomFigurePutOnBoardHandler from "../../core/events/next_handler/
 import STATE from "../../shared/store/leaves/State";
 import $randomFigureDrawer from "../../core/drawer/concrete/relax/RandomFiguresDrawer";
 import $boxOnboardCrasher from "../../Helper/relax/BoxOnboardCrasher";
+import $randomBoard from "../../core/logic/build-up/BoardBuilder";
 import FUNC from "../Custom";
 
 export default class BuildUp extends GameStarter {
@@ -36,6 +37,9 @@ export default class BuildUp extends GameStarter {
                 FUNC.attach(box.getDiv(), EVENTS.MOUSE_DOWN, e => box.toggleBusy(true))
             })
         })
+
+        const randomBoard = $randomBoard.getBoard()
+        $boxes.useLayout(randomBoard.getLayout())
     }
 
     reset(...params) {
