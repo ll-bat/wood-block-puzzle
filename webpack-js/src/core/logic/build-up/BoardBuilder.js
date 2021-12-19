@@ -107,29 +107,114 @@ class BuildingBoard {
     }
 
     build() {
+        const orderedFiltering = [
+            CRASH_COLUMNS,
+            CRASH_ROWS,
+            X,
+            Y,
+            FIGURE,
+            AVAILABLE_PLACES,
+            NTH
+        ]
+
         for (let filter of this._obj_filters) {
             this._cur_filter = filter
-            for (let key in filter) {
-                this._applyFilter(key, filter[key])
+            for (let key of orderedFiltering) {
+                if (filter[key] !== undefined) {
+                    this._applyFilter(key, filter[key])
+                }
             }
             this._cur_filter = {}
         }
     }
 
+    getFigureRows() {
+        const figure = this._cur_filter[FIGURE]
+        const matrix = figure.toMatrix()
+        const rows = []
+
+        for (let i = 0; i < matrix.length; i++) {
+            for (let j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] === 1) {
+                    if (!rows.includes(i)) {
+                        rows.push(i)
+                    }
+                }
+            }
+        }
+
+        return rows;
+    }
+
+    getFigureColumns() {
+        const figure = this._cur_filter[FIGURE]
+        const matrix = figure.toMatrix()
+        const columns = []
+
+        for (let i = 0; i < matrix.length; i++) {
+            for (let j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] === 1) {
+                    if (!columns.includes(j)) {
+                        columns.push(j)
+                    }
+                }
+            }
+        }
+
+        return columns;
+    }
+
+    getRandomNumbersFrom(arr, n) {
+        arr = JSON.parse(JSON.stringify(arr))
+        const random = []
+
+        let cnt = arr.length;
+        while (n--) {
+            let rand = Math.round(Math.random() * cnt)
+            if (arr[rand] === undefined)
+                rand--;
+
+            if (arr[rand] !== undefined) {
+                random.push(arr[rand])
+                arr.splice(rand, 1)
+                cnt--;
+            } else {
+                console.log(rand, arr)
+                alert('error')
+                throw new DOMException()
+            }
+        }
+
+        return random
+    }
+
     /**
-     *
      * @param figure {Figure}
      */
     [FIGURE](figure) {
 
     }
 
-    [X](x) {
-        console.log('applying x: ', x)
+    [X]() {
     }
 
-    [Y](y) {
-        console.log('applying y: ', y)
+    [Y]() {
+        let x, y, figure, figureMatrix
+        x = this._cur_filter[X]
+        y = this._cur_filter[Y]
+        /**
+         * @param figure {Figure}
+         */
+        figure = this._cur_filter[FIGURE]
+        figureMatrix = figure.matrix
+
+        for (let i = 0; i < figureMatrix.length; i++) {
+            for (let j = 0; j < figureMatrix[i].length; j++) {
+                if (figureMatrix[i][j] === 1) {
+                    this._board.unset(x + i, y + j)
+                }
+            }
+        }
     }
 
     [NTH](n) {
@@ -140,12 +225,36 @@ class BuildingBoard {
         console.log('applying avail_places: ', n)
     }
 
+    /**
+     * @param columns {Number}
+     */
     [CRASH_COLUMNS](columns) {
-        console.log('applying crash_columns: ', columns)
+        const figureColumns = this.getFigureColumns()
+        columns = Math.min(columns, figureColumns.length)
+        const randomColumns = this.getRandomNumbersFrom(figureColumns, columns)
+        for (let i = 0; i < CONSTANTS.boxesOnRow; i++) {
+            for (let j = 0; j < CONSTANTS.boxesOnColumn; j++) {
+                if (randomColumns.includes(j)) {
+                    this._board.set(i, j)
+                }
+            }
+        }
     }
 
+    /**
+     * @param rows {Number}
+     */
     [CRASH_ROWS](rows) {
-        console.log('applying crash_rows: ', rows)
+        const figureRows = this.getFigureRows()
+        rows = Math.min(rows, figureRows.length)
+        const randomRows = this.getRandomNumbersFrom(figureRows, rows)
+        for (let i = 0; i < CONSTANTS.boxesOnRow; i++) {
+            for (let j = 0; j < CONSTANTS.boxesOnColumn; j++) {
+                if (randomRows.includes(i)) {
+                    this._board.set(i, j)
+                }
+            }
+        }
     }
 
 }
@@ -283,6 +392,7 @@ class Helper {
         return board
     }
 }
+
 const helper = new Helper()
 
 export class RandomBoard {
