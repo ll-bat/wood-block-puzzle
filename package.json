@@ -4,7 +4,10 @@
     "description": "",
     "main": "src/app.js",
     "scripts": {
-        "start": "npx webpack"
+        "start-dev": "npx webpack --env mode=development",
+        "postinstall": "npx webpack",
+        "start": "node server.js"
+
     },
     "repository": {
         "type": "git",
@@ -20,7 +23,9 @@
     "dependencies": {
         "css-loader": "^5.0.1",
         "style-loader": "^2.0.0",
-        "webpack": "^5.11.0"
+        "webpack": "^5.11.0",
+        "express": "^4.18.1",
+        "serve-static": "^1.15.0"
     },
     "devDependencies": {
         "webpack-cli": "^4.7.2"
