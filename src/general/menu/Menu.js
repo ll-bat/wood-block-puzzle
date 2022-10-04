@@ -31,11 +31,17 @@ export default class Menu {
                    </div>
                    `
 
-            mainDiv.addEventListener('click', (e) => {
-                Menu.hide()
-                $game.init(mode)
-                $game.start()
-            })
+            if (mode === GAME_TYPE_RELAX) {
+                mainDiv.addEventListener('click', (e) => {
+                    Menu.hide()
+                    $game.init(mode)
+                    $game.start()
+                })
+            } else {
+                mainDiv.style.opacity = .6;
+            }
+
+           
 
             FUNC.$('.menu-buttons').append(mainDiv)
         })
