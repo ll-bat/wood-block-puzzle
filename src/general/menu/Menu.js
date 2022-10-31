@@ -31,7 +31,7 @@ export default class Menu {
                    </div>
                    `
 
-            if (mode === GAME_TYPE_RELAX) {
+            if (true) {
                 mainDiv.addEventListener('click', (e) => {
                     Menu.hide()
                     $game.init(mode)

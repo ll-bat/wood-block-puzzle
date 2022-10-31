@@ -116,6 +116,18 @@ class Boxes extends EventHandler {
         }
     }
 
+    getLayout() {
+        return this.toMatrix();
+    }
+
+    resetBoard() {
+        for (let [i, boxes] of Object.entries(this._boxes)) {
+            for (let [j, box] of Object.entries(boxes)) {
+                box.unset(true);
+            }
+        }
+    }
+
     reset() {
         /**
          * @type {Box[]}

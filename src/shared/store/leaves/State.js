@@ -63,6 +63,10 @@ const STATE = {
             return this.randomFigures.length === 0;
         },
         clear() {
+            this.randomFigures.forEach(figure => {
+                figure.getDivElement().remove();
+            });
+            
             this.cachedFigures.forEach(figure => {
                 figure.getDivElement().remove();
             });

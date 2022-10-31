@@ -28,7 +28,7 @@ export default class Box {
         this.setBusy(true, $color)
     }
 
-    unset($color = false) {
+    unset($color = true) {
         this.setBusy(false, $color)
     }
 

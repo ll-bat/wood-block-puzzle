@@ -5,6 +5,11 @@ import $blockCrashAnimation from "../../core/animation/BlockCrashAnimation";
 class BoxOnboardCrasher {
     constructor() {
         this.reset();
+        this.shouldAnimateCrashing = true;
+    }
+
+    setAnimateCrashing(state) {
+        this.shouldAnimateCrashing = state;
     }
 
     reset() {
@@ -25,7 +30,27 @@ class BoxOnboardCrasher {
         this.boxesOnColumn[y]++;
     }
 
+    resetValues(){
+        this.boxesOnRow = this.boxesOnRow.map(e => 0);
+        this.boxesOnColumn = this.boxesOnColumn.map(e => 0)
+    }
+
+    setValues(){
+        for (let i = 0; i < CONSTANTS.boxesOnColumn; i++) {
+            for (let j = 0; j < CONSTANTS.boxesOnRow; j++) {
+                if ($boxes.get(i, j).isBusy()) {
+                    this.boxesOnRow[i]++;
+                    this.boxesOnColumn[j]++;
+                }
+            }
+        }
+    }
+
     checkBlocksToCrash() {
+        this.resetValues();
+        this.setValues();
+
+
         let crashBlocks = false;
 
         for (let i = 0; i < CONSTANTS.boxesOnRow; i++) {
@@ -46,6 +71,7 @@ class BoxOnboardCrasher {
     }
 
     crashBlocks() {
+        console.log(this.shouldAnimateCrashing)
         const rowIndexesToCrash = [];
         const columnIndexesToCrash = [];
         this.boxesOnRow.forEach((numberOfBlocks, rowIndex) => {
@@ -68,8 +94,10 @@ class BoxOnboardCrasher {
             for (let j = 0; j < CONSTANTS.boxesOnColumn; j++) {
                 const box = $boxes.get(rowIndex, j);
                 box.style({ background: CONSTANTS.boxDefaultColor });
-                $blockCrashAnimation.animateCrash(box);
                 box.setBusy(false);
+                if (this.shouldAnimateCrashing) {
+                    $blockCrashAnimation.animateCrash(box);
+                }
             }
 
             this.boxesOnRow[rowIndex] = 0;
@@ -82,8 +110,10 @@ class BoxOnboardCrasher {
             for (let i = 0; i < CONSTANTS.boxesOnRow; i++) {
                 const box = $boxes.get(i, columnIndex);
                 box.style({ background: CONSTANTS.boxDefaultColor });
-                $blockCrashAnimation.animateCrash(box);
                 box.setBusy(false);
+                if (this.shouldAnimateCrashing) {
+                    $blockCrashAnimation.animateCrash(box);
+                }
             }
 
             this.boxesOnColumn[columnIndex] = 0;

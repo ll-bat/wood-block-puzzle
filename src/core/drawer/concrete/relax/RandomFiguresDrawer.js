@@ -9,15 +9,20 @@ class RandomFiguresDrawer extends Negotiator {
         super();
     }
 
-    draw($figuresCount = 3) {
+    draw($figuresCount = 3, figures = []) {
         this.ensureProperties();
 
         const keys = Object.keys(AllFigures);
         const figuresLength = keys.length;
 
         for (let i = 0; i < $figuresCount; i++) {
-            const randomNumber = this.getRandomNumber(figuresLength);
-            const figure = keys[randomNumber];
+            let figure = null;
+            if (figures[i]) {
+                figure = figures[i].name;
+            } else {
+                const randomNumber = this.getRandomNumber(figuresLength);
+                figure = keys[randomNumber];
+            }
             const divElement = $figures.draw(figure);
             STATE.relax.addRandomFigure({ figure, divElement, index: i });
             this.getNegotiator().append(divElement);

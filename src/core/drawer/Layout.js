@@ -77,6 +77,21 @@ class Layout extends Negotiator {
         this.getNegotiator().append(el)
         box.setReferenceDiv(el);
     }
+
+    getLayoutInfo() {
+        const first = $boxes.get(0, 0);
+        const last = $boxes.get(CONSTANTS.boxesOnRow - 1, CONSTANTS.boxesOnColumn - 1);
+        return {
+            start: {
+                x: first.x, 
+                y: first.y 
+            },
+            end: {
+                x: last.x + CONSTANTS.boxWidth, 
+                y: last.y + CONSTANTS.boxHeight,
+            }
+        }
+    }
 }
 
 const $layout = new Layout()
