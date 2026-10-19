@@ -1,6 +1,6 @@
 import FUNC from "../Custom";
 import $game from "../Game";
-import {GAME_TYPE_BUILD_UP, GAME_TYPE_COMPETE, GAME_TYPE_RELAX} from "../game_types/Constants";
+import {GAME_TYPE_CHALLENGE, GAME_TYPE_RELAX} from "../game_types/Constants";
 
 export default class Menu {
     static show() {
@@ -15,7 +15,7 @@ export default class Menu {
         const toSpace = str => str.replace(/[A-Z]/g, letter => ` ${letter.toLowerCase()}`);
         const ucf = str => str.charAt(0).toUpperCase() + str.slice(1);
 
-        [GAME_TYPE_RELAX, GAME_TYPE_COMPETE, GAME_TYPE_BUILD_UP].forEach(mode => {
+        [GAME_TYPE_RELAX, GAME_TYPE_CHALLENGE].forEach(mode => {
             let mainDiv = FUNC.elt('div', 'menu-button')
 
             mainDiv.innerHTML = `

@@ -1,0 +1,7 @@
+Asset: meadow-grass.webp
+Created with the built-in image_gen tool; optimized to 384x384 WebP.
+The user's iStock grass-field photograph was inspected for inspiration only.
+No stock photograph is bundled.
+
+Final prompt:
+Original square photorealistic texture for a grass-themed block puzzle game. Dense freshly mown green lawn viewed straight down, tightly packed fine short grass blades and tiny tufts, lush rich natural green with restrained lime tips and darker emerald recesses. Inspired by a well maintained grass playing field, uniform texture across the full frame, soft even daylight. Fine grass only, no broad leaves, no flowers, no soil patches, no sky, no horizon, no mowing stripes, no perspective, no text, no logo, no watermark, no border. Seamless tileable edges preferred. Realistic softly tactile turf, clear blade detail at small tile sizes, moderate contrast, no noisy sparkling highlights. Square composition.

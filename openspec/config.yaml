@@ -1,0 +1,18 @@
+schema: spec-driven
+
+context: |
+  WoodBlockPuzzle is a browser-based JavaScript game bundled with Webpack and served by Express.
+  The challenge-generator work targets an 8x8 board, exactly three fixed-orientation shapes,
+  immediate simultaneous clearing of completed rows and columns, and guaranteed solvability.
+  New puzzle-domain logic must be pure and usable from both Node.js generation tools and the browser;
+  it must not depend on the DOM or mutable UI stores.
+  The agreed core catalog has 25 fixed-orientation, edge-connected shapes and allows duplicate shapes
+  in a three-shape tray. Initial challenge boards must contain no completed row or column.
+
+rules:
+  specs:
+    - Express game behavior as testable scenarios and keep UI behavior out of pure-domain capabilities.
+  design:
+    - Record alternatives considered for board representation and integration boundaries.
+  tasks:
+    - Include automated tests with every behavioral implementation group.

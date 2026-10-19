@@ -41,7 +41,7 @@ class FigureDrawer {
                     let l = j * (bw + 3);
                     let t = i * (bh + 3);
 
-                    let el = FUNC.elt("div", null, null, {
+                    let el = FUNC.elt("div", 'puzzle-cube', null, {
                         top: t + "px",
                         left: l + "px",
                         width: bw + "px",

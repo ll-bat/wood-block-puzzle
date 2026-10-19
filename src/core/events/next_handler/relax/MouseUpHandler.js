@@ -4,6 +4,7 @@ import $boxes from "../../../../shared/store/Boxes";
 import $figures from "../../../drawer/figures/Figures";
 import $randomFigureDrawer from "../../../drawer/concrete/relax/RandomFiguresDrawer";
 import RandomFigureEventHelper from "./RandomFigureEventHelper";
+import sound from '../../../../puzzle/sound';
 
 class MouseUpHandler extends NextHandler {
     /**
@@ -25,6 +26,7 @@ class MouseUpHandler extends NextHandler {
             this.error('x or y in MouseUpHandler next() method is not in right format')
         } else {
             const matrix = $figures.getFigure(figure).toMatrix();
+            sound.play('drop');
             $boxes.updateMatrix(matrix, { x, y }, { colorBox: true })
             STATE.relax.removeRandomFigure(figure, index);
             if (STATE.relax.isAllFiguresDrawn()) {

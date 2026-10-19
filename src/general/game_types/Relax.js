@@ -14,6 +14,8 @@ import $afterRandomFigurePutOnBoardHandler from "../../core/events/next_handler/
 import STATE from "../../shared/store/leaves/State";
 import $randomFigureDrawer from "../../core/drawer/concrete/relax/RandomFiguresDrawer";
 import $boxOnboardCrasher from "../../Helper/relax/BoxOnboardCrasher";
+import { alignPieceTray, createThemePicker } from '../Appearance';
+import CONSTANTS from '../Constants';
 
 export default class Relax extends GameStarter {
     constructor() {
@@ -22,6 +24,12 @@ export default class Relax extends GameStarter {
 
     start(...params) {
         $layout.draw();
+        const sidebar = document.createElement('aside');
+        sidebar.className = 'challenge-sidebar relax-appearance';
+        sidebar.style.top = `${CONSTANTS.offsetY}px`;
+        sidebar.append(createThemePicker());
+        document.querySelector('#wood-block-puzzle').append(sidebar);
+        alignPieceTray();
         $figureMover.registerHandler(EVENTS.MOUSE_MOVE, $figureOnBoardMatcher);
         $figureMover.registerHandler(EVENTS.MOUSE_UP, $mouseUpHandler);
         $figureMover.registerHandler(EVENTS.MOUSE_UP, $randomFigureOnBoardChecker);

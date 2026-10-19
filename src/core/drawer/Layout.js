@@ -3,6 +3,7 @@ import CONSTANTS from "../../general/Constants";
 import FUNC from "../../general/Custom";
 import Negotiator from "../abstract/Negotiator";
 import DomNegotiator from "../../negotiators/DomNegotiator";
+import { applyOceanDepth } from '../../puzzle/oceanDepth';
 
 class Layout extends Negotiator {
     constructor() {
@@ -49,6 +50,7 @@ class Layout extends Negotiator {
 
     drawLayout() {
         this.getNegotiator().clearHtml();
+        this.drawBoardFrame();
 
         for (let i = 0; i < CONSTANTS.boxesOnColumn; i++) {
             for (let j = 0; j < CONSTANTS.boxesOnRow; j++) {
@@ -58,11 +60,28 @@ class Layout extends Negotiator {
         }
     }
 
+    drawBoardFrame() {
+        const inset = 8;
+        const width = CONSTANTS.boxesOnRow * CONSTANTS.boxWidth
+            + (CONSTANTS.boxesOnRow - 1);
+        const height = CONSTANTS.boxesOnColumn * CONSTANTS.boxHeight
+            + (CONSTANTS.boxesOnColumn - 1);
+        const frame = FUNC.elt('div', 'board-frame', 'board-frame', {
+            position: 'absolute',
+            left: `${CONSTANTS.offsetX - inset}px`,
+            top: `${CONSTANTS.offsetY - inset}px`,
+            width: `${width + inset * 2}px`,
+            height: `${height + inset * 2}px`,
+        });
+        frame.setAttribute('aria-hidden', 'true');
+        this.getNegotiator().append(frame);
+    }
+
     /**
      * @param box {Box}
      */
     drawOneBlock(box) {
-        let el = FUNC.elt('div', "box", null, {
+        let el = FUNC.elt('div', "box board-cell board-cell-empty", null, {
             position: 'absolute',
             width: (CONSTANTS.boxWidth) + "px",
             height: (CONSTANTS.boxHeight) + "px",
@@ -72,6 +91,7 @@ class Layout extends Negotiator {
             border: '2px solid black' //1px solid rgba(0,0,0,.051)
         })
 
+        applyOceanDepth(el, Math.round((box.getCoordinateY() - CONSTANTS.offsetY) / (CONSTANTS.boxHeight + 1)), CONSTANTS.boxesOnColumn);
         el.onmousedown = (e) => e.preventDefault()
 
         this.getNegotiator().append(el)

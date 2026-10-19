@@ -1,0 +1,47 @@
+RECORDED LINE-CLEAR SOUNDS
+
+All sources below are listed as CC0 1.0 Universal (public-domain dedication).
+License: https://creativecommons.org/publicdomain/zero/1.0/
+Retrieved 2026-10-19. Source files are not hotlinked during gameplay.
+These local excerpts were converted to mono PCM WAV at 32000 Hz, normalized
+(peak ceiling 0.65, RMS target 0.15), trimmed, and given short fade-in/out edges.
+The approved pickup and placement taps remain synthesized and unchanged.
+
+clear-water.wav (Ocean)
+Water Waves — transitking; submitted to OpenGameArt by qubodup.
+https://opengameart.org/content/water-waves
+Source: https://opengameart.org/sites/default/files/wave_01_cc0-11505__transitking__wavesound.flac
+Excerpt: 0–1.6 seconds; gain 1.7123.
+
+clear-ice.wav (Frozen)
+Ice breaking/shattering — IgnasD.
+https://opengameart.org/content/ice-breakingshattering
+Source: https://opengameart.org/sites/default/files/LedasLuzta.ogg
+Full 0.5921-second effect; gain 0.7811.
+
+clear-leaves.wav (Grove), clear-grass.wav (Meadow)
+Wind and Leaves.wav — ecfike. Wind in a small clump of broad-leaf trees.
+https://freesound.org/people/ecfike/sounds/183496/
+Source: https://cdn.freesound.org/previews/183/183496_2337290-hq.mp3
+Grove: 122–123.8 seconds; gain 34.7578.
+Meadow: 137.0892–138.6892 seconds; gain 10.9875.
+Two different gust excerpts, each with a 120ms attack and 180ms release.
+
+clear-snow.wav (Winter)
+4 dry snow steps — Iwan "qubodup" Gabovitch.
+https://opengameart.org/content/4-dry-snow-steps
+Source: https://opengameart.org/sites/default/files/ssd.mp3
+Excerpt: 0.0183–1.1183 seconds; gain 6.1407.
+
+clear-wood.wav (Amber)
+35 wooden cracks/hits/destructions — Independent.nu; submitted by qubodup.
+https://opengameart.org/content/35-wooden-crackshitsdestructions
+Source: https://opengameart.org/sites/default/files/wood.mp3
+Excerpt: 0.1962–1.2962 seconds; gain 0.7321.
+
+clear-candy.wav (Candy)
+Crunch sounds (burnt toast) — cogitollc.
+https://opengameart.org/content/crunch-sounds-burnt-toast
+Source: https://opengameart.org/sites/default/files/crunch_8.ogg
+Excerpt: 0.0472–0.5928 seconds; gain 0.6176.
+Recorded food-crunch Foley used to suggest brittle candy breaking.

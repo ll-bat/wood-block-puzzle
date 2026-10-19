@@ -1,0 +1,7 @@
+Asset: grove-leaves.webp
+Generated using the built-in image_gen tool, then optimized to 384x384 WebP.
+Reference direction: boxwood foliage, https://plants.ces.ncsu.edu/plants/buxus-sempervirens/
+The reference photograph is not bundled. This asset is an original generated texture.
+
+Final generation prompt:
+Create an original square game material texture: straight-on orthographic macro surface of a clipped boxwood bush, tightly packed tiny oval leaves, natural emerald and fresh spring green with dark forest green gaps. About 12 small leaves across the frame. Leaf veins, soft waxy highlights, layered overlapping foliage with gentle depth. Entire image filled by foliage, evenly lit diffuse daylight. No ground, pots, sky, flowers, text, border or individual cube silhouette. Realistic botanical material with readable simple leaf shapes, suited to cropping into small rounded game tiles. Seamless edges preferred. No glitter, no exaggerated contrast. Output square.

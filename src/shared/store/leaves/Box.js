@@ -34,6 +34,10 @@ export default class Box {
 
     setBusy($state = true, $color = false) {
         this.data.busy = $state;
+        if (this.referenceDiv) {
+            this.referenceDiv.classList.toggle('board-cell-occupied', $state);
+            this.referenceDiv.classList.toggle('board-cell-empty', !$state);
+        }
         if ($color) {
             this.style({
                 background: $state ? "#92522e" : "rgb(30, 30, 30)"

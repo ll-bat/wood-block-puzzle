@@ -1,6 +1,7 @@
 import CONSTANTS from "../../general/Constants";
 import $boxes from "../../shared/store/Boxes";
 import $blockCrashAnimation from "../../core/animation/BlockCrashAnimation";
+import sound from '../../puzzle/sound';
 
 class BoxOnboardCrasher {
     constructor() {
@@ -86,6 +87,10 @@ class BoxOnboardCrasher {
             }
         });
 
+        if (this.shouldAnimateCrashing && (rowIndexesToCrash.length || columnIndexesToCrash.length)) {
+            sound.play('clear', document.documentElement.dataset.blockTheme);
+        }
+
         // console.log('Crashing');
         // console.log(rowIndexesToCrash);
         // console.log(columnIndexesToCrash);
@@ -96,7 +101,7 @@ class BoxOnboardCrasher {
                 box.style({ background: CONSTANTS.boxDefaultColor });
                 box.setBusy(false);
                 if (this.shouldAnimateCrashing) {
-                    $blockCrashAnimation.animateCrash(box);
+                    $blockCrashAnimation.animateCrash(box, { delay: j * 42 });
                 }
             }
 
@@ -112,7 +117,7 @@ class BoxOnboardCrasher {
                 box.style({ background: CONSTANTS.boxDefaultColor });
                 box.setBusy(false);
                 if (this.shouldAnimateCrashing) {
-                    $blockCrashAnimation.animateCrash(box);
+                    $blockCrashAnimation.animateCrash(box, { delay: i * 42 });
                 }
             }
 

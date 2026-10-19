@@ -23,7 +23,27 @@ class RandomFiguresDrawer extends Negotiator {
                 const randomNumber = this.getRandomNumber(figuresLength);
                 figure = keys[randomNumber];
             }
-            const divElement = $figures.draw(figure);
+            const pattern = $figures.getFigure(figure).pattern;
+            const divElement = document.createElement('button');
+            divElement.type = 'button';
+            divElement.className = 'challenge-piece relax-piece';
+            divElement.setAttribute('aria-label', `Piece ${i + 1}`);
+            const preview = document.createElement('span');
+            preview.className = 'challenge-shape-preview';
+            preview.style.width = `${Math.max(...pattern.map(row => row.length)) * 21}px`;
+            preview.style.height = `${pattern.length * 21}px`;
+            pattern.forEach((row, r) => row.forEach((cell, c) => {
+                if (cell === '.') return;
+                const cube = document.createElement('span');
+                cube.className = 'challenge-shape-cell';
+                cube.style.left = `${c * 21}px`;
+                cube.style.top = `${r * 21}px`;
+                preview.append(cube);
+            }));
+            const label = document.createElement('span');
+            label.className = 'challenge-piece-label';
+            label.textContent = `Piece ${i + 1}`;
+            divElement.append(preview, label);
             STATE.relax.addRandomFigure({ figure, divElement, index: i });
             this.getNegotiator().append(divElement);
         }

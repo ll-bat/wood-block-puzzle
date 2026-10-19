@@ -1,0 +1,6 @@
+Original Ocean theme texture generated using the built-in image_gen tool.
+Reference (inspiration only; not bundled): https://www.ejiltalk.org/wp-content/uploads/2023/08/krystian-tambur-k7rZ8wTfABA-unsplash-scaled.jpg
+Asset: ocean-water.webp, optimized from generated source for small game cubes.
+
+Prompt:
+Use case: photorealistic-natural. Asset type: square water texture for small glossy cubes in a puzzle game. Original close-up clear tropical ocean water seen just beneath the surface, luminous turquoise and cyan, gentle curved ripples with soft sunlit silver highlights in upper half, deeper clean teal blue in lower half, very few tiny bubbles, translucent liquid depth. Calm realistic water, moderate detail readable at small size, restrained contrast, smoothly distributed texture, no strong focal point. Fill entire square with water. No horizon, land, objects, fish, text, watermark, border, ice cracks, foam or excessive sparkling noise. Not a cube rendering, just the material texture.

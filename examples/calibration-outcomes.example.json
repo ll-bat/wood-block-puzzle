@@ -1,0 +1,74 @@
+[
+  {
+    "formatVersion": 1,
+    "puzzleId": "example-easy-1",
+    "modelVersion": "casual-v1",
+    "predictedScore": 1,
+    "predictedTier": "easy",
+    "completed": true,
+    "acceptedMoveCount": 3,
+    "invalidAttemptCount": 0,
+    "hintsUsed": 0,
+    "durationSeconds": 18.4
+  },
+  {
+    "formatVersion": 1,
+    "puzzleId": "example-easy-2",
+    "modelVersion": "casual-v1",
+    "predictedScore": 3,
+    "predictedTier": "easy",
+    "completed": true,
+    "acceptedMoveCount": 3,
+    "invalidAttemptCount": 1,
+    "hintsUsed": 0,
+    "durationSeconds": 26.1
+  },
+  {
+    "formatVersion": 1,
+    "puzzleId": "example-medium-1",
+    "modelVersion": "casual-v1",
+    "predictedScore": 5,
+    "predictedTier": "medium",
+    "completed": true,
+    "acceptedMoveCount": 3,
+    "invalidAttemptCount": 2,
+    "hintsUsed": 0,
+    "durationSeconds": 41
+  },
+  {
+    "formatVersion": 1,
+    "puzzleId": "example-medium-2",
+    "modelVersion": "casual-v1",
+    "predictedScore": 7,
+    "predictedTier": "medium",
+    "completed": false,
+    "acceptedMoveCount": 2,
+    "invalidAttemptCount": 2,
+    "hintsUsed": 1,
+    "durationSeconds": 59.7
+  },
+  {
+    "formatVersion": 1,
+    "puzzleId": "example-hard-1",
+    "modelVersion": "casual-v1",
+    "predictedScore": 8,
+    "predictedTier": "hard",
+    "completed": false,
+    "acceptedMoveCount": 1,
+    "invalidAttemptCount": 3,
+    "hintsUsed": 0,
+    "durationSeconds": 66.2
+  },
+  {
+    "formatVersion": 1,
+    "puzzleId": "example-hard-2",
+    "modelVersion": "casual-v1",
+    "predictedScore": 10,
+    "predictedTier": "hard",
+    "completed": true,
+    "acceptedMoveCount": 3,
+    "invalidAttemptCount": 1,
+    "hintsUsed": 1,
+    "durationSeconds": 73.5
+  }
+]

@@ -1,0 +1,16 @@
+Asset: frozen-ice.webp
+Created with: built-in image_gen tool; original generated material, inspired by clear blue ice.
+Web asset: 384 x 384 WebP, quality 0.84, 62,762 bytes.
+The provided Google thumbnail was inspected as a material reference, not bundled.
+
+Generation prompt:
+Use case: stylized-concept
+Asset type: seamless game UI material texture for small square puzzle cubes
+Primary request: create an original photorealistic translucent frozen ice texture, inspired by clear blue ice cubes but not copying any existing photograph
+Style/medium: polished realistic macro ice material texture
+Composition/framing: flat orthographic square texture, seamless/tileable edges, no single cube silhouette, useful when cropped into many small rounded squares
+Lighting/mood: cool luminous blue-white light, glassy highlights, strong clarity at thumbnail size
+Color palette: transparent arctic blue, icy cyan, white highlights, deep cobalt refraction
+Materials/textures: subtle trapped air bubbles, cloudy frozen inclusions, fine irregular hairline cracks, watery internal refraction, crystalline depth
+Constraints: texture only; no snowflake icons, no objects, no text, no logo, no watermark, no frame or border; evenly detailed across the image; must remain legible at 32x32 pixels
+Avoid: plastic, cartoon style, opaque snow, large central subject, photographic background

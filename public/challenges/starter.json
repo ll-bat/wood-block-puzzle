@@ -1,0 +1,97 @@
+{
+  "formatVersion": 1,
+  "rulesVersion": "wood-block-8x8/v1",
+  "catalogVersion": "core-25/v1",
+  "id": "starter-001",
+  "board": "0000000000000007",
+  "shapes": [
+    "SQUARE_2",
+    "LINE_3_VERTICAL",
+    "T_STEM_DOWN"
+  ],
+  "provenance": {
+    "method": "gameplay-derived",
+    "seed": 0,
+    "candidateAttempt": 1,
+    "simulationBatches": 1,
+    "simulationHistory": [
+      {
+        "shapeIndex": 0,
+        "shapeId": "SINGLE",
+        "row": 0,
+        "column": 0,
+        "boardBefore": "0000000000000000",
+        "placedBoard": "0000000000000001",
+        "boardAfter": "0000000000000001",
+        "clearedRows": [],
+        "clearedColumns": [],
+        "clearedMask": "0000000000000000",
+        "batchIndex": 0
+      },
+      {
+        "shapeIndex": 1,
+        "shapeId": "SINGLE",
+        "row": 0,
+        "column": 1,
+        "boardBefore": "0000000000000001",
+        "placedBoard": "0000000000000003",
+        "boardAfter": "0000000000000003",
+        "clearedRows": [],
+        "clearedColumns": [],
+        "clearedMask": "0000000000000000",
+        "batchIndex": 0
+      },
+      {
+        "shapeIndex": 2,
+        "shapeId": "SINGLE",
+        "row": 0,
+        "column": 2,
+        "boardBefore": "0000000000000003",
+        "placedBoard": "0000000000000007",
+        "boardAfter": "0000000000000007",
+        "clearedRows": [],
+        "clearedColumns": [],
+        "clearedMask": "0000000000000000",
+        "batchIndex": 0
+      }
+    ]
+  },
+  "solution": [
+    {
+      "shapeIndex": 0,
+      "shapeId": "SQUARE_2",
+      "row": 1,
+      "column": 0,
+      "boardBefore": "0000000000000007",
+      "placedBoard": "0000000000030307",
+      "boardAfter": "0000000000030307",
+      "clearedRows": [],
+      "clearedColumns": [],
+      "clearedMask": "0000000000000000"
+    },
+    {
+      "shapeIndex": 1,
+      "shapeId": "LINE_3_VERTICAL",
+      "row": 0,
+      "column": 3,
+      "boardBefore": "0000000000030307",
+      "placedBoard": "00000000000b0b0f",
+      "boardAfter": "00000000000b0b0f",
+      "clearedRows": [],
+      "clearedColumns": [],
+      "clearedMask": "0000000000000000"
+    },
+    {
+      "shapeIndex": 2,
+      "shapeId": "T_STEM_DOWN",
+      "row": 3,
+      "column": 0,
+      "boardBefore": "00000000000b0b0f",
+      "placedBoard": "00000002070b0b0f",
+      "boardAfter": "00000002070b0b0f",
+      "clearedRows": [],
+      "clearedColumns": [],
+      "clearedMask": "0000000000000000"
+    }
+  ]
+}

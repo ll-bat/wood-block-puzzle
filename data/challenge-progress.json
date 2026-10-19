@@ -1,0 +1,405 @@
+{
+  "formatVersion": 1,
+  "puzzles": {
+    "puz-00001092-49f4607c-000008": {
+      "solved": true,
+      "manualDifficulty": "hard"
+    },
+    "puz-00001092-a234eeb3-000010": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-1a09a96e-000011": {
+      "solved": true,
+      "manualDifficulty": "medium"
+    },
+    "puz-00001092-80657753-000014": {
+      "solved": true,
+      "manualDifficulty": "medium"
+    },
+    "puz-00001092-0ee6938c-000016": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-1cca7e0e-000017": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-109bd27e-000020": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-1fc39cdc-000021": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-d4351cad-000022": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-7f9e330e-000023": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-33bce854-000024": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-0222c3e8-000030": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-981430cc-000031": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-c74541b8-000035": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-be8da9f1-000037": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-3ac0f2a5-000038": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-514bd6aa-000039": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-f59e6310-000040": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-526d8733-000041": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-38d949ef-000046": {
+      "solved": true,
+      "manualDifficulty": "medium"
+    },
+    "puz-00001092-d8b2fb20-000047": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-cdc74b8d-000048": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-7664101e-000050": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-27e6a038-000054": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-08224691-000063": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-159893d5-000067": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-698102c9-000074": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-5d622b06-000075": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-090c4d9e-000076": {
+      "solved": true,
+      "manualDifficulty": "medium"
+    },
+    "puz-00001092-e0338c2b-000077": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-90c12f34-000078": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-fd52aefb-000079": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-f248c1f9-000080": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-014fcfa4-000083": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-4da362be-000087": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-9f09983c-000091": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-d79d1537-000092": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-f5013788-000096": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-c3a8e9ca-000097": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-44f4b359-000099": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-5c1dfc8e-000104": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-fe9af245-000105": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-f2386467-000111": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-3ccbad63-000117": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-4436c955-000119": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-faebffda-000120": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-e204b016-000123": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-4abb4e0c-000126": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-edc09f3e-000127": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-a29124bc-000128": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-4f536df2-000129": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-07792236-000130": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-caba614e-000133": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-2ca8bf22-000135": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-6cb09222-000138": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-deee3815-000139": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-8538fcd1-000145": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-7fa03a3b-000149": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-af92f0d2-000150": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-50f8cc2a-000153": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-f7ba6e40-000154": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-b0481544-000155": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-9645ef3f-000156": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-39950fed-000157": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-b1389fd6-000159": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-0079ab85-000161": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-a45a84f1-000163": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-b86d3016-000165": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-5e68e221-000167": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-76c98cb9-000168": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-a8f24fe1-000169": {
+      "solved": true,
+      "manualDifficulty": "medium"
+    },
+    "puz-00001092-4b8504de-000172": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-046298cb-000173": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-59077bf7-000175": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-e198d405-000178": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-ae20da13-000188": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-c7110de6-000191": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-cf5373c3-000192": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-b0c3e525-000197": {
+      "solved": true,
+      "manualDifficulty": "hard"
+    },
+    "puz-00001092-8dc4eeea-000199": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-a073a7e6-000200": {
+      "solved": true,
+      "manualDifficulty": "medium"
+    },
+    "puz-00001092-32437da9-000205": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-28d04f05-000209": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-42906ab4-000214": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-25846863-000218": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-3fbaaf97-000219": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-a8f388c2-000220": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-c501794c-000221": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-b3d05a7a-000222": {
+      "solved": true,
+      "manualDifficulty": "medium"
+    },
+    "puz-00001092-b6970642-000223": {
+      "solved": true,
+      "manualDifficulty": "medium"
+    },
+    "puz-00001092-c676140d-000227": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-8d0f504d-000228": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-28f20c5e-000230": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-75062238-000233": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-4e344f16-000236": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-ee8a7e75-000238": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-ac84ddb2-000242": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-4869ff57-000243": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-6c16f9e0-000244": {
+      "solved": false,
+      "manualDifficulty": "easy"
+    },
+    "puz-00001092-5589dd92-000249": {
+      "solved": true,
+      "manualDifficulty": "easy"
+    }
+  }
+}

@@ -54,7 +54,9 @@ const STATE = {
              * @type {RandomFigure}
              */
             const thisFigure = this.randomFigures.find(f => f.index === index);
-            FUNC.setStyle(thisFigure.getDivElement(), { visibility: "hidden"})
+            const element = thisFigure.getDivElement();
+            element.disabled = true;
+            element.classList.add('challenge-piece-used');
             const figureIndex = this.randomFigures.findIndex(f => f.index === index);
             this.randomFigures.splice(figureIndex, 1);
             this.cachedFigures.push(thisFigure);
